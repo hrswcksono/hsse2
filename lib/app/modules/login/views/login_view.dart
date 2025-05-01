@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:hsse2/app/routes/app_pages.dart';
 
 import '../controllers/login_controller.dart';
 
@@ -9,7 +10,7 @@ class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF00A89D), // Background color
+      // Background color
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -17,10 +18,10 @@ class LoginView extends GetView<LoginController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Spacer(flex: 2),
-              // Image.asset(
-              //   'assets/login_image.png', // Replace with your asset path
-              //   height: 200,
-              // ),
+              Image.asset(
+                'assets/images/login_image.png', // Replace with your asset path
+                height: 200,
+              ),
               SizedBox(height: 20),
               Text(
                 'Silahkan login akun anda untuk melanjutkan',
@@ -57,7 +58,9 @@ class LoginView extends GetView<LoginController> {
               SizedBox(height: 25),
               // Login button
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed(Routes.HOME);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.yellow,
                   foregroundColor: Colors.black,
@@ -75,7 +78,9 @@ class LoginView extends GetView<LoginController> {
                 children: [
                   Text("Do you have any account? "),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(Routes.REGISTER);
+                    },
                     child: Text(
                       "Register",
                       style: TextStyle(

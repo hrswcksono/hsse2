@@ -6,6 +6,9 @@ abstract class Routes {
   static const HOME = _Paths.HOME;
   static const LOGIN = _Paths.LOGIN;
   static const REGISTER = _Paths.REGISTER;
+  static const USER = _Paths.USER;
+  static const PROFILE = _Paths.PROFILE;
+  static const UBAH_PASSWORD = _Paths.UBAH_PASSWORD;
 }
 
 abstract class _Paths {
@@ -13,4 +16,7 @@ abstract class _Paths {
   static const HOME = '/home';
   static const LOGIN = '/login';
   static const REGISTER = '/register';
+  static const USER = '/user';
+  static const PROFILE = '/profile';
+  static const UBAH_PASSWORD = '/ubah-password';
 }

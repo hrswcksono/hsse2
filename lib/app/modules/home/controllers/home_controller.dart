@@ -9,15 +9,13 @@ class HomeController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  var isPopupVisible = false.obs;
+
+  void togglePopup() {
+    isPopupVisible.value = !isPopupVisible.value;
   }
 
-  @override
-  void onClose() {
-    super.onClose();
+  void hidePopup() {
+    isPopupVisible.value = false;
   }
-
-  void increment() => count.value++;
 }
