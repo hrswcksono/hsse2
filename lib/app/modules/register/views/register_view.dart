@@ -29,11 +29,11 @@ class RegisterView extends GetView<RegisterController> {
               buildTextField(
                 Icons.person_outline,
                 "username",
-                controller.username,
+                controller.usernameTF,
               ),
-              buildTextField(Icons.person, "nama", controller.name),
-              buildTextField(Icons.email_outlined, "email", controller.email),
-              buildTextField(Icons.phone, "telepon", controller.phone),
+              buildTextField(Icons.person, "nama", controller.namaTF),
+              buildTextField(Icons.email_outlined, "email", controller.emailTF),
+              buildTextField(Icons.phone, "telepon", controller.telpTF),
 
               Obx(
                 () => DropdownButtonFormField<String>(
@@ -42,8 +42,11 @@ class RegisterView extends GetView<RegisterController> {
                           ? null
                           : controller.selectedJob.value,
                   items:
-                      controller.jobs.map((job) {
-                        return DropdownMenuItem(value: job, child: Text(job));
+                      controller.listRole.map((job) {
+                        return DropdownMenuItem(
+                          value: job.namarole,
+                          child: Text(job.namarole.toString()),
+                        );
                       }).toList(),
                   onChanged: (value) {
                     controller.selectedJob.value = value!;
@@ -61,17 +64,16 @@ class RegisterView extends GetView<RegisterController> {
               ),
               SizedBox(height: 16),
 
-              buildPasswordField("password", controller.password),
+              buildPasswordField("password", controller.passwordTF),
               buildPasswordField(
                 "confirm password",
-                controller.confirmPassword,
+                controller.passwordConfirmTF,
               ),
 
               SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () {
-                  print("Username: ${controller.username.text}");
-                  print("Jabatan: ${controller.selectedJob.value}");
+                  controller.submitRegister();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.yellow,

@@ -1,5 +1,5 @@
 class StringConst {
-  static const String baseUrl = "http://93.127.185.77:3000/";
+  static const String baseUrl = "http://192.168.1.10:3000/";
   // static const String baseUrl = "http://192.168.1.11:3000/";
   // static const String baseApi = "$baseUrl/API/";
   // static const String baseFileAttachment =
@@ -10,6 +10,6 @@ class StringConst {
     "Memastikan alat pengukuran yang digunakan tidak rusak dan sudah dilakukan kalibrasi",
     "Pengukuran dilakukan oleh orang yang berkompeten",
     "Pengukuran dilakukan menggunakan APD yang lengkap",
-    "Prosedur pengukuran gas telah dipahami"
+    "Prosedur pengukuran gas telah dipahami",
   ];
 }

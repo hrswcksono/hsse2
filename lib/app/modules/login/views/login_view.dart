@@ -30,6 +30,7 @@ class LoginView extends GetView<LoginController> {
               SizedBox(height: 20),
               // Username field
               TextField(
+                controller: controller.usernameTF,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.person_outline),
                   hintText: 'username',
@@ -43,6 +44,7 @@ class LoginView extends GetView<LoginController> {
               SizedBox(height: 15),
               // Password field
               TextField(
+                controller: controller.passwordTF,
                 obscureText: true,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.lock_outline),
@@ -59,7 +61,7 @@ class LoginView extends GetView<LoginController> {
               // Login button
               ElevatedButton(
                 onPressed: () {
-                  Get.toNamed(Routes.HOME);
+                  controller.submitLogin();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.yellow,
