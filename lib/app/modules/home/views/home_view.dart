@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:hsse2/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
@@ -59,6 +60,40 @@ class HomeView extends GetView<HomeController> {
                       crossAxisSpacing: 20,
                       children: [
                         _tile(
+                          "Unsafe Action",
+                          "assets/images/engineer.png",
+                          onTap: () {
+                            Get.toNamed(
+                              Routes.UNSAFE_ACTION,
+                              arguments: {'idjenisunsafe': 1},
+                            );
+                          },
+                        ),
+                        _tile(
+                          "Unsafe Condition",
+                          "assets/images/engineer.png",
+                          onTap: () {
+                            Get.toNamed(
+                              Routes.UNSAFE_ACTION,
+                              arguments: {'idjenisunsafe': 2},
+                            );
+                          },
+                        ),
+                        _tile(
+                          "Safety Brief",
+                          "assets/images/engineer.png",
+                          onTap: () {
+                            Get.toNamed(Routes.SAFETY_BRIEF);
+                          },
+                        ),
+                        _tile(
+                          "List User",
+                          "assets/images/engineer.png",
+                          onTap: () {
+                            Get.toNamed(Routes.USER);
+                          },
+                        ),
+                        _tile(
                           "Formulir Work Permit",
                           "assets/images/engineer.png",
                         ),
@@ -116,7 +151,8 @@ class HomeView extends GetView<HomeController> {
                           title: Text('Logout'),
                           onTap: () {
                             controller.hidePopup();
-                            Get.toNamed(Routes.LOGIN);
+                            GetStorage().erase();
+                            Get.offAllNamed(Routes.LOGIN);
                           },
                         ),
                       ],
@@ -131,19 +167,19 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Widget _tile(String label, String asset) {
+  Widget _tile(String label, String asset, {VoidCallback? onTap}) {
     return GestureDetector(
-      onTap: () => print("Tapped: $label"),
+      onTap: onTap, // aman meskipun null
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black),
           borderRadius: BorderRadius.circular(20),
         ),
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             Expanded(child: Image.asset(asset, fit: BoxFit.contain)),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(label, textAlign: TextAlign.center),
           ],
         ),

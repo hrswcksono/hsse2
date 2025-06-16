@@ -9,6 +9,11 @@ abstract class Routes {
   static const USER = _Paths.USER;
   static const PROFILE = _Paths.PROFILE;
   static const UBAH_PASSWORD = _Paths.UBAH_PASSWORD;
+  static const UNSAFE_ACTION = _Paths.UNSAFE_ACTION;
+  static const UNSAFE_ACTION_FORM = _Paths.UNSAFE_ACTION_FORM;
+  static const UNSAFE_ACTION_DETAIL = _Paths.UNSAFE_ACTION_DETAIL;
+  static const SAFETY_BRIEF = _Paths.SAFETY_BRIEF;
+  static const SAFETY_BRIEF_FORM = _Paths.SAFETY_BRIEF_FORM;
 }
 
 abstract class _Paths {
@@ -19,4 +24,9 @@ abstract class _Paths {
   static const USER = '/user';
   static const PROFILE = '/profile';
   static const UBAH_PASSWORD = '/ubah-password';
+  static const UNSAFE_ACTION = '/unsafe-action';
+  static const UNSAFE_ACTION_FORM = '/unsafe-action-form';
+  static const UNSAFE_ACTION_DETAIL = '/unsafe-action-detail';
+  static const SAFETY_BRIEF = '/safety-brief';
+  static const SAFETY_BRIEF_FORM = '/safety-brief-form';
 }

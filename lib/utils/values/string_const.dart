@@ -1,5 +1,5 @@
 class StringConst {
-  static const String baseUrl = "http://192.168.1.10:3000/";
+  static const String baseUrl = "http://141.11.25.55:3000/";
   // static const String baseUrl = "http://192.168.1.11:3000/";
   // static const String baseApi = "$baseUrl/API/";
   // static const String baseFileAttachment =
