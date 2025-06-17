@@ -14,6 +14,8 @@ abstract class Routes {
   static const UNSAFE_ACTION_DETAIL = _Paths.UNSAFE_ACTION_DETAIL;
   static const SAFETY_BRIEF = _Paths.SAFETY_BRIEF;
   static const SAFETY_BRIEF_FORM = _Paths.SAFETY_BRIEF_FORM;
+  static const USER_FORM = _Paths.USER_FORM;
+  static const LAPORAN_AH = _Paths.LAPORAN_AH;
 }
 
 abstract class _Paths {
@@ -29,4 +31,6 @@ abstract class _Paths {
   static const UNSAFE_ACTION_DETAIL = '/unsafe-action-detail';
   static const SAFETY_BRIEF = '/safety-brief';
   static const SAFETY_BRIEF_FORM = '/safety-brief-form';
+  static const USER_FORM = '/user-form';
+  static const LAPORAN_AH = '/laporan-ah';
 }

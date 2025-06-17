@@ -1,31 +1,64 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:hsse2/app/data/models/ListUser.dart';
+import 'package:hsse2/app/data/providers/user_provider.dart';
+import 'package:hsse2/app/widgets/dialog_alert.dart';
 
-class UserController extends GetxController {
-  //TODO: Implement UserController
+class UserController extends GetxController with StateMixin<List<UserItem>> {
+  var userProvider = Get.put(UserProvider());
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
+    getListUserFetch();
   }
 
   var searchText = ''.obs;
   var selectedUsers = <int>{}.obs;
-
-  List<Map<String, String>> userList = List.generate(51, (index) {
-    return {
-      'username': 'username',
-      'email': 'email',
-      'telepon': 'telepon',
-      'jabatan': 'jabatan',
-    };
-  });
 
   void toggleSelection(int index) {
     if (selectedUsers.contains(index)) {
       selectedUsers.remove(index);
     } else {
       selectedUsers.add(index);
+    }
+    update();
+  }
+
+  void getListUserFetch() {
+    try {
+      userProvider
+          .getListUser(searchText.value)
+          .then((value) {
+            change(value.data, status: RxStatus.success());
+          })
+          .onError((error, _) {
+            change(null, status: RxStatus.error());
+          });
+    } catch (e) {
+      change(null, status: RxStatus.error());
+    }
+  }
+
+  void deleteUser() {
+    var temp = jsonEncode(selectedUsers.toList());
+    try {
+      userProvider
+          .deleteUser(
+            temp
+          )
+          .then((value) {
+            Get.back();
+            DialogAlert.notif(value.toString(), "success");
+            getListUserFetch();
+          })
+          .onError((error, _) {
+            DialogAlert.notif(error.toString(), "error");
+          });
+    } catch (e) {
+      DialogAlert.notif("Network Error", "error");
     }
   }
 }

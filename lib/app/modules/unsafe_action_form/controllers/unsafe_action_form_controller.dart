@@ -111,7 +111,6 @@ class UnsafeActionFormController extends GetxController {
           .then((value) {
             listPertanyaan.addAll(value.data!);
             initJawaban();
-            print(listPertanyaan);
             update();
           })
           .onError((error, _) {

@@ -1,9 +1,21 @@
 import 'package:hsse2/app/data/providers/base_provider.dart';
 
+import '../models/ListUser.dart';
 import '../models/ProfileResponse.dart';
 import '../models/RoleResponse.dart';
 
 class UserProvider extends BaseProvider {
+  Future<String> deleteUser(String data) async {
+    var response = await post('user/deleteuser', {'data': data});
+    print(response.body);
+
+    if (!response.body['success']) {
+      return Future.error(response.body["message"]);
+    } else {
+      return response.body["message"];
+    }
+  }
+
   Future<String> ubahPassword(
     passwordlama,
     passwordbaru,
@@ -66,6 +78,18 @@ class UserProvider extends BaseProvider {
       return Future.error(response.body["message"]);
     } else {
       return response.body['message'];
+    }
+  }
+
+  Future<ListUser> getListUser(String search) async {
+    var response = await post('user/listuser', {'search': search});
+
+    print(response.body);
+
+    if (!response.body['success']) {
+      return Future.error(response.body["message"]);
+    } else {
+      return listUserFromJson(response.bodyString.toString());
     }
   }
 }

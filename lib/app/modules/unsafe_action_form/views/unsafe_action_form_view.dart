@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hsse2/app/widgets/global_app_bar.dart';
+import 'package:hsse2/app/widgets/global_widget.dart';
 import 'package:hsse2/utils/values/colors.dart';
 
 import '../controllers/unsafe_action_form_controller.dart';
@@ -17,7 +18,6 @@ class UnsafeActionFormView extends GetView<UnsafeActionFormController> {
   @override
   Widget build(BuildContext context) {
     controller.idJenisUnsafe = data['idjenisunsafe'];
-    print(controller.idJenisUnsafe);
     controller.getSoalUnsafe(controller.idJenisUnsafe);
     return Scaffold(
       appBar: GlobalAppBar(
@@ -268,52 +268,6 @@ class UnsafeActionFormView extends GetView<UnsafeActionFormController> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget buildTextField(
-    String label,
-    TextEditingController controller, {
-    int maxLines = 1,
-    VoidCallback? onTap,
-    bool readOnly = false,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: Colors.black87,
-            ),
-          ),
-          const SizedBox(height: 4),
-          TextField(
-            controller: controller,
-            readOnly: readOnly,
-            maxLines: maxLines,
-            onTap: onTap,
-            style: const TextStyle(fontSize: 13),
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: Colors.grey[100],
-              isDense: true,
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: 8,
-                horizontal: 10,
-              ),
-              border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
