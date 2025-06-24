@@ -6,12 +6,14 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hsse2/app/data/providers/unsafe_provider.dart';
+import 'package:hsse2/app/modules/unsafe_action/controllers/unsafe_action_controller.dart';
 import 'package:hsse2/app/widgets/dialog_alert.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:hsse2/app/data/models/SoalUnsafeRepsonse.dart';
 
 class UnsafeActionFormController extends GetxController {
   var unsafeProvider = Get.put(UnsafeProvider());
+  var unsafeCtrl = Get.put(UnsafeActionController());
   late TextEditingController namaTF;
   late TextEditingController tglTemuanTF;
   late TextEditingController waktuTF;
@@ -148,8 +150,9 @@ class UnsafeActionFormController extends GetxController {
             imageFile.value!,
           )
           .then((value) {
-            Get.close(3);
+            Get.back();
             DialogAlert.notif(value, "success");
+            unsafeCtrl.getListUnsafe(idJenisUnsafe);
           })
           .onError((error, _) {
             DialogAlert.notif(error.toString(), "error");

@@ -1,11 +1,13 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:hsse2/app/data/models/RoleResponse.dart';
 
 import '../controllers/register_controller.dart';
 
 class RegisterView extends GetView<RegisterController> {
-  const RegisterView({super.key});
+  RegisterView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,45 +30,48 @@ class RegisterView extends GetView<RegisterController> {
 
               buildTextField(
                 Icons.person_outline,
-                "username",
+                "Username",
                 controller.usernameTF,
               ),
-              buildTextField(Icons.person, "nama", controller.namaTF),
-              buildTextField(Icons.email_outlined, "email", controller.emailTF),
-              buildTextField(Icons.phone, "telepon", controller.telpTF),
+              buildTextField(Icons.person, "Nama", controller.namaTF),
+              buildTextField(Icons.email_outlined, "Email", controller.emailTF),
+              buildTextField(Icons.phone, "Telepon", controller.telpTF),
+              SizedBox(height: 7),
 
-              Obx(
-                () => DropdownButtonFormField<String>(
-                  value:
-                      controller.selectedJob.value.isEmpty
-                          ? null
-                          : controller.selectedJob.value,
-                  items:
-                      controller.listRole.map((job) {
-                        return DropdownMenuItem(
-                          value: job.namarole,
-                          child: Text(job.namarole.toString()),
-                        );
-                      }).toList(),
-                  onChanged: (value) {
-                    controller.selectedJob.value = value!;
-                  },
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.groups),
-                    hintText: "jabatan",
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
+              GetBuilder<RegisterController>(
+                builder: (controller) {
+                  return DropdownSearch<Role>(
+                    items: controller.listRole,
+                    selectedItem: controller.selectedJob,
+                    itemAsString: (Role? role) => role?.namarole ?? "",
+                    dropdownDecoratorProps: DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(
+                        hintText: "Jabatan",
+                        prefixIcon: Icon(Icons.groups),
+                        filled: true,
+                        fillColor: Colors.white,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 14,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
+                    onChanged: (value) {
+                      controller.selectedJob = value;
+                      controller.idRole = value!.idrole!;
+                      controller.update();
+                    },
+                  );
+                },
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 7),
 
-              buildPasswordField("password", controller.passwordTF),
+              buildPasswordField("Password", controller.passwordTF),
               buildPasswordField(
-                "confirm password",
+                "Confirm Password",
                 controller.passwordConfirmTF,
               ),
 

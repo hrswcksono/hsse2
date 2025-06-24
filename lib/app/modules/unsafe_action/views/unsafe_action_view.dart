@@ -20,7 +20,10 @@ class UnsafeActionView extends GetView<UnsafeActionController> {
     controller.getListUnsafe(controller.idjenisunsafe);
     return Scaffold(
       appBar: GlobalAppBar(
-        pTitle: controller.idjenisunsafe == 1 ? "Unsafe Action" : "Unsafe Condition",
+        pTitle:
+            controller.idjenisunsafe == 1
+                ? "Unsafe Action"
+                : "Unsafe Condition",
         pBgColor: CustomColor.appBarColor,
       ),
       body: Padding(
@@ -29,10 +32,11 @@ class UnsafeActionView extends GetView<UnsafeActionController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ElevatedButton(
-              onPressed: (){
-                Get.toNamed(Routes.UNSAFE_ACTION_FORM, arguments: {
-                  'idjenisunsafe' : controller.idjenisunsafe
-                });
+              onPressed: () {
+                Get.toNamed(
+                  Routes.UNSAFE_ACTION_FORM,
+                  arguments: {'idjenisunsafe': controller.idjenisunsafe},
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.yellow,
@@ -59,10 +63,11 @@ class UnsafeActionView extends GetView<UnsafeActionController> {
                       data[index].status!,
                       data[index].namajenisunsafe!,
                       data[index].penanggungjawab ?? "Belum Direspon",
+                      data[index].nama!,
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(height: 10);
+                    return const SizedBox(height: 0);
                   },
                 ),
               ),
@@ -81,48 +86,43 @@ class UnsafeActionView extends GetView<UnsafeActionController> {
     String status,
     String jenisUnsafe,
     String perespon,
+    String title,
   ) {
+    final isAction = jenisUnsafe.toUpperCase() == "ACTION";
+    final isClosed = status != 'I';
+
     return Container(
-      height: 150,
-      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: const BorderRadius.all(Radius.circular(5)),
-        border: Border.all(
-          color:
-              jenisUnsafe == "ACTION"
-                  ? const Color.fromRGBO(240, 67, 31, 1)
-                  : const Color.fromRGBO(55, 180, 251, 1),
-          width: 2,
-        ),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 2,
-            blurRadius: 7,
-            offset: const Offset(0, 3), // changes position of shadow
-          ),
+          BoxShadow(color: Colors.black12, blurRadius: 8, offset: Offset(0, 4)),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Header: Pelapor + Menu
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Pelapor", style: GoogleFonts.poppins(fontSize: 18)),
+              Text(title, style: GoogleFonts.poppins(fontSize: 14)),
               PopupMenuButton<int>(
                 color: Colors.white,
-                // offset: Offset(dx, dy),
                 onSelected: (int item) {
                   if (item == 1) {
+                    print({
+                      "idunsafe": idunsafe.toString(),
+                      "idjenisunsafe": idjenisunsafe.toString(),
+                      "from": "buat",
+                    });
                     Get.toNamed(
                       Routes.UNSAFE_ACTION_DETAIL,
                       arguments: {
-                        "idunsafe": idunsafe.toString(),
-                        "idjenisunsafe": idjenisunsafe.toString(),
-                        "jenis":
-                            "Unsafe ${jenisUnsafe[0].toUpperCase()}${jenisUnsafe.substring(1).toLowerCase()}",
+                        "idunsafe": idunsafe,
+                        "idjenisunsafe": idjenisunsafe,
                         "from": "buat",
                       },
                     );
@@ -136,46 +136,54 @@ class UnsafeActionView extends GetView<UnsafeActionController> {
               ),
             ],
           ),
-          Text(namapelapor, style: GoogleFonts.poppins(fontSize: 18)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+          // Nama Pelapor
+          Text(
+            namapelapor,
+            style: GoogleFonts.poppins(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+
+          const SizedBox(height: 12),
+
+          // Kategori dan Status (Chips)
+          Wrap(
+            spacing: 8,
+            runSpacing: 4,
             children: [
-              Text("Kategori : ", style: GoogleFonts.poppins(fontSize: 10)),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                decoration: BoxDecoration(
-                  color:
-                      jenisUnsafe == "ACTION"
-                          ? const Color.fromRGBO(240, 67, 31, 1)
-                          : const Color.fromRGBO(55, 180, 251, 1),
-                  borderRadius: const BorderRadius.all(Radius.circular(5)),
+              Chip(
+                label: Text("UNSAFE $jenisUnsafe"),
+                backgroundColor: isAction ? Colors.red[100] : Colors.blue[100],
+                labelStyle: TextStyle(
+                  color: isAction ? Colors.red[700] : Colors.blue[800],
+                  fontWeight: FontWeight.w600,
                 ),
-                child: Text("UNSAFE $jenisUnsafe"),
+                visualDensity: VisualDensity.compact,
+              ),
+              Chip(
+                label: Text(isClosed ? "Close" : "Open"),
+                backgroundColor: isClosed ? Colors.red[100] : Colors.green[100],
+                labelStyle: TextStyle(
+                  color: isClosed ? Colors.red : Colors.green[800],
+                  fontWeight: FontWeight.w600,
+                ),
+                visualDensity: VisualDensity.compact,
               ),
             ],
           ),
-          const SizedBox(height: 5),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Status : ", style: GoogleFonts.poppins(fontSize: 10)),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                decoration: BoxDecoration(
-                  color: status == 'I' ? Colors.green : Colors.red,
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                ),
-                child: Text(status == 'I' ? "Open" : "Close"),
-              ),
-            ],
-          ),
+
+          const SizedBox(height: 12),
+
+          // Informasi Tgl dan Direspon Oleh
           Text(
             "Tgl Temuan : ${tgltemuan.split(' ')[0]}",
-            style: GoogleFonts.poppins(fontSize: 10),
+            style: GoogleFonts.poppins(fontSize: 12),
           ),
           Text(
-            "Direspon Oleh : ${perespon}",
-            style: GoogleFonts.poppins(fontSize: 10),
+            "Direspon Oleh : $perespon",
+            style: GoogleFonts.poppins(fontSize: 12),
           ),
         ],
       ),

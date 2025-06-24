@@ -24,7 +24,7 @@ class GlobalAppBar extends StatelessWidget implements PreferredSizeWidget {
           pBackButton ?? true
               ? IconButton(
                 icon: const Icon(
-                  Icons.arrow_back_ios_rounded,
+                  Icons.arrow_back,
                   color: Colors.black,
                 ),
                 onPressed: () => Navigator.of(context).pop(),

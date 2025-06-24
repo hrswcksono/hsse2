@@ -19,7 +19,7 @@ class RegisterController extends GetxController {
   late TextEditingController passwordTF;
   late TextEditingController passwordConfirmTF;
 
-  var selectedJob = ''.obs;
+  Role? selectedJob;
 
   var idRole = 0;
 
@@ -41,7 +41,6 @@ class RegisterController extends GetxController {
       userProvider
           .getRole()
           .then((value) {
-            print(value.data);
             listRole.addAll(value.data!);
             update();
           })
@@ -78,10 +77,6 @@ class RegisterController extends GetxController {
       DialogAlert.notif("Telphone Belum Diisi", "warning");
       return;
     }
-    if (perusahaanTF.text == "") {
-      DialogAlert.notif("Perusahaan Belum Diisi", "warning");
-      return;
-    }
     if (idRole == 0) {
       DialogAlert.notif("Role Belum Dipilih", "warning");
       return;
@@ -112,7 +107,7 @@ class RegisterController extends GetxController {
           )
           .then((value) {
             Get.back();
-            Get.back();
+            DialogAlert.notif("Berhasil Menambahkan User", "success");
           })
           .onError((error, stackTrace) {
             DialogAlert.notif(error.toString(), "error");

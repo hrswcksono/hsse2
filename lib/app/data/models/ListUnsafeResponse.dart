@@ -53,6 +53,7 @@ class ListUnsafeResponse {
 
 class ItemUnsafeList {
   int? idunsafe;
+  String? nama;
   DateTime? tgltemuan;
   String? lokasi;
   int? idjenisunsafe;
@@ -73,6 +74,7 @@ class ItemUnsafeList {
 
   ItemUnsafeList({
     this.idunsafe,
+    this.nama,
     this.tgltemuan,
     this.lokasi,
     this.idjenisunsafe,
@@ -94,6 +96,7 @@ class ItemUnsafeList {
 
   ItemUnsafeList copyWith({
     int? idunsafe,
+    String? nama,
     DateTime? tgltemuan,
     String? lokasi,
     int? idjenisunsafe,
@@ -135,6 +138,7 @@ class ItemUnsafeList {
 
   factory ItemUnsafeList.fromJson(Map<String, dynamic> json) => ItemUnsafeList(
         idunsafe: json["idunsafe"],
+        nama: json["nama"],
         tgltemuan: json["tgltemuan"] == null
             ? null
             : DateTime.parse(json["tgltemuan"]),
@@ -161,6 +165,7 @@ class ItemUnsafeList {
 
   Map<String, dynamic> toJson() => {
         "idunsafe": idunsafe,
+        "nama": nama,
         "tgltemuan":
             "${tgltemuan!.year.toString().padLeft(4, '0')}-${tgltemuan!.month.toString().padLeft(2, '0')}-${tgltemuan!.day.toString().padLeft(2, '0')}",
         "lokasi": lokasi,

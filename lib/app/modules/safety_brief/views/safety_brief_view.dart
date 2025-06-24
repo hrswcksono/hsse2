@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hsse2/app/routes/app_pages.dart';
 import 'package:hsse2/app/widgets/global_app_bar.dart';
+import 'package:hsse2/utils/helpers/helpers.dart';
 import 'package:hsse2/utils/values/colors.dart';
 
 import '../controllers/safety_brief_controller.dart';
@@ -37,29 +38,30 @@ class SafetyBriefView extends GetView<SafetyBriefController> {
               ),
               child: const Text('Tambah'),
             ),
-            // Expanded(
-            //   child: controller.obx(
-            //     (data) => ListView.separated(
-            //       shrinkWrap: true,
-            //       physics: const ClampingScrollPhysics(),
-            //       itemCount: data!.length,
-            //       itemBuilder: (BuildContext context, int index) {
-            //         return itemUnsafe(
-            //           data[index].idunsafe!,
-            //           data[index].idjenisunsafe!,
-            //           data[index].username!,
-            //           data[index].tgltemuan.toString(),
-            //           data[index].status!,
-            //           data[index].namajenisunsafe!,
-            //           data[index].penanggungjawab ?? "Belum Direspon",
-            //         );
-            //       },
-            //       separatorBuilder: (BuildContext context, int index) {
-            //         return const SizedBox(height: 10);
-            //       },
-            //     ),
-            //   ),
-            // ),
+            Expanded(
+              child: controller.obx(
+                (data) => ListView.separated(
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: data!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return itemUnsafe(
+                      data[index].idsafetybrief!,
+                      data[index].idsafetybrief!,
+                      data[index].departemen!,
+                      data[index].tgltrans.toString(),
+                      data[index].status!,
+                      data[index].namapekerja!,
+                      data[index].namapekerjaan ?? "Belum Direspon",
+                      "sdad"
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(height: 10);
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -74,49 +76,36 @@ class SafetyBriefView extends GetView<SafetyBriefController> {
     String status,
     String jenisUnsafe,
     String perespon,
+    String title,
   ) {
+    final isClosed = status != 'I';
+
     return Container(
-      height: 150,
-      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: const BorderRadius.all(Radius.circular(5)),
-        border: Border.all(
-          color:
-              jenisUnsafe == "ACTION"
-                  ? const Color.fromRGBO(240, 67, 31, 1)
-                  : const Color.fromRGBO(55, 180, 251, 1),
-          width: 2,
-        ),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 2,
-            blurRadius: 7,
-            offset: const Offset(0, 3), // changes position of shadow
-          ),
+          BoxShadow(color: Colors.black12, blurRadius: 8, offset: Offset(0, 4)),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Header: Pelapor + Menu
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Pelapor", style: GoogleFonts.poppins(fontSize: 18)),
+              Text(title, style: GoogleFonts.poppins(fontSize: 14)),
               PopupMenuButton<int>(
                 color: Colors.white,
-                // offset: Offset(dx, dy),
                 onSelected: (int item) {
                   if (item == 1) {
                     Get.toNamed(
-                      Routes.UNSAFE_ACTION_DETAIL,
+                      Routes.SAFETY_BRIEF_DETAIL,
                       arguments: {
-                        "idunsafe": idunsafe.toString(),
-                        "idjenisunsafe": idjenisunsafe.toString(),
-                        "jenis":
-                            "Unsafe ${jenisUnsafe[0].toUpperCase()}${jenisUnsafe.substring(1).toLowerCase()}",
-                        "from": "buat",
+                        "idsafetybrief": idunsafe,
                       },
                     );
                   }
@@ -129,46 +118,22 @@ class SafetyBriefView extends GetView<SafetyBriefController> {
               ),
             ],
           ),
-          Text(namapelapor, style: GoogleFonts.poppins(fontSize: 18)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Kategori : ", style: GoogleFonts.poppins(fontSize: 10)),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                decoration: BoxDecoration(
-                  color:
-                      jenisUnsafe == "ACTION"
-                          ? const Color.fromRGBO(240, 67, 31, 1)
-                          : const Color.fromRGBO(55, 180, 251, 1),
-                  borderRadius: const BorderRadius.all(Radius.circular(5)),
-                ),
-                child: Text("UNSAFE $jenisUnsafe"),
-              ),
-            ],
-          ),
-          const SizedBox(height: 5),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Status : ", style: GoogleFonts.poppins(fontSize: 10)),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                decoration: BoxDecoration(
-                  color: status == 'I' ? Colors.green : Colors.red,
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                ),
-                child: Text(status == 'I' ? "Open" : "Close"),
-              ),
-            ],
-          ),
+
+          // Nama Pelapor
           Text(
-            "Tgl Temuan : ${tgltemuan.split(' ')[0]}",
-            style: GoogleFonts.poppins(fontSize: 10),
+            namapelapor,
+            style: GoogleFonts.poppins(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
+
+          const SizedBox(height: 12),
+
+          // Informasi Tgl dan Direspon Oleh
           Text(
-            "Direspon Oleh : ${perespon}",
-            style: GoogleFonts.poppins(fontSize: 10),
+            "Tgl : ${formatDate(tgltemuan)}",
+            style: GoogleFonts.poppins(fontSize: 12),
           ),
         ],
       ),

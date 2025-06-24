@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hsse2/app/routes/app_pages.dart';
-
+import 'package:hsse2/utils/values/get_storage_key.dart';
+import '../../../widgets/global_widget.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,19 +28,19 @@ class HomeView extends GetView<HomeController> {
                     children: [
                       GestureDetector(
                         onTap: () => controller.togglePopup(),
-                        child: Icon(Icons.menu, color: Colors.black),
+                        child: const Icon(Icons.menu, color: Colors.black),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: Text(
-                          'Selamat datang, Staff HSE!',
-                          style: TextStyle(
+                          'Selamat datang, ${GetStorage().read(GetStorageKey.namarole)}!',
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                      Icon(Icons.notifications_none),
+                      const Icon(Icons.notifications_none),
                     ],
                   ),
                 ),
@@ -47,70 +48,69 @@ class HomeView extends GetView<HomeController> {
                 // Main Content
                 Expanded(
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(40),
                       ),
                     ),
                     padding: const EdgeInsets.all(20),
-                    child: GridView.count(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 20,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _tile(
-                          "Unsafe Action",
-                          "assets/images/engineer.png",
-                          onTap: () {
-                            Get.toNamed(
-                              Routes.UNSAFE_ACTION,
-                              arguments: {'idjenisunsafe': 1},
-                            );
-                          },
+                        const Text(
+                          "Silahkan pilih dokumen berikut untuk memulai",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                        _tile(
-                          "Unsafe Condition",
-                          "assets/images/engineer.png",
-                          onTap: () {
-                            Get.toNamed(
-                              Routes.UNSAFE_ACTION,
-                              arguments: {'idjenisunsafe': 2},
-                            );
-                          },
+                        const SizedBox(height: 20),
+                        Expanded(
+                          child: GridView.count(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 20,
+                            crossAxisSpacing: 20,
+                            children: [
+                              buttonMenu(
+                                "Safety Briefing",
+                                "assets/images/icon_sb.png",
+                                onTap: () => Get.toNamed(Routes.SAFETY_BRIEF),
+                              ),
+                              buttonMenu(
+                                "Safety Patrol",
+                                "assets/images/icon_sp.png",
+                                onTap: () => Get.toNamed(Routes.SAFETY_PATROL),
+                              ),
+                              buttonMenu(
+                                "Approval Safety Patrol",
+                                "assets/images/icon_sp.png",
+                                onTap: () => Get.toNamed(Routes.SAFETY_PATROL_APPROVAL),
+                              ),
+                              buttonMenu(
+                                "List User",
+                                "assets/images/engineer.png",
+                                onTap: () => Get.toNamed(Routes.USER),
+                              ),
+                              buttonMenu(
+                                "Formulir Work Permit",
+                                "assets/images/engineer.png",
+                              ),
+                              buttonMenu(
+                                "List Work Permit",
+                                "assets/images/engineer.png",
+                              ),
+                              buttonMenu(
+                                "Formulir Starr Card",
+                                "assets/images/engineer.png",
+                              ),
+                              buttonMenu(
+                                "Aktivitas Harian",
+                                "assets/images/engineer.png",
+                              ),
+                            ],
+                          ),
                         ),
-                        _tile(
-                          "Safety Brief",
-                          "assets/images/engineer.png",
-                          onTap: () {
-                            Get.toNamed(Routes.SAFETY_BRIEF);
-                          },
-                        ),
-                        _tile(
-                          "List User",
-                          "assets/images/engineer.png",
-                          onTap: () {
-                            Get.toNamed(Routes.USER);
-                          },
-                        ),
-                        _tile(
-                          "Formulir Work Permit",
-                          "assets/images/engineer.png",
-                        ),
-                        _tile("List Work Permit", "assets/images/engineer.png"),
-                        _tile(
-                          "Formulir Safety Briefing",
-                          "assets/images/engineer.png",
-                        ),
-                        _tile(
-                          "Formulir Safety Patrol",
-                          "assets/images/engineer.png",
-                        ),
-                        _tile(
-                          "Formulir Starr Card",
-                          "assets/images/engineer.png",
-                        ),
-                        _tile("Aktivitas Harian", "assets/images/engineer.png"),
                       ],
                     ),
                   ),
@@ -118,37 +118,36 @@ class HomeView extends GetView<HomeController> {
               ],
             ),
           ),
-          // Popup
+
+          // Popup Menu
           Obx(() {
-            if (!controller.isPopupVisible.value) return SizedBox.shrink();
+            if (!controller.isPopupVisible.value)
+              return const SizedBox.shrink();
             return Positioned(
               top: 80,
               left: 20,
               child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxWidth: 180, // ✅ prevent infinite width error
-                ),
+                constraints: const BoxConstraints(maxWidth: 180),
                 child: Material(
                   elevation: 6,
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.purple[50],
                   child: IntrinsicWidth(
-                    // ✅ allows width to fit content within constraints
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         ListTile(
-                          leading: Icon(Icons.person),
-                          title: Text('Ubah Profile'),
+                          leading: const Icon(Icons.person),
+                          title: const Text('Ubah Profile'),
                           onTap: () {
                             controller.hidePopup();
                             Get.toNamed(Routes.PROFILE);
                           },
                         ),
                         ListTile(
-                          leading: Icon(Icons.logout),
-                          title: Text('Logout'),
+                          leading: const Icon(Icons.logout),
+                          title: const Text('Logout'),
                           onTap: () {
                             controller.hidePopup();
                             GetStorage().erase();
@@ -163,26 +162,6 @@ class HomeView extends GetView<HomeController> {
             );
           }),
         ],
-      ),
-    );
-  }
-
-  Widget _tile(String label, String asset, {VoidCallback? onTap}) {
-    return GestureDetector(
-      onTap: onTap, // aman meskipun null
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Expanded(child: Image.asset(asset, fit: BoxFit.contain)),
-            const SizedBox(height: 10),
-            Text(label, textAlign: TextAlign.center),
-          ],
-        ),
       ),
     );
   }

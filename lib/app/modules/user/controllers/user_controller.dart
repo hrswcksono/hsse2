@@ -43,7 +43,13 @@ class UserController extends GetxController with StateMixin<List<UserItem>> {
   }
 
   void deleteUser() {
-    var temp = jsonEncode(selectedUsers.toList());
+    var userlist = selectedUsers.toList();
+    if(userlist.isEmpty) {
+      Get.back();
+      DialogAlert.notif("Belum memilih user", "error");
+      return;
+    }
+    var temp = jsonEncode(userlist);
     try {
       userProvider
           .deleteUser(

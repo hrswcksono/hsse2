@@ -22,7 +22,10 @@ class UnsafeProvider extends BaseProvider {
   }
 
   Future<ListUnsafeResponse> listSoalUnsafe(int idjenisunsafe) async {
-    
+    print({
+      'idjenisunsafe' : idjenisunsafe
+    });
+
     var response = await post('unsafe/list', {
       'idjenisunsafe' : idjenisunsafe
     });
@@ -85,6 +88,33 @@ class UnsafeProvider extends BaseProvider {
     });
 
     var response = await post('unsafe/simpan', formData);
+
+    if (!response.body['success']) {
+      return Future.error(response.body["message"]);
+    } else {
+      return response.body["message"];
+    }
+  }
+
+  Future<String> responseUnsafe(
+    int idunsafe,
+    String konfirmasitemuan,
+    String statuspengerjaan,
+    String catatantambahan,
+    File dokumentasi,
+  ) async {
+    final formData = FormData({
+      'idunsafe': idunsafe,
+      'konfirmasitemuan': konfirmasitemuan,
+      'statuspengerjaan': statuspengerjaan,
+      'catatantambahan': catatantambahan,
+      'dokumentasi': MultipartFile(
+        dokumentasi,
+        filename: dokumentasi.path.split('/').last,
+      ),
+    });
+
+    var response = await post('unsafe/respon', formData);
 
     if (!response.body['success']) {
       return Future.error(response.body["message"]);

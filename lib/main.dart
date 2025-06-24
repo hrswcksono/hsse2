@@ -50,8 +50,8 @@ class MyApp extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.0),
           ),
           filled: true,
-          fillColor: Colors.white,
-          hintStyle: GoogleFonts.inter(fontSize: 14, color: Colors.white),
+          fillColor: Colors.black,
+          hintStyle: GoogleFonts.inter(fontSize: 14, color: Colors.grey),
           contentPadding: const EdgeInsets.only(
             bottom: 10,
             top: 10,

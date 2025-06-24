@@ -49,3 +49,11 @@ String getYearMonthNow() {
 
   return formattedDate;
 }
+
+String formatDate(String inputDate) {
+  // Parse the original string to DateTime
+  DateTime date = DateFormat("yyyy-MM-dd").parse(inputDate);
+
+  // Format to desired output
+  return DateFormat("dd MMMM yyyy").format(date);
+}

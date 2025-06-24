@@ -1,23 +1,121 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hsse2/app/data/models/RoleResponse.dart';
+import 'package:hsse2/app/data/providers/auth_provider.dart';
+import 'package:hsse2/app/data/providers/user_provider.dart';
+import 'package:hsse2/app/modules/user/controllers/user_controller.dart';
+import 'package:hsse2/app/widgets/dialog_alert.dart';
 
 class UserFormController extends GetxController {
-  //TODO: Implement UserFormController
+  var listRole = List<Role>.empty(growable: true);
+  var userProvider = Get.put(UserProvider());
+  var authProvider = Get.put(AuthProvider());
+  var userCtrl = Get.put(UserController());
 
-  final count = 0.obs;
+  late TextEditingController usernameTF;
+  late TextEditingController namaTF;
+  late TextEditingController emailTF;
+  late TextEditingController perusahaanTF;
+  late TextEditingController telpTF;
+  late TextEditingController passwordTF;
+  late TextEditingController passwordConfirmTF;
+
+  Role? selectedJob;
+
+  var idRole = 0;
+
   @override
   void onInit() {
     super.onInit();
+    usernameTF = TextEditingController();
+    namaTF = TextEditingController();
+    emailTF = TextEditingController();
+    perusahaanTF = TextEditingController();
+    telpTF = TextEditingController();
+    passwordTF = TextEditingController();
+    passwordConfirmTF = TextEditingController();
+    getRole();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  void getRole() {
+    try {
+      userProvider
+          .getRole()
+          .then((value) {
+            listRole.addAll(value.data!);
+            update();
+          })
+          .onError((error, stackTrace) {
+            print(error);
+          });
+    } catch (e) {
+      print(e);
+    }
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
+  void submitRegister() {
+    if (usernameTF.text == "") {
+      DialogAlert.notif("Username Belum Diisi", "warning");
+      return;
+    }
+    if (namaTF.text == "") {
+      DialogAlert.notif("Nama Belum Diisi", "warning");
+      return;
+    }
+    if (emailTF.text == "") {
+      DialogAlert.notif("Email Belum Diisi", "warning");
+      return;
+    }
+    final bool emailValid = RegExp(
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+    ).hasMatch(emailTF.text);
 
-  void increment() => count.value++;
+    if (!emailValid) {
+      DialogAlert.notif("Email Tidak Valid", "warning");
+      return;
+    }
+    if (telpTF.text == "") {
+      DialogAlert.notif("Telphone Belum Diisi", "warning");
+      return;
+    }
+    if (idRole == 0) {
+      DialogAlert.notif("Role Belum Dipilih", "warning");
+      return;
+    }
+    if (passwordTF.text == "") {
+      DialogAlert.notif("Password Belum Diisi", "warning");
+      return;
+    }
+    if (passwordConfirmTF.text == "") {
+      DialogAlert.notif("Password Konfirmasi Belum Diisi", "warning");
+      return;
+    }
+    if (passwordConfirmTF.text != passwordTF.text) {
+      DialogAlert.notif("Password Konfirmasi Tidak Sama", "warning");
+      return;
+    }
+    CircularProgressIndicator();
+    try {
+      authProvider
+          .register(
+            usernameTF.text,
+            namaTF.text,
+            emailTF.text,
+            telpTF.text,
+            perusahaanTF.text,
+            passwordTF.text,
+            idRole,
+          )
+          .then((value) {
+            Get.back();
+            DialogAlert.notif("Berhasil Menambahkan User", "success");
+            userCtrl.getListUserFetch();
+          })
+          .onError((error, stackTrace) {
+            DialogAlert.notif(error.toString(), "error");
+          });
+    } catch (e) {
+      DialogAlert.notif(e.toString(), "error");
+    }
+  }
 }

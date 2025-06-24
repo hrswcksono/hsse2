@@ -30,7 +30,7 @@ class LoginView extends GetView<LoginController> {
                   controller: controller.usernameTF,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.person_outline),
-                    hintText: 'username',
+                    hintText: 'Username',
                     filled: true,
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
@@ -46,7 +46,7 @@ class LoginView extends GetView<LoginController> {
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.lock_outline),
                     suffixIcon: const Icon(Icons.visibility),
-                    hintText: 'password',
+                    hintText: 'Password',
                     filled: true,
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
