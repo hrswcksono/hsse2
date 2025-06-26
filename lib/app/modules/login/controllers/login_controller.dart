@@ -13,6 +13,8 @@ class LoginController extends GetxController {
   late TextEditingController usernameTF;
   late TextEditingController passwordTF;
 
+  final isPasswordHidden = true.obs;
+
   var authProvider = Get.put(AuthProvider());
   var getService = Get.put(StorageService());
 

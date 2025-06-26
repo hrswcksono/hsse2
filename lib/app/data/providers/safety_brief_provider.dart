@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:hsse2/app/data/models/CuacaResponse.dart';
 import 'package:hsse2/app/data/models/ListSbResponse.dart';
+import 'package:hsse2/app/data/models/SafetyBriefResponse.dart';
 import 'package:hsse2/app/data/providers/base_provider.dart';
 
 class SafetyBriefProvider extends BaseProvider {
@@ -23,6 +24,16 @@ class SafetyBriefProvider extends BaseProvider {
       return Future.error(response.body["message"]);
     } else {
       return listSbResponseFromJson(response.bodyString.toString());
+    }
+  }
+
+  Future<SafetyBriefResponse> getDetailUnsafe(int idsafetybrief) async {
+    var response = await post('sb/detail', {'idsafetybrief': idsafetybrief});
+
+    if (!response.body['success']) {
+      return Future.error(response.body["message"]);
+    } else {
+      return safetyBriefResponseFromJson(response.bodyString.toString());
     }
   }
 

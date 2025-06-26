@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 
 import '../middlewares/login_middlewares.dart';
+import '../modules/forgot_password/bindings/forgot_password_binding.dart';
+import '../modules/forgot_password/views/forgot_password_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/laporan_ah/bindings/laporan_ah_binding.dart';
@@ -51,7 +53,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.LOGIN,
-      page: () => const LoginView(),
+      page: () => LoginView(),
       binding: LoginBinding(),
       middlewares: [LoginMiddleware()],
     ),
@@ -127,8 +129,13 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SAFETY_BRIEF_DETAIL,
-      page: () => const SafetyBriefDetailView(),
+      page: () => SafetyBriefDetailView(),
       binding: SafetyBriefDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.FORGOT_PASSWORD,
+      page: () => const ForgotPasswordView(),
+      binding: ForgotPasswordBinding(),
     ),
   ];
 }

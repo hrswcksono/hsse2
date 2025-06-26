@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hsse2/app/data/models/ProfileResponse.dart';
 import 'package:hsse2/app/data/models/RoleResponse.dart';
+import 'package:hsse2/app/widgets/dialog_alert.dart';
 
 import '../../../data/providers/user_provider.dart';
 
-class ProfileController extends GetxController {
+class ProfileController extends GetxController
+    with StateMixin<ProfileResponse> {
   var userProvider = Get.put(UserProvider());
   var listRole = List<Role>.empty(growable: true);
 
@@ -13,10 +16,7 @@ class ProfileController extends GetxController {
   late TextEditingController emailTF;
   late TextEditingController perusahaanTF;
   late TextEditingController telpTF;
-
-  late TextEditingController passwordLamaTF;
-  late TextEditingController passwordBaruTF;
-  late TextEditingController passwordBaruConfirmTF;
+  late TextEditingController roleTF;
 
   var isEdit = false;
 
@@ -27,22 +27,80 @@ class ProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
+    usernameTF = TextEditingController();
+    namaTF = TextEditingController();
+    emailTF = TextEditingController();
+    perusahaanTF = TextEditingController();
+    telpTF = TextEditingController();
+    roleTF = TextEditingController();
+
+    getRole();
+    getProfile();
   }
 
-  final username = TextEditingController();
-  final name = TextEditingController();
-  final email = TextEditingController();
-  final phone = TextEditingController();
-  final job = TextEditingController();
+  void getRole() {
+    try {
+      userProvider
+          .getRole()
+          .then((value) {
+            listRole.addAll(value.data!);
+            update();
+          })
+          .onError((error, stackTrace) {
+            DialogAlert.notif(error.toString(), "error");
+          });
+    } catch (e) {
+      DialogAlert.notif("Network Error", "error");
+    }
+  }
+
+  void getProfile() {
+    change(null, status: RxStatus.loading());
+    try {
+      userProvider
+          .getProfile()
+          .then((value) {
+            usernameTF.text = value.data!.username!;
+            namaTF.text = value.data!.nama!;
+            emailTF.text = value.data!.email!;
+            perusahaanTF.text = value.data!.perusahaan!;
+            telpTF.text = value.data!.telp!;
+            idRole = value.data!.idrole!;
+            namaRole = value.data!.namarole!;
+            roleTF.text = value.data!.namarole!;
+
+            print(idRole);
+            print(namaRole);
+            update();
+          })
+          .onError((error, _) {
+            DialogAlert.notif(error.toString(), "error");
+          });
+    } catch (e) {
+      DialogAlert.notif("Network Error", "error");
+    }
+  }
 
   void saveProfile() {
-    print("Saving profile:");
-    print(username.text);
-    // Add your logic here (e.g., API call)
-  }
-
-  void changePassword() {
-    Get.snackbar("Change Password", "Navigating to change password screen");
-    // Add navigation to password change screen
+    try {
+      userProvider
+          .updateProfile(
+            usernameTF.text,
+            namaTF.text,
+            emailTF.text,
+            telpTF.text,
+            perusahaanTF.text,
+            idRole,
+          )
+          .then((value) {
+            DialogAlert.notif(value.toString(), "success");
+          })
+          .onError((error, _) {
+            DialogAlert.notif(error.toString(), "error");
+          });
+    } catch (e) {
+      DialogAlert.notif("Network Error", "error");
+    }
   }
 }

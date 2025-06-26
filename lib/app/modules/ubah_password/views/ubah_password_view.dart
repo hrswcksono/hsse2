@@ -12,7 +12,7 @@ class UbahPasswordView extends GetView<UbahPasswordController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GlobalAppBar(
-        pTitle: "Ubah Profil",
+        pTitle: "Ubah Password",
         pBgColor: CustomColor.appBarColor,
       ),
       body: SafeArea(
@@ -24,23 +24,23 @@ class UbahPasswordView extends GetView<UbahPasswordController> {
 
               buildPasswordField(
                 Icons.lock,
-                "password lama",
-                controller.oldPassword,
+                "Password Lama",
+                controller.passwordLamaTF,
               ),
               buildPasswordField(
                 Icons.lock_outline,
-                "password baru",
-                controller.newPassword,
+                "Password Baru",
+                controller.passwordBaruTF,
               ),
               buildPasswordField(
                 Icons.vpn_key,
-                "konfirmasi password",
-                controller.confirmPassword,
+                "Konfirmasi Password",
+                controller.passwordBaruConfirmTF,
               ),
 
               SizedBox(height: 30),
               ElevatedButton(
-                onPressed: controller.saveNewPassword,
+                onPressed: controller.ubahPassword,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.yellow,
                   foregroundColor: Colors.black,

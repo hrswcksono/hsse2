@@ -91,6 +91,23 @@ class RegisterView extends GetView<RegisterController> {
                 child: Text('Register'),
               ),
               SizedBox(height: 20),
+              const SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Have an account? "),
+                  GestureDetector(
+                    onTap: () => Get.back(),
+                    child: Text(
+                      "Login",
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        color: Colors.blue[900],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

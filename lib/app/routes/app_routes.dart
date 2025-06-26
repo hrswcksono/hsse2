@@ -20,6 +20,7 @@ abstract class Routes {
   static const SAFETY_PATROL_APPROVAL = _Paths.SAFETY_PATROL_APPROVAL;
   static const UNSAFE_ACTION_APPROAL = _Paths.UNSAFE_ACTION_APPROAL;
   static const SAFETY_BRIEF_DETAIL = _Paths.SAFETY_BRIEF_DETAIL;
+  static const FORGOT_PASSWORD = _Paths.FORGOT_PASSWORD;
 }
 
 abstract class _Paths {
@@ -41,4 +42,5 @@ abstract class _Paths {
   static const SAFETY_PATROL_APPROVAL = '/safety-patrol-approval';
   static const UNSAFE_ACTION_APPROAL = '/unsafe-action-approal';
   static const SAFETY_BRIEF_DETAIL = '/safety-brief-detail';
+  static const FORGOT_PASSWORD = '/forgot-password';
 }

@@ -6,7 +6,7 @@ import 'package:hsse2/app/routes/app_pages.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
-  const LoginView({super.key});
+  LoginView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +26,11 @@ class LoginView extends GetView<LoginController> {
                 ),
                 const SizedBox(height: 20),
                 // Username
+                // buildField(
+                //   Icons.person_outline,
+                //   "Username",
+                //   controller.usernameTF,
+                // ),
                 TextField(
                   controller: controller.usernameTF,
                   decoration: InputDecoration(
@@ -38,21 +43,15 @@ class LoginView extends GetView<LoginController> {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 15),
+
                 // Password
-                TextField(
-                  controller: controller.passwordTF,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.lock_outline),
-                    suffixIcon: const Icon(Icons.visibility),
-                    hintText: 'Password',
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
+                buildField(
+                  Icons.lock_outline,
+                  "Password",
+                  controller.passwordTF,
+                  obscureTextRx: controller.isPasswordHidden,
                 ),
                 const SizedBox(height: 25),
                 ElevatedButton(
@@ -86,7 +85,9 @@ class LoginView extends GetView<LoginController> {
                 ),
                 const SizedBox(height: 5),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(Routes.FORGOT_PASSWORD);
+                  },
                   child: const Text(
                     "Forgot Password",
                     style: TextStyle(
@@ -98,6 +99,44 @@ class LoginView extends GetView<LoginController> {
                 const SizedBox(height: 40),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildField(
+    IconData icon,
+    String hint,
+    TextEditingController ctrl, {
+    bool readOnly = false,
+    RxBool? obscureTextRx,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Obx(
+        () => TextField(
+          controller: ctrl,
+          readOnly: readOnly,
+          obscureText: obscureTextRx?.value ?? false,
+          decoration: InputDecoration(
+            prefixIcon: Icon(icon),
+            suffixIcon:
+                obscureTextRx != null
+                    ? IconButton(
+                      icon: Icon(
+                        obscureTextRx.value
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                      onPressed:
+                          () => obscureTextRx.value = !obscureTextRx.value,
+                    )
+                    : null,
+            hintText: hint,
+            filled: true,
+            fillColor: Colors.white,
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
           ),
         ),
       ),

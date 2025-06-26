@@ -25,11 +25,11 @@ class ProfileView extends GetView<ProfileController> {
               // Header
               SizedBox(height: 30),
 
-              buildField(Icons.person_outline, "username", controller.username),
-              buildField(Icons.person, "nama", controller.name),
-              buildField(Icons.email_outlined, "email", controller.email),
-              buildField(Icons.phone, "telepon", controller.phone),
-              buildField(Icons.groups, "jabatan", controller.job),
+              buildField(Icons.person_outline, "username", controller.usernameTF),
+              buildField(Icons.person, "nama", controller.namaTF),
+              buildField(Icons.email_outlined, "email", controller.emailTF),
+              buildField(Icons.phone, "telepon", controller.telpTF),
+              buildField(Icons.groups, "jabatan", controller.roleTF, readOnly: true),
 
               SizedBox(height: 30),
 
@@ -67,19 +67,21 @@ class ProfileView extends GetView<ProfileController> {
     );
   }
 
-  Widget buildField(IconData icon, String hint, TextEditingController ctrl) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: TextField(
-        controller: ctrl,
-        decoration: InputDecoration(
-          prefixIcon: Icon(icon),
-          hintText: hint,
-          filled: true,
-          fillColor: Colors.white,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
-        ),
+  Widget buildField(IconData icon, String hint, TextEditingController ctrl, {bool readOnly = false}) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 8),
+    child: TextField(
+      controller: ctrl,
+      readOnly: readOnly,
+      decoration: InputDecoration(
+        prefixIcon: Icon(icon),
+        hintText: hint,
+        filled: true,
+        fillColor: Colors.white,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
       ),
-    );
-  }
+    ),
+  );
+}
+
 }

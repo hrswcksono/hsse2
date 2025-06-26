@@ -85,13 +85,19 @@ class HomeView extends GetView<HomeController> {
                               buttonMenu(
                                 "Approval Safety Patrol",
                                 "assets/images/icon_sp.png",
-                                onTap: () => Get.toNamed(Routes.SAFETY_PATROL_APPROVAL),
+                                onTap:
+                                    () => Get.toNamed(
+                                      Routes.SAFETY_PATROL_APPROVAL,
+                                    ),
                               ),
-                              buttonMenu(
-                                "List User",
-                                "assets/images/engineer.png",
-                                onTap: () => Get.toNamed(Routes.USER),
-                              ),
+                              if (GetStorage().read(GetStorageKey.namarole) ==
+                                  'ADMIN HSE') ...[
+                                buttonMenu(
+                                  "List User",
+                                  "assets/images/engineer.png",
+                                  onTap: () => Get.toNamed(Routes.USER),
+                                ),
+                              ],
                               buttonMenu(
                                 "Formulir Work Permit",
                                 "assets/images/engineer.png",

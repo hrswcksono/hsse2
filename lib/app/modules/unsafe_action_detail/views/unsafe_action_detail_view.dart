@@ -228,6 +228,28 @@ class UnsafeActionDetailView extends GetView<UnsafeActionDetailController> {
                                   width: double.infinity,
                                   height: 160,
                                   fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return const Center(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.camera_alt_outlined,
+                                            size: 40,
+                                            color: Colors.grey,
+                                          ),
+                                          SizedBox(height: 8),
+                                          Text(
+                                            "Gagal memuat gambar",
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
                                 ),
                               )
                               : const Center(
@@ -241,7 +263,7 @@ class UnsafeActionDetailView extends GetView<UnsafeActionDetailController> {
                                     ),
                                     SizedBox(height: 8),
                                     Text(
-                                      "Upload atau Ambil Foto",
+                                      "Foto Kosong",
                                       style: TextStyle(color: Colors.grey),
                                     ),
                                   ],
@@ -256,10 +278,13 @@ class UnsafeActionDetailView extends GetView<UnsafeActionDetailController> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Get.toNamed(Routes.UNSAFE_ACTION_APPROAL, arguments: {
-                        'idjenisunsafe' : controller.idJenisUnsafe,
-                        'idunsafe' : controller.idUnsafe,
-                      });
+                      Get.toNamed(
+                        Routes.UNSAFE_ACTION_APPROAL,
+                        arguments: {
+                          'idjenisunsafe': controller.idJenisUnsafe,
+                          'idunsafe': controller.idUnsafe,
+                        },
+                      );
                     },
                     child: Text(
                       "Respon",
