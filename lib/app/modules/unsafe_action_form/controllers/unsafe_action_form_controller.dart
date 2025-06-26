@@ -107,6 +107,9 @@ class UnsafeActionFormController extends GetxController {
 
   void getSoalUnsafe(int idSoalUnsafe) {
     listPertanyaan.clear();
+    Future.microtask(() {
+      DialogAlert.showLoading(message: "Loading...");
+    });
     try {
       unsafeProvider
           .getSoalUnsafe(idSoalUnsafe)
@@ -114,11 +117,14 @@ class UnsafeActionFormController extends GetxController {
             listPertanyaan.addAll(value.data!);
             initJawaban();
             update();
+            Get.back();
           })
           .onError((error, _) {
+            Get.back();
             DialogAlert.notif(error.toString(), "error");
           });
     } catch (e) {
+      Get.back();
       DialogAlert.notif(e.toString(), "error");
     }
   }
@@ -135,6 +141,9 @@ class UnsafeActionFormController extends GetxController {
           });
         }
       }
+      Future.microtask(() {
+      DialogAlert.showLoading(message: "Loading...");
+    });
       unsafeProvider
           .submitUnsafe(
             idJenisUnsafe,
@@ -151,13 +160,16 @@ class UnsafeActionFormController extends GetxController {
           )
           .then((value) {
             Get.back();
+            Get.back();
             DialogAlert.notif(value, "success");
             unsafeCtrl.getListUnsafe(idJenisUnsafe);
           })
           .onError((error, _) {
+            Get.back();
             DialogAlert.notif(error.toString(), "error");
           });
     } catch (e) {
+      Get.back();
       DialogAlert.notif(e.toString(), "error");
     }
   }

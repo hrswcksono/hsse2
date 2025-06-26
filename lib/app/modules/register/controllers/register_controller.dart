@@ -37,18 +37,22 @@ class RegisterController extends GetxController {
   }
 
   void getRole() {
+    Future.microtask(() {
+      DialogAlert.showLoading(message: "Loading...");
+    });
     try {
       userProvider
           .getRole()
           .then((value) {
             listRole.addAll(value.data!);
             update();
+            Get.back();
           })
           .onError((error, stackTrace) {
-            print(error);
+            Get.back();
           });
     } catch (e) {
-      print(e);
+      Get.back();
     }
   }
 
@@ -93,7 +97,9 @@ class RegisterController extends GetxController {
       DialogAlert.notif("Password Konfirmasi Tidak Sama", "warning");
       return;
     }
-    CircularProgressIndicator();
+    Future.microtask(() {
+      DialogAlert.showLoading(message: "Loading...");
+    });
     try {
       authProvider
           .register(
@@ -107,12 +113,15 @@ class RegisterController extends GetxController {
           )
           .then((value) {
             Get.back();
+            Get.back();
             DialogAlert.notif("Berhasil Menambahkan User", "success");
           })
           .onError((error, stackTrace) {
+            Get.back();
             DialogAlert.notif(error.toString(), "error");
           });
     } catch (e) {
+      Get.back();
       DialogAlert.notif(e.toString(), "error");
     }
   }

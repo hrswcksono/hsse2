@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:hsse2/app/data/models/CuacaResponse.dart';
 import 'package:hsse2/app/data/providers/safety_brief_provider.dart';
 import 'package:hsse2/app/widgets/dialog_alert.dart';
+import 'package:hsse2/utils/helpers/helpers.dart';
 
 class SafetyBriefDetailController extends GetxController {
 
@@ -61,11 +62,14 @@ class SafetyBriefDetailController extends GetxController {
   var imageFoto = "";
 
   void getDetailSb(int idsafetybrief) {
+    Future.microtask(() {
+      DialogAlert.showLoading(message: "Loading...");
+    });
     try {
       sbProvider
           .getDetailUnsafe(idsafetybrief)
           .then((value) {
-            tglTF.text = value.data!.tgltrans.toString();
+            tglTF.text = formatDate(value.data!.tgltrans.toString());
             waktuTF.text = value.data!.waktu.toString();
             shiftTF.text = value.data!.shift.toString();
             departemenTF.text = value.data!.departemen!.toString();
@@ -86,11 +90,15 @@ class SafetyBriefDetailController extends GetxController {
             imageFoto = value.data!.dokumentasi.toString();
 
             update();
+
+            Get.back();
           })
           .onError((error, _) {
+            Get.back();
             DialogAlert.notif(error.toString(), "error");
           });
     } catch (e) {
+      Get.back();
       DialogAlert.notif(e.toString(), "error");
     }
   }

@@ -56,7 +56,10 @@ class ProfileController extends GetxController
   }
 
   void getProfile() {
-    change(null, status: RxStatus.loading());
+
+    Future.microtask(() {
+      DialogAlert.showLoading(message: "Loading...");
+    });
     try {
       userProvider
           .getProfile()
@@ -70,19 +73,23 @@ class ProfileController extends GetxController
             namaRole = value.data!.namarole!;
             roleTF.text = value.data!.namarole!;
 
-            print(idRole);
-            print(namaRole);
             update();
+            Get.back();
           })
           .onError((error, _) {
+            Get.back();
             DialogAlert.notif(error.toString(), "error");
           });
     } catch (e) {
+      Get.back();
       DialogAlert.notif("Network Error", "error");
     }
   }
 
   void saveProfile() {
+    Future.microtask(() {
+      DialogAlert.showLoading(message: "Loading...");
+    });
     try {
       userProvider
           .updateProfile(
@@ -94,12 +101,15 @@ class ProfileController extends GetxController
             idRole,
           )
           .then((value) {
+            Get.back();
             DialogAlert.notif(value.toString(), "success");
           })
           .onError((error, _) {
+            Get.back();
             DialogAlert.notif(error.toString(), "error");
           });
     } catch (e) {
+      Get.back();
       DialogAlert.notif("Network Error", "error");
     }
   }

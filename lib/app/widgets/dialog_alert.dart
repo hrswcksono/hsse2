@@ -32,9 +32,7 @@ class DialogAlert {
                     padding: const EdgeInsets.all(20),
                     decoration: const BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,25 +45,23 @@ class DialogAlert {
                             fontSize: 18,
                           ),
                         ),
-                        Icon(
-                          icons,
-                          size: 100,
-                          color: colors,
-                        ),
+                        Icon(icons, size: 100, color: colors),
                         SizedBox(
                           width: Get.width * 0.3,
                           child: ElevatedButton(
-                              onPressed: () {
-                                Get.back();
-                              },
-                              child: Text(
-                                "Ya",
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 15,
-                                    color: Colors.white),
-                              )),
-                        )
+                            onPressed: () {
+                              Get.back();
+                            },
+                            child: Text(
+                              "Ya",
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 15,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -79,7 +75,10 @@ class DialogAlert {
   }
 
   static Future<void> showDialogConfirm(
-      String title, Function() function, Function() functionNo) {
+    String title,
+    Function() function,
+    Function() functionNo,
+  ) {
     return Get.dialog(
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -96,9 +95,7 @@ class DialogAlert {
                     padding: const EdgeInsets.all(20),
                     decoration: const BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -117,31 +114,35 @@ class DialogAlert {
                             SizedBox(
                               width: Get.width * 0.3,
                               child: ElevatedButton(
-                                  onPressed: function,
-                                  child: Text(
-                                    "Ya",
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15,
-                                        color: Colors.white),
-                                  )),
+                                onPressed: function,
+                                child: Text(
+                                  "Ya",
+                                  style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
                             ),
                             SizedBox(
                               width: Get.width * 0.3,
                               child: ElevatedButton(
-                                  onPressed: () {
-                                    functionNo();
-                                  },
-                                  child: Text(
-                                    "Tidak",
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15,
-                                        color: Colors.white),
-                                  )),
-                            )
+                                onPressed: () {
+                                  functionNo();
+                                },
+                                child: Text(
+                                  "Tidak",
+                                  style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -171,9 +172,7 @@ class DialogAlert {
                     padding: const EdgeInsets.all(20),
                     decoration: const BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -192,19 +191,21 @@ class DialogAlert {
                             SizedBox(
                               width: Get.width * 0.3,
                               child: ElevatedButton(
-                                  onPressed: () {
-                                    Get.back();
-                                  },
-                                  child: Text(
-                                    "Ok",
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15,
-                                        color: Colors.white),
-                                  )),
+                                onPressed: () {
+                                  Get.back();
+                                },
+                                child: Text(
+                                  "Ok",
+                                  style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -218,7 +219,10 @@ class DialogAlert {
   }
 
   static Future<void> imagePicker(
-      String title, Function() functionCamera, Function() functionGallery) {
+    String title,
+    Function() functionCamera,
+    Function() functionGallery,
+  ) {
     return Get.dialog(
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -235,9 +239,7 @@ class DialogAlert {
                     padding: const EdgeInsets.all(20),
                     decoration: const BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -250,9 +252,7 @@ class DialogAlert {
                             fontSize: 18,
                           ),
                         ),
-                        const SizedBox(
-                          height: 15,
-                        ),
+                        const SizedBox(height: 15),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -264,7 +264,8 @@ class DialogAlert {
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: const BorderRadius.all(
-                                      Radius.circular(10)),
+                                    Radius.circular(10),
+                                  ),
                                   border: Border.all(color: Colors.black),
                                   boxShadow: [
                                     BoxShadow(
@@ -272,18 +273,17 @@ class DialogAlert {
                                       spreadRadius: 5,
                                       blurRadius: 7,
                                       offset: const Offset(
-                                          0, 3), // changes position of shadow
+                                        0,
+                                        3,
+                                      ), // changes position of shadow
                                     ),
                                   ],
                                 ),
                                 child: const Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(
-                                      Icons.image,
-                                      size: 30,
-                                    ),
-                                    Text('Galerry')
+                                    Icon(Icons.image, size: 30),
+                                    Text('Galerry'),
                                   ],
                                 ),
                               ),
@@ -296,7 +296,8 @@ class DialogAlert {
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: const BorderRadius.all(
-                                      Radius.circular(10)),
+                                    Radius.circular(10),
+                                  ),
                                   border: Border.all(color: Colors.black),
                                   boxShadow: [
                                     BoxShadow(
@@ -304,24 +305,23 @@ class DialogAlert {
                                       spreadRadius: 5,
                                       blurRadius: 7,
                                       offset: const Offset(
-                                          0, 3), // changes position of shadow
+                                        0,
+                                        3,
+                                      ), // changes position of shadow
                                     ),
                                   ],
                                 ),
                                 child: const Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(
-                                      Icons.camera_alt,
-                                      size: 30,
-                                    ),
-                                    Text('Camera')
+                                    Icon(Icons.camera_alt, size: 30),
+                                    Text('Camera'),
                                   ],
                                 ),
                               ),
-                            )
+                            ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -331,6 +331,44 @@ class DialogAlert {
           ),
         ],
       ),
+    );
+  }
+
+  static Future<void> showLoading({String? message}) {
+    return Get.dialog(
+      // ignore: deprecated_member_use
+      WillPopScope(
+        onWillPop: () async => false, // agar tidak bisa ditutup pakai back
+        child: Center(
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              width: 150,
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const CircularProgressIndicator(),
+                  const SizedBox(height: 15),
+                  Text(
+                    message ?? 'Loading...',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      barrierDismissible: false, // tidak bisa ditutup klik luar
     );
   }
 }

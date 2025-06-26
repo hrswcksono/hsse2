@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hsse2/app/data/models/ListUnsafeResponse.dart';
 import 'package:hsse2/app/data/providers/unsafe_provider.dart';
+import 'package:hsse2/app/widgets/dialog_alert.dart';
 
 class UnsafeActionController extends GetxController
     with StateMixin<List<ItemUnsafeList>> {
@@ -22,16 +23,22 @@ class UnsafeActionController extends GetxController
   @override
   void onClose() {}
   void getListUnsafe(idjenisunsafe) {
+    Future.microtask(() {
+      DialogAlert.showLoading(message: "Loading...");
+    });
     try {
       unsafeProvider
           .listSoalUnsafe(idjenisunsafe)
           .then((value) {
+            Get.back();
             change(value.data, status: RxStatus.success());
           })
           .onError((error, _) {
+            Get.back();
             change(null, status: RxStatus.error());
           });
     } catch (e) {
+      Get.back();
       change(null, status: RxStatus.error());
     }
   }

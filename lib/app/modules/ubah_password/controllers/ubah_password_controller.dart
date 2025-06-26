@@ -37,6 +37,9 @@ class UbahPasswordController extends GetxController {
       return;
     }
     try {
+      Future.microtask(() {
+        DialogAlert.showLoading(message: "Loading...");
+      });
       userProvider
           .ubahPassword(
             passwordLamaTF.text,
@@ -45,12 +48,15 @@ class UbahPasswordController extends GetxController {
           )
           .then((value) {
             Get.back();
+            Get.back();
             DialogAlert.notif(value.toString(), "success");
           })
           .onError((error, _) {
+            Get.back();
             DialogAlert.notif(error.toString(), "error");
           });
     } catch (e) {
+      Get.back();
       DialogAlert.notif("Network Error", "error");
     }
   }

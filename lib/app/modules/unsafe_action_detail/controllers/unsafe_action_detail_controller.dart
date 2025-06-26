@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:hsse2/app/data/providers/unsafe_provider.dart';
 import 'package:hsse2/app/modules/unsafe_action/controllers/unsafe_action_controller.dart';
 import 'package:hsse2/app/widgets/dialog_alert.dart';
+import 'package:hsse2/utils/helpers/helpers.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:hsse2/app/data/models/SoalUnsafeRepsonse.dart';
 
@@ -127,6 +128,9 @@ class UnsafeActionDetailController extends GetxController {
   var imageFoto = "";
 
   void getDetailUnsafe(int idunsafe) {
+    Future.microtask(() {
+      DialogAlert.showLoading(message: "Loading...");
+    });
     try {
       unsafeProvider
           .getDetailUnsafe(idunsafe)
@@ -134,7 +138,7 @@ class UnsafeActionDetailController extends GetxController {
             namaTF.text = value.data!.pic.toString();
             waktuTF.text = value.data!.waktu.toString();
             picTF.text = value.data!.pic.toString();
-            tglTemuanTF.text = value.data!.tgltemuan!.toString().split(' ')[0];
+            tglTemuanTF.text = formatDate(value.data!.tgltemuan!);
             lokasiTF.text = value.data!.lokasi.toString();
             catatanTF.text = value.data!.catatan!;
             impacTF.text = value.data!.impac!;
@@ -151,16 +155,15 @@ class UnsafeActionDetailController extends GetxController {
 
             imageFoto = value.data!.dokumentasi.toString();
 
-            print(imageFoto);
-
-            print(listJawaban);
-
             update();
+            Get.back();
           })
           .onError((error, _) {
+            Get.back();
             DialogAlert.notif(error.toString(), "error");
           });
     } catch (e) {
+      Get.back();
       DialogAlert.notif(e.toString(), "error");
     }
   }

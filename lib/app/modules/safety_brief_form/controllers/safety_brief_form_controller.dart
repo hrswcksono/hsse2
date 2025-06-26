@@ -65,6 +65,9 @@ class SafetyBriefFormController extends GetxController {
   }
 
   void getCuaca() {
+    Future.microtask(() {
+      DialogAlert.showLoading(message: "Loading...");
+    });
     listPertanyaan.clear();
     try {
       sbProvider
@@ -73,11 +76,14 @@ class SafetyBriefFormController extends GetxController {
             listPertanyaan.addAll(value.data!);
             initJawaban();
             update();
+            Get.back();
           })
           .onError((error, _) {
+            Get.back();
             DialogAlert.notif(error.toString(), "error");
           });
     } catch (e) {
+      Get.back();
       DialogAlert.notif(e.toString(), "error");
     }
   }
@@ -128,6 +134,9 @@ class SafetyBriefFormController extends GetxController {
           });
         }
       }
+      Future.microtask(() {
+        DialogAlert.showLoading(message: "Loading...");
+      });
       sbProvider
           .submitSB(
             tglTF.text,
@@ -143,13 +152,15 @@ class SafetyBriefFormController extends GetxController {
             imageFile.value!,
           )
           .then((value) {
-            Get.close(1);
+            Get.close(2);
             DialogAlert.notif(value, "success");
           })
           .onError((error, _) {
+            Get.back();
             DialogAlert.notif(error.toString(), "error");
           });
     } catch (e) {
+      Get.back();
       DialogAlert.notif(e.toString(), "error");
     }
   }
