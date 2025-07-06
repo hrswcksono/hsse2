@@ -21,6 +21,12 @@ abstract class Routes {
   static const UNSAFE_ACTION_APPROAL = _Paths.UNSAFE_ACTION_APPROAL;
   static const SAFETY_BRIEF_DETAIL = _Paths.SAFETY_BRIEF_DETAIL;
   static const FORGOT_PASSWORD = _Paths.FORGOT_PASSWORD;
+  static const PERMIT = _Paths.PERMIT;
+  static const PERMIT_JENIS = _Paths.PERMIT_JENIS;
+  static const PERMIT_LIST = _Paths.PERMIT_LIST;
+  static const PERMIT_SOAL = _Paths.PERMIT_SOAL;
+  static const PERMIT_DETAIL = _Paths.PERMIT_DETAIL;
+  static const PERMIT_FORM = _Paths.PERMIT_FORM;
 }
 
 abstract class _Paths {
@@ -43,4 +49,10 @@ abstract class _Paths {
   static const UNSAFE_ACTION_APPROAL = '/unsafe-action-approal';
   static const SAFETY_BRIEF_DETAIL = '/safety-brief-detail';
   static const FORGOT_PASSWORD = '/forgot-password';
+  static const PERMIT = '/permit';
+  static const PERMIT_JENIS = '/permit-jenis';
+  static const PERMIT_LIST = '/permit-list';
+  static const PERMIT_SOAL = '/permit-soal';
+  static const PERMIT_DETAIL = '/permit-detail';
+  static const PERMIT_FORM = '/permit-form';
 }

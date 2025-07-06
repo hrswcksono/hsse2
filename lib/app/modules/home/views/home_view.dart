@@ -99,19 +99,16 @@ class HomeView extends GetView<HomeController> {
                                 ),
                               ],
                               buttonMenu(
-                                "Formulir Work Permit",
-                                "assets/images/engineer.png",
-                              ),
-                              buttonMenu(
                                 "List Work Permit",
                                 "assets/images/engineer.png",
+                                onTap: () => Get.toNamed(Routes.PERMIT),
                               ),
                               buttonMenu(
-                                "Formulir Starr Card",
+                                "Approval Work Permit",
                                 "assets/images/engineer.png",
                               ),
                               buttonMenu(
-                                "Aktivitas Harian",
+                                "Laporan Aktivitas Harian",
                                 "assets/images/engineer.png",
                               ),
                             ],

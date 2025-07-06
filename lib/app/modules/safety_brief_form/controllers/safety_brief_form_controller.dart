@@ -8,8 +8,11 @@ import 'package:hsse2/app/data/providers/safety_brief_provider.dart';
 import 'package:hsse2/app/widgets/dialog_alert.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../safety_brief/controllers/safety_brief_controller.dart';
+
 class SafetyBriefFormController extends GetxController {
   var sbProvider = Get.put(SafetyBriefProvider());
+  var sbCtrl = Get.put(SafetyBriefController());
   var listPertanyaan = List<CuacaItem>.empty(growable: true);
 
   late TextEditingController tglTF;
@@ -154,6 +157,7 @@ class SafetyBriefFormController extends GetxController {
           .then((value) {
             Get.close(2);
             DialogAlert.notif(value, "success");
+            sbCtrl.getListSb();
           })
           .onError((error, _) {
             Get.back();

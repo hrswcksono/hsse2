@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class GlobalAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -9,6 +10,7 @@ class GlobalAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.pBackButton,
     this.pCenterTitle,
     this.pWidgets,
+    this.onBack, // ✅ tambahkan
   });
 
   final String pTitle;
@@ -16,18 +18,16 @@ class GlobalAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool? pBackButton;
   final bool? pCenterTitle;
   final List<Widget>? pWidgets;
+  final VoidCallback? onBack; // ✅ tambahan
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       leading:
-          pBackButton ?? true
+          (pBackButton ?? true)
               ? IconButton(
-                icon: const Icon(
-                  Icons.arrow_back,
-                  color: Colors.black,
-                ),
-                onPressed: () => Navigator.of(context).pop(),
+                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                onPressed: onBack ?? () => Get.back(), // ✅ gunakan callback
               )
               : const SizedBox(),
       title: Text(

@@ -80,78 +80,71 @@ class DialogAlert {
     Function() functionNo,
   ) {
     return Get.dialog(
-      Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Material(
-            color: Colors.transparent,
+      Center(
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            width: Get.width * 0.8,
+            padding: const EdgeInsets.all(20),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
             child: Column(
+              mainAxisSize: MainAxisSize.min, // ⬅️ fleksibel tinggi
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    height: 150,
-                    width: Get.width * 0.8,
-                    padding: const EdgeInsets.all(20),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                Flexible(
+                  child: SingleChildScrollView(
+                    child: Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15,
+                      ),
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          title,
-                          textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: Get.width * 0.3,
+                      child: ElevatedButton(
+                        onPressed: function,
+                        child: Text(
+                          "Ya",
                           style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
                             fontSize: 15,
+                            color: Colors.white,
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: Get.width * 0.3,
-                              child: ElevatedButton(
-                                onPressed: function,
-                                child: Text(
-                                  "Ya",
-                                  style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 15,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: Get.width * 0.3,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  functionNo();
-                                },
-                                child: Text(
-                                  "Tidak",
-                                  style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 15,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                    SizedBox(
+                      width: Get.width * 0.3,
+                      child: ElevatedButton(
+                        onPressed: functionNo,
+                        child: Text(
+                          "Tidak",
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
-        ],
+        ),
       ),
+      barrierDismissible: false,
     );
   }
 

@@ -9,6 +9,18 @@ import '../modules/laporan_ah/bindings/laporan_ah_binding.dart';
 import '../modules/laporan_ah/views/laporan_ah_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/permit/bindings/permit_binding.dart';
+import '../modules/permit/views/permit_view.dart';
+import '../modules/permit_detail/bindings/permit_detail_binding.dart';
+import '../modules/permit_detail/views/permit_detail_view.dart';
+import '../modules/permit_form/bindings/permit_form_binding.dart';
+import '../modules/permit_form/views/permit_form_view.dart';
+import '../modules/permit_jenis/bindings/permit_jenis_binding.dart';
+import '../modules/permit_jenis/views/permit_jenis_view.dart';
+import '../modules/permit_list/bindings/permit_list_binding.dart';
+import '../modules/permit_list/views/permit_list_view.dart';
+import '../modules/permit_soal/bindings/permit_soal_binding.dart';
+import '../modules/permit_soal/views/permit_soal_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/register/bindings/register_binding.dart';
@@ -136,6 +148,36 @@ class AppPages {
       name: _Paths.FORGOT_PASSWORD,
       page: () => const ForgotPasswordView(),
       binding: ForgotPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.PERMIT,
+      page: () => const PermitView(),
+      binding: PermitBinding(),
+    ),
+    GetPage(
+      name: _Paths.PERMIT_JENIS,
+      page: () => const PermitJenisView(),
+      binding: PermitJenisBinding(),
+    ),
+    GetPage(
+      name: _Paths.PERMIT_LIST,
+      page: () => PermitListView(),
+      binding: PermitListBinding(),
+    ),
+    GetPage(
+      name: _Paths.PERMIT_SOAL,
+      page: () => const PermitSoalView(),
+      binding: PermitSoalBinding(),
+    ),
+    GetPage(
+      name: _Paths.PERMIT_DETAIL,
+      page: () => const PermitDetailView(),
+      binding: PermitDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.PERMIT_FORM,
+      page: () => PermitFormView(),
+      binding: PermitFormBinding(),
     ),
   ];
 }
