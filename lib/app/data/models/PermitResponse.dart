@@ -35,6 +35,8 @@ class PermitResponse {
 class ListItemPermit {
     String? namajenispermit;
     int? idpermit;
+    int? sudahapprove;
+    int? siapselesai;
     String? kodepermit;
     String? namaproject;
     int? idjenispermit;
@@ -54,6 +56,8 @@ class ListItemPermit {
     ListItemPermit({
         this.namajenispermit,
         this.idpermit,
+        this.sudahapprove,
+        this.siapselesai,
         this.kodepermit,
         this.namaproject,
         this.idjenispermit,
@@ -74,6 +78,8 @@ class ListItemPermit {
     factory ListItemPermit.fromJson(Map<String, dynamic> json) => ListItemPermit(
         namajenispermit: json["namajenispermit"],
         idpermit: json["idpermit"],
+        sudahapprove: json["sudahapprove"],
+        siapselesai: json["siapselesai"],
         kodepermit: json["kodepermit"],
         namaproject: json["namaproject"],
         idjenispermit: json["idjenispermit"],
@@ -94,6 +100,8 @@ class ListItemPermit {
     Map<String, dynamic> toJson() => {
         "namajenispermit": namajenispermit,
         "idpermit": idpermit,
+        "sudahapprove": sudahapprove,
+        "siapselesai": siapselesai,
         "kodepermit": kodepermit,
         "namaproject": namaproject,
         "idjenispermit": idjenispermit,

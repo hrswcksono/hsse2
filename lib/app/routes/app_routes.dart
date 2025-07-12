@@ -27,6 +27,11 @@ abstract class Routes {
   static const PERMIT_SOAL = _Paths.PERMIT_SOAL;
   static const PERMIT_DETAIL = _Paths.PERMIT_DETAIL;
   static const PERMIT_FORM = _Paths.PERMIT_FORM;
+  static const PERMIT_APPROVE = _Paths.PERMIT_APPROVE;
+  static const PERMIT_SELESAI = _Paths.PERMIT_SELESAI;
+  static const REKAP_SB = _Paths.REKAP_SB;
+  static const REKAP_SP = _Paths.REKAP_SP;
+  static const REKAP_PERMIT = _Paths.REKAP_PERMIT;
 }
 
 abstract class _Paths {
@@ -55,4 +60,9 @@ abstract class _Paths {
   static const PERMIT_SOAL = '/permit-soal';
   static const PERMIT_DETAIL = '/permit-detail';
   static const PERMIT_FORM = '/permit-form';
+  static const PERMIT_APPROVE = '/permit-approve';
+  static const PERMIT_SELESAI = '/permit-selesai';
+  static const REKAP_SB = '/rekap-sb';
+  static const REKAP_SP = '/rekap-sp';
+  static const REKAP_PERMIT = '/rekap-permit';
 }

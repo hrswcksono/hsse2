@@ -48,6 +48,7 @@ class Data {
     int? idpermit;
     String? kodepermit;
     String? namaproject;
+    String? perusahaan;
     String? bagian;
     String? nomorijin;
     dynamic lainnyajenispekerjaan;
@@ -74,6 +75,12 @@ class Data {
     dynamic statuspenyelesaian;
     String? status;
     String? userbuat;
+    int? sudahapprove1;
+    int? sudahapprove2;
+    int? sudahapprove3;
+    String? ttdapprove1;
+    String? ttdapprove2;
+    String? ttdapprove3;
     List<Detailjawaban>? detailjawaban;
     List<Detailapproval>? detailapproval;
 
@@ -82,6 +89,7 @@ class Data {
         this.idpermit,
         this.kodepermit,
         this.namaproject,
+        this.perusahaan,
         this.bagian,
         this.nomorijin,
         this.lainnyajenispekerjaan,
@@ -108,6 +116,12 @@ class Data {
         this.statuspenyelesaian,
         this.status,
         this.userbuat,
+        this.sudahapprove1,
+        this.sudahapprove2,
+        this.sudahapprove3,
+        this.ttdapprove1,
+        this.ttdapprove2,
+        this.ttdapprove3,
         this.detailjawaban,
         this.detailapproval,
     });
@@ -117,6 +131,7 @@ class Data {
         int? idpermit,
         String? kodepermit,
         String? namaproject,
+        String? perusahaan,
         String? bagian,
         String? nomorijin,
         dynamic lainnyajenispekerjaan,
@@ -143,6 +158,12 @@ class Data {
         dynamic statuspenyelesaian,
         String? status,
         String? userbuat,
+        int? sudahapprove1,
+        int? sudahapprove2,
+        int? sudahapprove3,
+        String? ttdapprove1,
+        String? ttdapprove2,
+        String? ttdapprove3,
         List<Detailjawaban>? detailjawaban,
         List<Detailapproval>? detailapproval,
     }) => 
@@ -151,6 +172,7 @@ class Data {
             idpermit: idpermit ?? this.idpermit,
             kodepermit: kodepermit ?? this.kodepermit,
             namaproject: namaproject ?? this.namaproject,
+            perusahaan: perusahaan ?? this.perusahaan,
             bagian: bagian ?? this.bagian,
             nomorijin: nomorijin ?? this.nomorijin,
             lainnyajenispekerjaan: lainnyajenispekerjaan ?? this.lainnyajenispekerjaan,
@@ -177,6 +199,12 @@ class Data {
             statuspenyelesaian: statuspenyelesaian ?? this.statuspenyelesaian,
             status: status ?? this.status,
             userbuat: userbuat ?? this.userbuat,
+            sudahapprove1: sudahapprove1 ?? this.sudahapprove1,
+            sudahapprove2: sudahapprove2 ?? this.sudahapprove2,
+            sudahapprove3: sudahapprove3 ?? this.sudahapprove3,
+            ttdapprove1: ttdapprove1 ?? this.ttdapprove1,
+            ttdapprove2: ttdapprove2 ?? this.ttdapprove2,
+            ttdapprove3: ttdapprove3 ?? this.ttdapprove3,
             detailjawaban: detailjawaban ?? this.detailjawaban,
             detailapproval: detailapproval ?? this.detailapproval,
         );
@@ -186,6 +214,7 @@ class Data {
         idpermit: json["idpermit"],
         kodepermit: json["kodepermit"],
         namaproject: json["namaproject"],
+        perusahaan: json["perusahaan"],
         bagian: json["bagian"],
         nomorijin: json["nomorijin"],
         lainnyajenispekerjaan: json["lainnyajenispekerjaan"],
@@ -212,6 +241,12 @@ class Data {
         statuspenyelesaian: json["statuspenyelesaian"],
         status: json["status"],
         userbuat: json["userbuat"],
+        sudahapprove1: json["sudahapprove1"],
+        sudahapprove2: json["sudahapprove2"],
+        sudahapprove3: json["sudahapprove3"],
+        ttdapprove1: json["ttdapprove1"],
+        ttdapprove2: json["ttdapprove2"],
+        ttdapprove3: json["ttdapprove3"],
         detailjawaban: json["detailjawaban"] == null ? [] : List<Detailjawaban>.from(json["detailjawaban"]!.map((x) => Detailjawaban.fromJson(x))),
         detailapproval: json["detailapproval"] == null ? [] : List<Detailapproval>.from(json["detailapproval"]!.map((x) => Detailapproval.fromJson(x))),
     );
@@ -221,6 +256,7 @@ class Data {
         "idpermit": idpermit,
         "kodepermit": kodepermit,
         "namaproject": namaproject,
+        "perusahaan": perusahaan,
         "bagian": bagian,
         "nomorijin": nomorijin,
         "lainnyajenispekerjaan": lainnyajenispekerjaan,
@@ -247,6 +283,12 @@ class Data {
         "statuspenyelesaian": statuspenyelesaian,
         "status": status,
         "userbuat": userbuat,
+        "sudahapprove1": sudahapprove1,
+        "sudahapprove2": sudahapprove2,
+        "sudahapprove3": sudahapprove3,
+        "ttdapprove1": ttdapprove1,
+        "ttdapprove2": ttdapprove2,
+        "ttdapprove3": ttdapprove3,
         "detailjawaban": detailjawaban == null ? [] : List<dynamic>.from(detailjawaban!.map((x) => x.toJson())),
         "detailapproval": detailapproval == null ? [] : List<dynamic>.from(detailapproval!.map((x) => x.toJson())),
     };

@@ -23,21 +23,6 @@ class SafetyBriefView extends GetView<SafetyBriefController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                Get.toNamed(
-                  Routes.SAFETY_BRIEF_FORM);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.yellow,
-                foregroundColor: Colors.black,
-                minimumSize: const Size(40, 40),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: const Text('Tambah'),
-            ),
             Expanded(
               child: controller.obx(
                 (data) => ListView.separated(

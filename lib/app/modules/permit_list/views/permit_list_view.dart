@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hsse2/app/modules/permit_list/controllers/permit_list_controller.dart';
 import 'package:hsse2/app/routes/app_pages.dart';
 import 'package:hsse2/app/widgets/global_app_bar.dart';
 import 'package:hsse2/utils/helpers/helpers.dart';
 import 'package:hsse2/utils/values/colors.dart';
+import 'package:hsse2/utils/values/get_storage_key.dart';
 
 class PermitListView extends GetView<PermitListController> {
-  var data = Get.arguments;
+  var arguments = Get.arguments;
 
   PermitListView({super.key});
   @override
   Widget build(BuildContext context) {
+    print(arguments['asal']);
+    controller.initList(arguments["idjenispermit"], arguments["asal"]);
     return Scaffold(
       appBar: GlobalAppBar(
-        pTitle: data['namapermit'],
+        pTitle: arguments['namapermit'],
         pBgColor: CustomColor.appBarColor,
       ),
       body: Padding(
@@ -24,26 +28,6 @@ class PermitListView extends GetView<PermitListController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                Get.toNamed(
-                  Routes.PERMIT_FORM,
-                  arguments: {
-                    'idjenispermit': data['idjenispermit'],
-                    'namapermit': data['namapermit'],
-                  },
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.yellow,
-                foregroundColor: Colors.black,
-                minimumSize: const Size(40, 40),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: const Text('Tambah'),
-            ),
             Expanded(
               child: controller.obx(
                 (data) => ListView.separated(
@@ -60,6 +44,7 @@ class PermitListView extends GetView<PermitListController> {
                       data[index].lokasi!,
                       data[index].kodepermit!,
                       data[index].deskripsi!,
+                      GetStorage().read(GetStorageKey.namarole) == 'SPV HSE' && data[index].siapselesai == 1
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {
@@ -83,6 +68,7 @@ class PermitListView extends GetView<PermitListController> {
     String jenisUnsafe,
     String perespon,
     String title,
+    bool siapselesai,
   ) {
     final isClosed = status != 'I';
 
@@ -113,14 +99,34 @@ class PermitListView extends GetView<PermitListController> {
                       arguments: {
                         "idpermit": idpermit,
                         "idjenispermit": idjenispermit,
-                        // "from": "buat",
+                        'asal': arguments["asal"],
+                        'action': 'approve',
+                      },
+                    );
+                  } else if (item == 2) {
+                    Get.toNamed(
+                      Routes.PERMIT_DETAIL,
+                      arguments: {
+                        "idpermit": idpermit,
+                        "idjenispermit": idjenispermit,
+                        'asal': arguments["asal"],
+                        'action': 'selesai',
                       },
                     );
                   }
                 },
                 itemBuilder:
-                    (context) => const [
-                      PopupMenuItem<int>(value: 1, child: Text('Detail')),
+                    (context) => [
+                      PopupMenuItem<int>(
+                        value: 1,
+                        child:
+                            arguments["asal"] == 'approve'
+                                ? Text('Approve')
+                                : Text('Detail'),
+                      ),
+                      if (siapselesai) ...[
+                        PopupMenuItem<int>(value: 2, child: Text('Selesaikan')),
+                      ],
                     ],
                 child: const Icon(Icons.more_vert),
               ),

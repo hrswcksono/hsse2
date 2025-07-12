@@ -10,7 +10,7 @@ import 'package:hsse2/app/widgets/dialog_alert.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PermitFormController extends GetxController {
-  var permitProvider = Get.find<PermitProvider>();
+  var permitProvider = Get.put(PermitProvider());
   var permitListCtl = Get.put(PermitListController());
   var arguments = Get.arguments;
   late TextEditingController kodePermitTF;
@@ -291,8 +291,6 @@ class PermitFormController extends GetxController {
       }
     }
 
-    print(datajawaban);
-
     try {
       permitProvider
           .submitPermit(
@@ -300,6 +298,7 @@ class PermitFormController extends GetxController {
             namaProjectTF.text,
             bagianTF.text,
             nomorIjinTF.text,
+            perusahaanTF.text,
             tanggalKerjaTF.text,
             jamTF.text,
             int.parse(jumlahPekerjaTF.text),
@@ -330,26 +329,5 @@ class PermitFormController extends GetxController {
       Get.back();
       DialogAlert.notif(e.toString(), "error");
     }
-  }
-
-  void checkStatusAman() {
-    if (o2TF.text != "" &&
-        coTF.text != "" &&
-        h2sTF.text != "" &&
-        lelTF.text != "") {
-      if (double.parse(o2TF.text) >= 19.5 &&
-          double.parse(o2TF.text) <= 23.5 &&
-          double.parse(coTF.text) < 25 &&
-          double.parse((h2sTF.text)) < 1 &&
-          double.parse(lelTF.text) < 10) {
-        statusAman = true;
-      } else {
-        statusAman = false;
-      }
-    } else {
-      statusAman = true;
-    }
-
-    update();
   }
 }

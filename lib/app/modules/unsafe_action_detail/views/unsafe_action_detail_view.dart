@@ -13,14 +13,14 @@ class UnsafeActionDetailView extends GetView<UnsafeActionDetailController> {
 
   var controller = Get.put(UnsafeActionDetailController());
 
-  var data = Get.arguments;
+  var arguments = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
-    controller.idJenisUnsafe = data['idjenisunsafe'];
-    controller.idUnsafe = data['idunsafe'];
+    controller.idJenisUnsafe = arguments['idjenisunsafe'];
+    controller.idUnsafe = arguments['idunsafe'];
     controller.getSoalUnsafe(controller.idJenisUnsafe);
-    controller.getDetailUnsafe(data['idunsafe']);
+    controller.getDetailUnsafe(arguments['idunsafe']);
     return Scaffold(
       appBar: GlobalAppBar(
         pTitle:
@@ -274,24 +274,25 @@ class UnsafeActionDetailView extends GetView<UnsafeActionDetailController> {
                 ),
 
                 const SizedBox(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Get.toNamed(
-                        Routes.UNSAFE_ACTION_APPROAL,
-                        arguments: {
-                          'idjenisunsafe': controller.idJenisUnsafe,
-                          'idunsafe': controller.idUnsafe,
-                        },
-                      );
-                    },
-                    child: Text(
-                      "Respon",
-                      style: GoogleFonts.inter(color: Colors.white),
+                if (arguments["asal"] == 'approve')
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Get.toNamed(
+                          Routes.UNSAFE_ACTION_APPROAL,
+                          arguments: {
+                            'idjenisunsafe': controller.idJenisUnsafe,
+                            'idunsafe': controller.idUnsafe,
+                          },
+                        );
+                      },
+                      child: Text(
+                        "Respon",
+                        style: GoogleFonts.inter(color: Colors.white),
+                      ),
                     ),
                   ),
-                ),
                 const SizedBox(height: 16),
               ],
             ),

@@ -72,45 +72,141 @@ class HomeView extends GetView<HomeController> {
                             mainAxisSpacing: 20,
                             crossAxisSpacing: 20,
                             children: [
-                              buttonMenu(
-                                "Safety Briefing",
-                                "assets/images/icon_sb.png",
-                                onTap: () => Get.toNamed(Routes.SAFETY_BRIEF),
-                              ),
-                              buttonMenu(
-                                "Safety Patrol",
-                                "assets/images/icon_sp.png",
-                                onTap: () => Get.toNamed(Routes.SAFETY_PATROL),
-                              ),
-                              buttonMenu(
-                                "Approval Safety Patrol",
-                                "assets/images/icon_sp.png",
-                                onTap:
-                                    () => Get.toNamed(
-                                      Routes.SAFETY_PATROL_APPROVAL,
-                                    ),
-                              ),
                               if (GetStorage().read(GetStorageKey.namarole) ==
-                                  'ADMIN HSE') ...[
+                                      'SPV HSE' ||
+                                  GetStorage().read(GetStorageKey.namarole) ==
+                                      'STAFF HSE')
                                 buttonMenu(
-                                  "List User",
-                                  "assets/images/engineer.png",
-                                  onTap: () => Get.toNamed(Routes.USER),
+                                  "Form Safety Briefing",
+                                  "assets/images/icon_form_sb.png",
+                                  onTap:
+                                      () =>
+                                          Get.toNamed(Routes.SAFETY_BRIEF_FORM),
                                 ),
-                              ],
-                              buttonMenu(
-                                "List Work Permit",
-                                "assets/images/engineer.png",
-                                onTap: () => Get.toNamed(Routes.PERMIT),
-                              ),
-                              buttonMenu(
-                                "Approval Work Permit",
-                                "assets/images/engineer.png",
-                              ),
-                              buttonMenu(
-                                "Laporan Aktivitas Harian",
-                                "assets/images/engineer.png",
-                              ),
+                              if (GetStorage().read(GetStorageKey.namarole) ==
+                                      'SPV HSE' ||
+                                  GetStorage().read(GetStorageKey.namarole) ==
+                                      'STAFF HSE')
+                                buttonMenu(
+                                  "Safety Briefing",
+                                  "assets/images/icon_sb.png",
+                                  onTap: () => Get.toNamed(Routes.SAFETY_BRIEF),
+                                ),
+                              if (GetStorage().read(GetStorageKey.namarole) ==
+                                      'SPV HSE' ||
+                                  GetStorage().read(GetStorageKey.namarole) ==
+                                      'STAFF HSE')
+                                buttonMenu(
+                                  "Form Safety Patrol",
+                                  "assets/images/icon_form_sp.png",
+                                  onTap:
+                                      () => Get.toNamed(
+                                        Routes.SAFETY_PATROL,
+                                        arguments: {"asal": "form"},
+                                      ),
+                                ),
+                              if (GetStorage().read(GetStorageKey.namarole) ==
+                                      'SPV HSE' ||
+                                  GetStorage().read(GetStorageKey.namarole) ==
+                                      'STAFF HSE')
+                                buttonMenu(
+                                  "Safety Patrol",
+                                  "assets/images/icon_sp.png",
+                                  onTap:
+                                      () => Get.toNamed(
+                                        Routes.SAFETY_PATROL,
+                                        arguments: {"asal": "list"},
+                                      ),
+                                ),
+                              if (GetStorage().read(GetStorageKey.namarole) ==
+                                  'SPV HSE')
+                                buttonMenu(
+                                  "Approval Safety Patrol",
+                                  "assets/images/icon_sp.png",
+                                  onTap:
+                                      () => Get.toNamed(
+                                        Routes.SAFETY_PATROL,
+                                        arguments: {"asal": "approve"},
+                                      ),
+                                ),
+                              if (GetStorage().read(GetStorageKey.namarole) ==
+                                      'SPV HSE' ||
+                                  GetStorage().read(GetStorageKey.namarole) ==
+                                      'STAFF HSE' ||
+                                  GetStorage().read(GetStorageKey.namarole) ==
+                                      'PEKERJA / SUB KONTRAKTOR')
+                                buttonMenu(
+                                  "Formulir Work Permit",
+                                  "assets/images/icon_form_work_permit.png",
+                                  onTap:
+                                      () => Get.toNamed(
+                                        Routes.PERMIT,
+                                        arguments: {"asal": "form"},
+                                      ),
+                                ),
+                              if (GetStorage().read(GetStorageKey.namarole) ==
+                                      'SPV AREA' ||
+                                  GetStorage().read(GetStorageKey.namarole) ==
+                                      'SPV HSE' ||
+                                  GetStorage().read(GetStorageKey.namarole) ==
+                                      'STAFF HSE' ||
+                                  GetStorage().read(GetStorageKey.namarole) ==
+                                      'MANAJER' ||
+                                  GetStorage().read(GetStorageKey.namarole) ==
+                                      'PEKERJA / SUB KONTRAKTOR')
+                                buttonMenu(
+                                  "List Work Permit",
+                                  "assets/images/icon_list_work_permit.png",
+                                  onTap:
+                                      () => Get.toNamed(
+                                        Routes.PERMIT,
+                                        arguments: {"asal": "list"},
+                                      ),
+                                ),
+                              if (GetStorage().read(GetStorageKey.namarole) ==
+                                      'SPV AREA' ||
+                                  GetStorage().read(GetStorageKey.namarole) ==
+                                      'SPV HSE' ||
+                                  GetStorage().read(GetStorageKey.namarole) ==
+                                      'MANAJER')
+                                buttonMenu(
+                                  "Approval Work Permit",
+                                  "assets/images/icon_list_approve_wp.png",
+                                  onTap:
+                                      () => Get.toNamed(
+                                        Routes.PERMIT,
+                                        arguments: {"asal": "approve"},
+                                      ),
+                                ),
+                              if (GetStorage().read(GetStorageKey.namarole) == 'ADMIN HSE')
+                                buttonMenu(
+                                  "Work Permit",
+                                  "assets/images/engineer.png",
+                                  onTap: () => Get.toNamed(Routes.PERMIT),
+                                ),
+                              if (GetStorage().read(GetStorageKey.namarole) == 'ADMIN HSE')
+                                buttonMenu(
+                                  "Safety Briefing",
+                                  "assets/images/icon_sb.png",
+                                  onTap: () => Get.toNamed(Routes.SAFETY_BRIEF),
+                                ),
+                              if (GetStorage().read(GetStorageKey.namarole) == 'ADMIN HSE')
+                                buttonMenu(
+                                  "Safety Patrol",
+                                  "assets/images/icon_sp.png",
+                                  onTap: () => Get.toNamed(Routes.SAFETY_PATROL),
+                                ),
+                              if (GetStorage().read(GetStorageKey.namarole) ==
+                                      'ADMIN HSE' ||
+                                  GetStorage().read(GetStorageKey.namarole) ==
+                                      'SPV HSE' ||
+                                  GetStorage().read(GetStorageKey.namarole) ==
+                                      'STAFF HSE')
+                                buttonMenu(
+                                  "Laporan Aktivitas Harian",
+                                  "assets/images/icon_lah.png",
+                                  onTap: () => Get.toNamed(Routes.LAPORAN_AH),
+                                ),
                             ],
                           ),
                         ),
@@ -126,42 +222,99 @@ class HomeView extends GetView<HomeController> {
           Obx(() {
             if (!controller.isPopupVisible.value)
               return const SizedBox.shrink();
-            return Positioned(
-              top: 80,
-              left: 20,
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 180),
-                child: Material(
-                  elevation: 6,
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.purple[50],
-                  child: IntrinsicWidth(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ListTile(
-                          leading: const Icon(Icons.person),
-                          title: const Text('Ubah Profile'),
-                          onTap: () {
-                            controller.hidePopup();
-                            Get.toNamed(Routes.PROFILE);
-                          },
-                        ),
-                        ListTile(
-                          leading: const Icon(Icons.logout),
-                          title: const Text('Logout'),
-                          onTap: () {
-                            controller.hidePopup();
-                            GetStorage().erase();
-                            Get.offAllNamed(Routes.LOGIN);
-                          },
-                        ),
-                      ],
+
+            return Stack(
+              children: [
+                // ✅ Layer transparan untuk menutup popup saat klik di luar
+                Positioned.fill(
+                  child: GestureDetector(
+                    onTap: () => controller.hidePopup(),
+                    child: Container(color: Colors.transparent),
+                  ),
+                ),
+
+                // ✅ Popup tombol melayang
+                Positioned(
+                  top: 40,
+                  left: 0,
+                  child: Material(
+                    elevation: 6,
+                    borderRadius: BorderRadius.circular(50),
+                    color: Colors.purple[50],
+                    child: Container(
+                      width: 70,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              controller.hidePopup();
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.only(bottom: 12),
+                              child: Icon(Icons.menu, size: 24),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              controller.hidePopup();
+                              Get.toNamed(Routes.PROFILE);
+                            },
+                            child: Column(
+                              children: const [
+                                Icon(Icons.person, size: 20),
+                                SizedBox(height: 4),
+                                Text(
+                                  'Ubah Profile',
+                                  style: TextStyle(fontSize: 10),
+                                ),
+                                SizedBox(height: 12),
+                              ],
+                            ),
+                          ),
+                          if (GetStorage().read(GetStorageKey.namarole) ==
+                              'ADMIN HSE')
+                            InkWell(
+                              onTap: () {
+                                controller.hidePopup();
+                                Get.toNamed(Routes.USER);
+                              },
+                              child: Column(
+                                children: const [
+                                  Icon(Icons.people, size: 20),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    'Manage Akun',
+                                    style: TextStyle(fontSize: 10),
+                                  ),
+                                  SizedBox(height: 12),
+                                ],
+                              ),
+                            ),
+                          InkWell(
+                            onTap: () {
+                              controller.hidePopup();
+                              GetStorage().erase();
+                              Get.offAllNamed(Routes.LOGIN);
+                            },
+                            child: Column(
+                              children: const [
+                                Icon(Icons.logout, size: 20),
+                                SizedBox(height: 4),
+                                Text('Logout', style: TextStyle(fontSize: 10)),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
             );
           }),
         ],

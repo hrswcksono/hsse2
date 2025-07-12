@@ -26,18 +26,6 @@ class LoginController extends GetxController {
     passwordTF = TextEditingController();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-    usernameTF = TextEditingController();
-    passwordTF = TextEditingController();
-  }
-
   void submitLogin() {
     if (usernameTF.text == "") {
       DialogAlert.notif("Username Belum Diisi", "warning");

@@ -11,12 +11,12 @@ import '../controllers/unsafe_action_controller.dart';
 class UnsafeActionView extends GetView<UnsafeActionController> {
   var controller = Get.put(UnsafeActionController());
 
-  var data = Get.arguments;
+  var arguments = Get.arguments;
 
   UnsafeActionView({super.key});
   @override
   Widget build(BuildContext context) {
-    controller.idjenisunsafe = data['idjenisunsafe'];
+    controller.idjenisunsafe = arguments['idjenisunsafe'];
     controller.getListUnsafe(controller.idjenisunsafe);
     return Scaffold(
       appBar: GlobalAppBar(
@@ -31,23 +31,6 @@ class UnsafeActionView extends GetView<UnsafeActionController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                Get.toNamed(
-                  Routes.UNSAFE_ACTION_FORM,
-                  arguments: {'idjenisunsafe': controller.idjenisunsafe},
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.yellow,
-                foregroundColor: Colors.black,
-                minimumSize: const Size(40, 40),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: const Text('Tambah'),
-            ),
             Expanded(
               child: controller.obx(
                 (data) => ListView.separated(
@@ -113,24 +96,19 @@ class UnsafeActionView extends GetView<UnsafeActionController> {
                 color: Colors.white,
                 onSelected: (int item) {
                   if (item == 1) {
-                    print({
-                      "idunsafe": idunsafe.toString(),
-                      "idjenisunsafe": idjenisunsafe.toString(),
-                      "from": "buat",
-                    });
                     Get.toNamed(
                       Routes.UNSAFE_ACTION_DETAIL,
                       arguments: {
                         "idunsafe": idunsafe,
                         "idjenisunsafe": idjenisunsafe,
-                        "from": "buat",
+                        'asal': arguments["asal"],
                       },
                     );
                   }
                 },
                 itemBuilder:
-                    (context) => const [
-                      PopupMenuItem<int>(value: 1, child: Text('Detail')),
+                    (context) => [
+                      PopupMenuItem<int>(value: 1, child: arguments["asal"] == 'approve' ? Text('Approve') : Text('Detail')),
                     ],
                 child: const Icon(Icons.more_vert),
               ),

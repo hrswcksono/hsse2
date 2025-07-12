@@ -8,7 +8,9 @@ import '../../../routes/app_pages.dart';
 import '../../../widgets/global_widget.dart';
 
 class PermitView extends GetView<PermitController> {
-  const PermitView({super.key});
+  PermitView({super.key});
+
+  var arguments = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +23,18 @@ class PermitView extends GetView<PermitController> {
               children: [
                 // Header
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 16,
+                  ),
                   child: Row(
                     children: [
                       GestureDetector(
                         onTap: () => Get.back(),
-                        child: const Icon(Icons.arrow_back, color: Colors.black),
+                        child: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.black,
+                        ),
                       ),
                       const SizedBox(width: 10),
                       Expanded(
@@ -72,41 +80,93 @@ class PermitView extends GetView<PermitController> {
 
                           // Tombol 1
                           Center(
-                            child: buttonMenu(
-                              "Hot Permit",
-                              "assets/images/engineer.png", // ganti dengan ikon sesuai desain
+                            child: buttonMenuWorkPermit(
+                              "Hot Work Permit",
+                              "assets/images/icon_hot_work_permit.png", // ganti dengan ikon sesuai desain
                               onTap: () {
-                                Get.toNamed(Routes.PERMIT_LIST, arguments: {'idjenispermit': 2, 'namapermit': 'Hot Permit'});
+                                if (arguments["asal"] == 'list' ||
+                                    arguments["asal"] == 'approve') {
+                                  Get.toNamed(
+                                    Routes.PERMIT_LIST,
+                                    arguments: {
+                                      'idjenispermit': 2,
+                                      'namapermit': 'Hot Work Permit',
+                                      'asal': arguments["asal"],
+                                    },
+                                  );
+                                } else if (arguments["asal"] == 'form') {
+                                  Get.toNamed(
+                                    Routes.PERMIT_FORM,
+                                    arguments: {
+                                      'idjenispermit': 2,
+                                      'namapermit': 'Hot Work Permit',
+                                    },
+                                  );
+                                }
                               },
-                              size: 180,
                             ),
                           ),
 
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 10),
 
                           // Tombol 2
                           Center(
-                            child: buttonMenu(
-                              "Safe Permit",
-                              "assets/images/engineer.png",
+                            child: buttonMenuWorkPermit(
+                              "Safe Work Permit",
+                              "assets/images/icon_safe_work_permit.png",
                               onTap: () {
-                                Get.toNamed(Routes.PERMIT_LIST, arguments: {'idjenispermit': 1, 'namapermit': 'Safe Permit'});
+                                if (arguments["asal"] == 'list' ||
+                                    arguments["asal"] == 'approve') {
+                                  Get.toNamed(
+                                    Routes.PERMIT_LIST,
+                                    arguments: {
+                                      'idjenispermit': 1,
+                                      'namapermit': 'Safe Work Permit',
+                                      'asal': arguments["asal"],
+                                    },
+                                  );
+                                } else if (arguments["asal"] == 'form') {
+                                  Get.toNamed(
+                                    Routes.PERMIT_FORM,
+                                    arguments: {
+                                      'idjenispermit': 1,
+                                      'namapermit': 'Safe Work Permit',
+                                    },
+                                  );
+                                }
                               },
-                              size: 180,
                             ),
                           ),
 
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 10),
 
                           // Tombol 2
                           Center(
-                            child: buttonMenu(
+                            child: buttonMenuWorkPermit(
                               "Confined Space Permit",
-                              "assets/images/engineer.png",
+                              "assets/images/icon_confined_space_permit.png",
                               onTap: () {
-                                Get.toNamed(Routes.PERMIT_LIST, arguments: {'idjenispermit': 3, 'namapermit': 'Confined Space Permit'});
+                                print(arguments["asal"]);
+                                if (arguments["asal"] == 'list' ||
+                                    arguments["asal"] == 'approve') {
+                                  Get.toNamed(
+                                    Routes.PERMIT_LIST,
+                                    arguments: {
+                                      'idjenispermit': 3,
+                                      'namapermit': 'Confined Space Permit',
+                                      'asal': arguments["asal"],
+                                    },
+                                  );
+                                } else if (arguments["asal"] == 'form') {
+                                  Get.toNamed(
+                                    Routes.PERMIT_FORM,
+                                    arguments: {
+                                      'idjenispermit': 3,
+                                      'namapermit': 'Confined Space Permit',
+                                    },
+                                  );
+                                }
                               },
-                              size: 180,
                             ),
                           ),
                         ],

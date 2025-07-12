@@ -8,7 +8,9 @@ import '../../../widgets/global_widget.dart';
 import '../controllers/safety_patrol_controller.dart';
 
 class SafetyPatrolView extends GetView<SafetyPatrolController> {
-  const SafetyPatrolView({super.key});
+  SafetyPatrolView({super.key});
+
+  var arguments = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +23,18 @@ class SafetyPatrolView extends GetView<SafetyPatrolController> {
               children: [
                 // Header
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 16,
+                  ),
                   child: Row(
                     children: [
                       GestureDetector(
                         onTap: () => Get.back(),
-                        child: const Icon(Icons.arrow_back, color: Colors.black),
+                        child: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.black,
+                        ),
                       ),
                       const SizedBox(width: 10),
                       Expanded(
@@ -74,9 +82,24 @@ class SafetyPatrolView extends GetView<SafetyPatrolController> {
                           Center(
                             child: buttonMenu(
                               "Unsafe Action",
-                              "assets/images/engineer.png", // ganti dengan ikon sesuai desain
+                              "assets/images/icon_unsafe_action.png", // ganti dengan ikon sesuai desain
                               onTap: () {
-                                Get.toNamed(Routes.UNSAFE_ACTION, arguments: {'idjenisunsafe': 1});
+                                // print('test data');
+                                if (arguments["asal"] == 'list' ||
+                                    arguments["asal"] == 'approve') {
+                                  Get.toNamed(
+                                    Routes.UNSAFE_ACTION,
+                                    arguments: {
+                                      'idjenisunsafe': 1,
+                                      'asal': arguments["asal"],
+                                    },
+                                  );
+                                } else {
+                                  Get.toNamed(
+                                    Routes.UNSAFE_ACTION_FORM,
+                                    arguments: {'idjenisunsafe': 1},
+                                  );
+                                }
                               },
                               size: 180,
                             ),
@@ -88,9 +111,23 @@ class SafetyPatrolView extends GetView<SafetyPatrolController> {
                           Center(
                             child: buttonMenu(
                               "Unsafe Condition",
-                              "assets/images/engineer.png",
+                              "assets/images/icon_unsafe_condition.png",
                               onTap: () {
-                                Get.toNamed(Routes.UNSAFE_ACTION, arguments: {'idjenisunsafe': 2});
+                                if (arguments["asal"] == 'list' ||
+                                    arguments["asal"] == 'approve') {
+                                  Get.toNamed(
+                                    Routes.UNSAFE_ACTION,
+                                    arguments: {
+                                      'idjenisunsafe': 2,
+                                      'asal': arguments["asal"],
+                                    },
+                                  );
+                                } else {
+                                  Get.toNamed(
+                                    Routes.UNSAFE_ACTION_FORM,
+                                    arguments: {'idjenisunsafe': 2},
+                                  );
+                                }
                               },
                               size: 180,
                             ),

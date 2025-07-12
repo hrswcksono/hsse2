@@ -887,34 +887,4 @@ class PermitFormView extends GetView<PermitFormController> {
 
     return Column(children: groupWidgets);
   }
-
-  Widget buildCheckbox(String text, RxBool value) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Obx(
-        () => CheckboxListTile(
-          value: value.value,
-          onChanged: (val) => value.value = val ?? false,
-          title: Text(text, style: GoogleFonts.poppins(fontSize: 12)),
-          controlAffinity: ListTileControlAffinity.leading,
-          dense: true,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 8,
-            vertical: 1,
-          ),
-          visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          tileColor: Colors.grey.shade100,
-          selectedTileColor: Colors.teal.shade50,
-          activeColor: Colors.teal,
-          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        ),
-      ),
-    );
-  }
 }

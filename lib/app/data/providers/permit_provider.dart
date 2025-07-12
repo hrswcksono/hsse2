@@ -10,7 +10,7 @@ import 'package:hsse2/app/data/providers/base_provider.dart';
 class PermitProvider extends BaseProvider {
   Future<DetailPermitResponse> getDetailPermit(int idpermit) async {
     var response = await post('permit/detail', {"idpermit": idpermit});
-
+    print(response.body);
     if (!response.body['success']) {
       return Future.error(response.body["message"]);
     } else {
@@ -19,10 +19,19 @@ class PermitProvider extends BaseProvider {
   }
   
   Future<PermitResponse> getListPermit(int idjenispermit) async {
-    print("panggil");
     var form = {'idjenispermit': idjenispermit};
     var response = await post('permit/list', form);
 
+    if (!response.body['success']) {
+      return Future.error(response.body["message"]);
+    } else {
+      return permitResponseFromJson(response.bodyString.toString());
+    }
+  }
+
+  Future<PermitResponse> getListPermitApprove(int idjenispermit) async {
+    var form = {'idjenispermit': idjenispermit};
+    var response = await post('permit/listapprove', form);
     if (!response.body['success']) {
       return Future.error(response.body["message"]);
     } else {
@@ -57,6 +66,7 @@ class PermitProvider extends BaseProvider {
     String namaproject,
     String bagian,
     String nomorijin,
+    String perusahaan,
     String tgltrans,
     String jam,
     int jumlahpekerja,
@@ -73,12 +83,12 @@ class PermitProvider extends BaseProvider {
     String datajawaban,
     File ttdbuat,
   ) async {
-    print('test data');
     final form = FormData({
       "kodepermit": kodepermit,
       "namaproject": namaproject,
       "bagian": bagian,
       "nomorijin": nomorijin,
+      "perusahaan": perusahaan,
       "tgltrans": tgltrans,
       "jam": jam,
       "jumlahpekerja": jumlahpekerja,
@@ -122,6 +132,22 @@ class PermitProvider extends BaseProvider {
     });
 
     var response = await post('permit/approve', form);
+
+    if (!response.body['success']) {
+      return Future.error(response.body["message"]);
+    } else {
+      return response.body["message"];
+    }
+  }
+
+  Future<String> donePermit(int idpermit, File ttdpenyelesaian, int statuspenyelesaian) async {
+    var form = FormData({
+      "idpermit": idpermit,
+      "statuspenyelesaian": statuspenyelesaian,
+      "ttd": MultipartFile(ttdpenyelesaian, filename: ttdpenyelesaian.path.split('/').last),
+    });
+
+    var response = await post('permit/done', form);
 
     if (!response.body['success']) {
       return Future.error(response.body["message"]);

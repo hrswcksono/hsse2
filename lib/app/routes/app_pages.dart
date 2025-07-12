@@ -11,6 +11,8 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/permit/bindings/permit_binding.dart';
 import '../modules/permit/views/permit_view.dart';
+import '../modules/permit_approve/bindings/permit_approve_binding.dart';
+import '../modules/permit_approve/views/permit_approve_view.dart';
 import '../modules/permit_detail/bindings/permit_detail_binding.dart';
 import '../modules/permit_detail/views/permit_detail_view.dart';
 import '../modules/permit_form/bindings/permit_form_binding.dart';
@@ -19,12 +21,20 @@ import '../modules/permit_jenis/bindings/permit_jenis_binding.dart';
 import '../modules/permit_jenis/views/permit_jenis_view.dart';
 import '../modules/permit_list/bindings/permit_list_binding.dart';
 import '../modules/permit_list/views/permit_list_view.dart';
+import '../modules/permit_selesai/bindings/permit_selesai_binding.dart';
+import '../modules/permit_selesai/views/permit_selesai_view.dart';
 import '../modules/permit_soal/bindings/permit_soal_binding.dart';
 import '../modules/permit_soal/views/permit_soal_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
+import '../modules/rekap_permit/bindings/rekap_permit_binding.dart';
+import '../modules/rekap_permit/views/rekap_permit_view.dart';
+import '../modules/rekap_sb/bindings/rekap_sb_binding.dart';
+import '../modules/rekap_sb/views/rekap_sb_view.dart';
+import '../modules/rekap_sp/bindings/rekap_sp_binding.dart';
+import '../modules/rekap_sp/views/rekap_sp_view.dart';
 import '../modules/safety_brief/bindings/safety_brief_binding.dart';
 import '../modules/safety_brief/views/safety_brief_view.dart';
 import '../modules/safety_brief_detail/bindings/safety_brief_detail_binding.dart';
@@ -126,7 +136,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SAFETY_PATROL,
-      page: () => const SafetyPatrolView(),
+      page: () => SafetyPatrolView(),
       binding: SafetyPatrolBinding(),
     ),
     GetPage(
@@ -151,7 +161,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PERMIT,
-      page: () => const PermitView(),
+      page: () => PermitView(),
       binding: PermitBinding(),
     ),
     GetPage(
@@ -171,13 +181,38 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PERMIT_DETAIL,
-      page: () => const PermitDetailView(),
+      page: () => PermitDetailView(),
       binding: PermitDetailBinding(),
     ),
     GetPage(
       name: _Paths.PERMIT_FORM,
       page: () => PermitFormView(),
       binding: PermitFormBinding(),
+    ),
+    GetPage(
+      name: _Paths.PERMIT_APPROVE,
+      page: () => PermitApproveView(),
+      binding: PermitApproveBinding(),
+    ),
+    GetPage(
+      name: _Paths.PERMIT_SELESAI,
+      page: () => PermitSelesaiView(),
+      binding: PermitSelesaiBinding(),
+    ),
+    GetPage(
+      name: _Paths.REKAP_SB,
+      page: () => const RekapSbView(),
+      binding: RekapSbBinding(),
+    ),
+    GetPage(
+      name: _Paths.REKAP_SP,
+      page: () => const RekapSpView(),
+      binding: RekapSpBinding(),
+    ),
+    GetPage(
+      name: _Paths.REKAP_PERMIT,
+      page: () => const RekapPermitView(),
+      binding: RekapPermitBinding(),
     ),
   ];
 }
