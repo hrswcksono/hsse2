@@ -11,8 +11,6 @@ import 'package:hsse2/utils/values/colors.dart';
 class UnsafeActionDetailView extends GetView<UnsafeActionDetailController> {
   UnsafeActionDetailView({super.key});
 
-  var controller = Get.put(UnsafeActionDetailController());
-
   var arguments = Get.arguments;
 
   @override
@@ -274,7 +272,8 @@ class UnsafeActionDetailView extends GetView<UnsafeActionDetailController> {
                 ),
 
                 const SizedBox(height: 20),
-                if (arguments["asal"] == 'approve')
+                if (arguments["asal"] == 'approve' ||
+                    controller.tglrespon != null)
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -282,13 +281,19 @@ class UnsafeActionDetailView extends GetView<UnsafeActionDetailController> {
                         Get.toNamed(
                           Routes.UNSAFE_ACTION_APPROAL,
                           arguments: {
-                            'idjenisunsafe': controller.idJenisUnsafe,
-                            'idunsafe': controller.idUnsafe,
+                            'idjenisunsafe'   : controller.idJenisUnsafe,
+                            'idunsafe'        : controller.idUnsafe,
+                            'konfirmasitemuan': controller.konfirmasitemuan,
+                            'penanggungjawab' : controller.penanggungjawab,
+                            'statuspengerjaan': controller.statuspengerjaan,
+                            'catatantambahan' : controller.catatantambahan,
+                            'tglrespon'       : controller.tglrespon,
+                            'asal'            : arguments["asal"]
                           },
                         );
                       },
                       child: Text(
-                        "Respon",
+                        controller.tglrespon != null ? "Detail" : "Respon",
                         style: GoogleFonts.inter(color: Colors.white),
                       ),
                     ),

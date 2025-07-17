@@ -6,9 +6,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hsse2/app/modules/permit_list/controllers/permit_list_controller.dart';
 import 'package:hsse2/app/routes/app_pages.dart';
 import 'package:hsse2/app/widgets/global_app_bar.dart';
+import 'package:hsse2/utils/helpers/function.dart';
 import 'package:hsse2/utils/helpers/helpers.dart';
 import 'package:hsse2/utils/values/colors.dart';
 import 'package:hsse2/utils/values/get_storage_key.dart';
+import 'package:hsse2/utils/values/string_const.dart';
 
 class PermitListView extends GetView<PermitListController> {
   var arguments = Get.arguments;
@@ -44,7 +46,9 @@ class PermitListView extends GetView<PermitListController> {
                       data[index].lokasi!,
                       data[index].kodepermit!,
                       data[index].deskripsi!,
-                      GetStorage().read(GetStorageKey.namarole) == 'SPV HSE' && data[index].siapselesai == 1
+                      data[index].sudahapprove == 1,
+                      GetStorage().read(GetStorageKey.namarole) == 'SPV HSE' &&
+                          data[index].siapselesai == 1,
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {
@@ -68,6 +72,7 @@ class PermitListView extends GetView<PermitListController> {
     String jenisUnsafe,
     String perespon,
     String title,
+    bool sudahapprove,
     bool siapselesai,
   ) {
     final isClosed = status != 'I';
@@ -113,6 +118,8 @@ class PermitListView extends GetView<PermitListController> {
                         'action': 'selesai',
                       },
                     );
+                  } else if (item == 3) {
+                    downloadFile("${StringConst.baseUrl}permit/cetak/$idpermit", "$title.pdf");
                   }
                 },
                 itemBuilder:
@@ -127,6 +134,7 @@ class PermitListView extends GetView<PermitListController> {
                       if (siapselesai) ...[
                         PopupMenuItem<int>(value: 2, child: Text('Selesaikan')),
                       ],
+                      PopupMenuItem<int>(value: 3, child: Text('Cetak')),
                     ],
                 child: const Icon(Icons.more_vert),
               ),

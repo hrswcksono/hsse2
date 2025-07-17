@@ -55,8 +55,15 @@ class PermitSelesaiView extends GetView<PermitSelesaiController> {
             ),
             SizedBox(height: 10),
             Obx(() {
+              final isEditable =
+                  GetStorage().read(GetStorageKey.namarole) == 'MANAJER' &&
+                  arguments['sudahapprove3'] == 0;
+
+              final localFile = controller.imageFile.value;
+              final ttdUrl = arguments['ttdpenyelesaian'];
+
               return GestureDetector(
-                onTap: controller.pickImage,
+                onTap: isEditable ? controller.pickImage : null,
                 child: Container(
                   width: double.infinity,
                   height: 160,
@@ -66,14 +73,29 @@ class PermitSelesaiView extends GetView<PermitSelesaiController> {
                     border: Border.all(color: Colors.grey.shade400),
                   ),
                   child:
-                      controller.imageFile.value != null
+                      localFile != null
                           ? ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: Image.file(
-                              controller.imageFile.value!,
+                              localFile,
                               width: double.infinity,
                               height: 160,
                               fit: BoxFit.cover,
+                            ),
+                          )
+                          : (ttdUrl != null && ttdUrl.toString().isNotEmpty)
+                          ? ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.network(
+                              ttdUrl,
+                              width: double.infinity,
+                              height: 160,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Center(
+                                  child: Text("Gagal memuat gambar TTD"),
+                                );
+                              },
                             ),
                           )
                           : const Center(
@@ -87,7 +109,7 @@ class PermitSelesaiView extends GetView<PermitSelesaiController> {
                                 ),
                                 SizedBox(height: 8),
                                 Text(
-                                  "Upload atau Ambil Foto",
+                                  "Upload atau Ambil TTD",
                                   style: TextStyle(color: Colors.grey),
                                 ),
                               ],
@@ -129,14 +151,14 @@ class PermitSelesaiView extends GetView<PermitSelesaiController> {
               ],
             ),
             SizedBox(height: 10),
-            globalButton(
-              "Permit Selesai",
-              // isEnabled: controller.isApprovedEnabled.value,
-              onPressed: () {
-                print("test");
-                controller.donePermit();
-              },
-            ),
+            if (arguments['statuspenyelesaian'] == null)
+              globalButton(
+                "Permit Selesai",
+                // isEnabled: controller.isApprovedEnabled.value,
+                onPressed: () {
+                  controller.donePermit();
+                },
+              ),
           ],
         ),
       ),

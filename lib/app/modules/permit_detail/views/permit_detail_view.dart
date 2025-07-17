@@ -88,6 +88,8 @@ class PermitDetailView extends GetView<PermitDetailController> {
                       final isBahaya = jenis.contains("bahaya");
                       final isTahap3 = jenis.contains("pelindung");
 
+                      print(pctx.listjawaban);
+
                       return AnimatedContainer(
                         duration: const Duration(milliseconds: 300),
                         padding: const EdgeInsets.symmetric(
@@ -136,6 +138,27 @@ class PermitDetailView extends GetView<PermitDetailController> {
                                       final soal = entry.value;
 
                                       if (isBahaya) {
+                                        // Pastikan data tersedia
+                                        if (index >=
+                                                controller.listjawaban.length ||
+                                            idx >=
+                                                controller
+                                                    .listjawaban[index]
+                                                    .length) {
+                                          return const SizedBox();
+                                        }
+
+                                        // Ambil data bahaya dari listjawaban
+                                        final rawData =
+                                            controller.listjawaban[index][idx];
+                                        final List<Map<String, dynamic>>
+                                        listBahaya =
+                                            rawData is List
+                                                ? List<
+                                                  Map<String, dynamic>
+                                                >.from(rawData)
+                                                : [];
+
                                         return Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -147,7 +170,7 @@ class PermitDetailView extends GetView<PermitDetailController> {
                                               ),
                                             ),
                                             const SizedBox(height: 4),
-                                            ...controller.listjawaban[index][idx].asMap().entries.map((
+                                            ...listBahaya.asMap().entries.map((
                                               e,
                                             ) {
                                               final itemIdx = e.key;
@@ -162,29 +185,14 @@ class PermitDetailView extends GetView<PermitDetailController> {
                                                     // input jam
                                                     Expanded(
                                                       child: TextField(
-                                                        readOnly: true,
+                                                        readOnly:
+                                                            true, // ✅ readonly
                                                         controller:
                                                             TextEditingController(
                                                               text:
                                                                   item["jam"] ??
                                                                   "",
                                                             ),
-                                                        onTap: () async {
-                                                          final picked =
-                                                              await showTimePicker(
-                                                                context:
-                                                                    context,
-                                                                initialTime:
-                                                                    TimeOfDay.now(),
-                                                              );
-                                                          if (picked != null) {
-                                                            item["jam"] = picked
-                                                                .format(
-                                                                  context,
-                                                                );
-                                                            controller.update();
-                                                          }
-                                                        },
                                                         decoration: InputDecoration(
                                                           hintText: "Jam",
                                                           isDense: true,
@@ -195,10 +203,13 @@ class PermitDetailView extends GetView<PermitDetailController> {
                                                               ),
                                                           filled: true,
                                                           fillColor:
-                                                              Colors.white,
+                                                              Colors
+                                                                  .grey
+                                                                  .shade100,
                                                           suffixIcon: const Icon(
                                                             Icons.access_time,
                                                             size: 18,
+                                                            color: Colors.grey,
                                                           ),
                                                           suffixIconConstraints:
                                                               const BoxConstraints(
@@ -222,22 +233,20 @@ class PermitDetailView extends GetView<PermitDetailController> {
                                                     // input aktual
                                                     Expanded(
                                                       child: TextField(
+                                                        readOnly:
+                                                            true, // ✅ readonly
                                                         keyboardType:
                                                             TextInputType
-                                                                .number, // ✅ hanya angka
+                                                                .number,
                                                         textAlign:
-                                                            TextAlign
-                                                                .right, // ✅ rata kanan
+                                                            TextAlign.right,
                                                         controller:
                                                             TextEditingController(
                                                               text:
-                                                                  item["keterangan"] ??
+                                                                  item["jml"]
+                                                                      .toString() ??
                                                                   "",
                                                             ),
-                                                        onChanged: (val) {
-                                                          item["keterangan"] =
-                                                              val;
-                                                        },
                                                         decoration: InputDecoration(
                                                           hintText: "Aktual",
                                                           isDense: true,
@@ -248,7 +257,9 @@ class PermitDetailView extends GetView<PermitDetailController> {
                                                               ),
                                                           filled: true,
                                                           fillColor:
-                                                              Colors.white,
+                                                              Colors
+                                                                  .grey
+                                                                  .shade100,
                                                           border: OutlineInputBorder(
                                                             borderRadius:
                                                                 BorderRadius.circular(
@@ -263,73 +274,34 @@ class PermitDetailView extends GetView<PermitDetailController> {
                                                     ),
                                                     const SizedBox(width: 6),
 
-                                                    // tombol hapus
+                                                    // tombol hapus dan tambah (disabled)
                                                     Row(
                                                       mainAxisSize:
                                                           MainAxisSize.min,
                                                       children: [
-                                                        InkWell(
-                                                          onTap:
-                                                              controller
-                                                                          .listjawaban[index][idx]
-                                                                          .length >
-                                                                      1
-                                                                  ? () {
-                                                                    controller
-                                                                        .listjawaban[index][idx]
-                                                                        .removeAt(
-                                                                          itemIdx,
-                                                                        );
-                                                                    controller
-                                                                        .update();
-                                                                  }
-                                                                  : null,
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                4,
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets.all(
+                                                                2.0,
                                                               ),
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets.all(
-                                                                  2.0,
-                                                                ),
-                                                            child: Icon(
-                                                              Icons.delete,
-                                                              size: 16,
-                                                              color: Colors.red,
-                                                            ),
+                                                          child: Icon(
+                                                            Icons.delete,
+                                                            size: 16,
+                                                            color: Colors.grey,
                                                           ),
                                                         ),
                                                         const SizedBox(
                                                           width: 4,
                                                         ),
-                                                        InkWell(
-                                                          onTap: () {
-                                                            controller
-                                                                .listjawaban[index][idx]
-                                                                .add({
-                                                                  "jam": "",
-                                                                  "keterangan":
-                                                                      "",
-                                                                });
-                                                            controller.update();
-                                                          },
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                4,
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets.all(
+                                                                2.0,
                                                               ),
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets.all(
-                                                                  2.0,
-                                                                ),
-                                                            child: Icon(
-                                                              Icons.add,
-                                                              size: 16,
-                                                              color:
-                                                                  Colors
-                                                                      .black87,
-                                                            ),
+                                                          child: Icon(
+                                                            Icons.add,
+                                                            size: 16,
+                                                            color: Colors.grey,
                                                           ),
                                                         ),
                                                       ],
@@ -341,152 +313,146 @@ class PermitDetailView extends GetView<PermitDetailController> {
                                           ],
                                         );
                                       } else {
-                                        // Normal checkbox
+                                        // Normal checkbox - ambil dari listjawaban
+                                        // Pastikan data ada dan dalam format yang benar
+                                        if (index >=
+                                                controller.listjawaban.length ||
+                                            idx >=
+                                                controller
+                                                    .listjawaban[index]
+                                                    .length) {
+                                          return const SizedBox(); // Skip jika data tidak ada
+                                        }
+
+                                        final jawabanData =
+                                            controller.listjawaban[index][idx];
                                         final isChecked =
-                                            controller
-                                                .listjawaban[index][idx]["jawaban"] ==
-                                            true;
+                                            jawabanData is Map<String, dynamic>
+                                                ? (jawabanData["jawaban"] ==
+                                                        true ||
+                                                    jawabanData["jawaban"] == 1)
+                                                : false;
                                         final isLainnya = soal.namapertanyaan!
                                             .toLowerCase()
                                             .contains("lainnya");
 
-                                        return InkWell(
-                                          onTap:
-                                              () =>
-                                                  controller.changeListJawaban(
-                                                    index,
-                                                    idx,
-                                                  ),
-                                          child: Container(
-                                            margin: const EdgeInsets.symmetric(
-                                              vertical: 2,
+                                        return Container(
+                                          margin: const EdgeInsets.symmetric(
+                                            vertical: 2,
+                                          ),
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 10,
+                                            vertical: 0,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                              8,
                                             ),
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 10,
-                                              vertical: 0,
+                                            border: Border.all(
+                                              color: Colors.grey.shade300,
                                             ),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              border: Border.all(
-                                                color: Colors.grey.shade300,
-                                              ),
-                                              color: Colors.white,
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Expanded(
-                                                  child:
-                                                      isLainnya && isChecked
-                                                          ? Row(
-                                                            children: [
-                                                              Text(
-                                                                "${idx + 1}. ",
-                                                              ),
-                                                              Expanded(
-                                                                child: TextField(
-                                                                  onChanged: (
-                                                                    val,
-                                                                  ) {
-                                                                    controller
-                                                                            .listjawaban[index][idx]["namapertanyaan"] =
-                                                                        val;
-                                                                  },
-                                                                  controller: TextEditingController.fromValue(
-                                                                    TextEditingValue(
-                                                                      text:
-                                                                          controller
-                                                                              .listjawaban[index][idx]["namapertanyaan"] ??
-                                                                          "",
-                                                                      selection: TextSelection.collapsed(
-                                                                        offset:
-                                                                            (controller.listjawaban[index][idx]["namapertanyaan"] ??
-                                                                                    "")
-                                                                                .length,
+                                            color: Colors.white,
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child:
+                                                    isLainnya && isChecked
+                                                        ? Row(
+                                                          children: [
+                                                            Text(
+                                                              "${idx + 1}. ",
+                                                            ),
+                                                            Expanded(
+                                                              child: TextField(
+                                                                readOnly:
+                                                                    true, // ✅ readonly
+                                                                controller: TextEditingController(
+                                                                  text:
+                                                                      (jawabanData
+                                                                              is Map<
+                                                                                String,
+                                                                                dynamic
+                                                                              >)
+                                                                          ? (jawabanData["namapertanyaan"] ??
+                                                                              "")
+                                                                          : "",
+                                                                ),
+                                                                decoration: InputDecoration(
+                                                                  hintText:
+                                                                      "Tuliskan jenis pekerjaan lainnya...",
+                                                                  hintStyle:
+                                                                      const TextStyle(
+                                                                        color:
+                                                                            Colors.black54,
                                                                       ),
+                                                                  isDense: true,
+                                                                  contentPadding:
+                                                                      const EdgeInsets.symmetric(
+                                                                        horizontal:
+                                                                            10,
+                                                                        vertical:
+                                                                            8,
+                                                                      ),
+                                                                  filled: true,
+                                                                  fillColor:
+                                                                      Colors
+                                                                          .grey
+                                                                          .shade100,
+                                                                  border: OutlineInputBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                          6,
+                                                                        ),
+                                                                    borderSide: BorderSide(
+                                                                      color:
+                                                                          Colors
+                                                                              .grey
+                                                                              .shade300,
                                                                     ),
                                                                   ),
-                                                                  decoration: InputDecoration(
-                                                                    hintText:
-                                                                        "Tuliskan jenis pekerjaan lainnya...",
-                                                                    hintStyle:
-                                                                        const TextStyle(
-                                                                          color:
-                                                                              Colors.black54,
+                                                                  enabledBorder: OutlineInputBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                          6,
                                                                         ),
-                                                                    isDense:
-                                                                        true,
-                                                                    contentPadding:
-                                                                        const EdgeInsets.symmetric(
-                                                                          horizontal:
-                                                                              10,
-                                                                          vertical:
-                                                                              8,
+                                                                    borderSide: BorderSide(
+                                                                      color:
+                                                                          Colors
+                                                                              .grey
+                                                                              .shade300,
+                                                                    ),
+                                                                  ),
+                                                                  focusedBorder: OutlineInputBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                          6,
                                                                         ),
-                                                                    filled:
-                                                                        true,
-                                                                    fillColor:
-                                                                        Colors
-                                                                            .white,
-                                                                    border: OutlineInputBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                            6,
-                                                                          ),
-                                                                      borderSide:
-                                                                          BorderSide(
-                                                                            color:
-                                                                                Colors.grey.shade300,
-                                                                          ),
-                                                                    ),
-                                                                    enabledBorder: OutlineInputBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                            6,
-                                                                          ),
-                                                                      borderSide:
-                                                                          BorderSide(
-                                                                            color:
-                                                                                Colors.grey.shade300,
-                                                                          ),
-                                                                    ),
-                                                                    focusedBorder: OutlineInputBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                            6,
-                                                                          ),
-                                                                      borderSide:
-                                                                          const BorderSide(
-                                                                            color:
-                                                                                Colors.black,
-                                                                          ),
+                                                                    borderSide: BorderSide(
+                                                                      color:
+                                                                          Colors
+                                                                              .grey
+                                                                              .shade300,
                                                                     ),
                                                                   ),
                                                                 ),
                                                               ),
-                                                            ],
-                                                          )
-                                                          : Text(
-                                                            "${idx + 1}. ${soal.namapertanyaan}",
-                                                          ),
-                                                ),
-                                                Checkbox(
-                                                  value: isChecked,
-                                                  onChanged:
-                                                      (_) => controller
-                                                          .changeListJawaban(
-                                                            index,
-                                                            idx,
-                                                          ),
-                                                  checkColor:
-                                                      Colors.teal.shade50,
-                                                  activeColor: Colors.teal,
-                                                ),
-                                              ],
-                                            ),
+                                                            ),
+                                                          ],
+                                                        )
+                                                        : Text(
+                                                          "${idx + 1}. ${soal.namapertanyaan}",
+                                                        ),
+                                              ),
+                                              Checkbox(
+                                                value: isChecked,
+                                                onChanged: null, // ✅ readonly
+                                                checkColor: Colors.teal.shade50,
+                                                activeColor: Colors.teal,
+                                              ),
+                                            ],
                                           ),
                                         );
                                       }
@@ -633,12 +599,13 @@ class PermitDetailView extends GetView<PermitDetailController> {
         ),
       ),
       bottomNavigationBar:
-          arguments["asal"] == 'approve'
+          arguments["asal"] == 'approve' ||
+                  (arguments["asal"] == 'list')
               ? SafeArea(
-                top: false, // ⛔ tidak pakai safe di atas
+                top: false,
                 left: false,
                 right: false,
-                bottom: true, // ✅ hanya di bawah
+                bottom: true,
                 child: Container(
                   color: Colors.teal,
                   padding: const EdgeInsets.symmetric(
@@ -657,17 +624,19 @@ class PermitDetailView extends GetView<PermitDetailController> {
                           "ttdapprove1": controller.ttdapprove1,
                           "ttdapprove2": controller.ttdapprove2,
                           "ttdapprove3": controller.ttdapprove3,
+                          "statuspenyelesaian": controller.statuspenyelaian,
+                          "ttdpenyelesaian": controller.ttdpenyelesaian,
                         },
                       );
                     },
                     child: Text(
-                      "Approve",
+                      arguments["asal"] == 'approve' ? "Approve" : 'Detail',
                       style: GoogleFonts.inter(color: Colors.white),
                     ),
                   ),
                 ),
               )
-              : SizedBox(),
+              : SizedBox(height: 50),
     );
   }
 
@@ -717,113 +686,107 @@ class PermitDetailView extends GetView<PermitDetailController> {
                 final soalIndex = questionData['soalIndex'] as int;
                 final soal = questionData['data'];
 
+                // Pastikan data ada
+                if (index >= controller.listjawaban.length ||
+                    soalIndex >= controller.listjawaban[index].length) {
+                  return const SizedBox();
+                }
+
+                // Ambil data dari listjawaban
+                final jawabanData = controller.listjawaban[index][soalIndex];
                 final isChecked =
-                    controller.listjawaban[index][soalIndex]["jawaban"] == true;
+                    jawabanData is Map<String, dynamic>
+                        ? (jawabanData["jawaban"] == true ||
+                            jawabanData["jawaban"] == 1)
+                        : false;
                 final isLainnya = soal.namapertanyaan!.toLowerCase().contains(
                   "lainnya",
                 );
 
                 return Container(
                   margin: const EdgeInsets.only(bottom: 6),
-                  child: InkWell(
-                    onTap: () => controller.changeListJawaban(index, soalIndex),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 0,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        border: Border.all(color: Colors.grey.shade300),
-                        color: Colors.white,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child:
-                                isLainnya && isChecked
-                                    ? Row(
-                                      children: [
-                                        Text("${soalIndex + 1}. "),
-                                        Expanded(
-                                          child: TextField(
-                                            onChanged: (val) {
-                                              controller
-                                                      .listjawaban[index][soalIndex]["namapertanyaan"] =
-                                                  val;
-                                            },
-                                            controller: TextEditingController.fromValue(
-                                              TextEditingValue(
-                                                text:
-                                                    controller
-                                                        .listjawaban[index][soalIndex]["namapertanyaan"] ??
-                                                    "",
-                                                selection: TextSelection.collapsed(
-                                                  offset:
-                                                      (controller.listjawaban[index][soalIndex]["namapertanyaan"] ??
-                                                              "")
-                                                          .length,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 0,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      border: Border.all(color: Colors.grey.shade300),
+                      color: Colors.white,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child:
+                              isLainnya && isChecked
+                                  ? Row(
+                                    children: [
+                                      Text("${soalIndex + 1}. "),
+                                      Expanded(
+                                        child: TextField(
+                                          readOnly: true, // ✅ readonly
+                                          controller: TextEditingController(
+                                            text:
+                                                (jawabanData
+                                                        is Map<String, dynamic>)
+                                                    ? (jawabanData["namapertanyaan"] ??
+                                                        "")
+                                                    : "",
+                                          ),
+                                          decoration: InputDecoration(
+                                            hintText:
+                                                "Tuliskan jenis pekerjaan lainnya...",
+                                            hintStyle: const TextStyle(
+                                              color: Colors.black54,
+                                            ),
+                                            isDense: true,
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                  horizontal: 8,
+                                                  vertical: 0,
                                                 ),
+                                            filled: true,
+                                            fillColor: Colors.grey.shade100,
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(4),
+                                              borderSide: BorderSide(
+                                                color: Colors.grey.shade300,
                                               ),
                                             ),
-                                            decoration: InputDecoration(
-                                              hintText:
-                                                  "Tuliskan jenis pekerjaan lainnya...",
-                                              hintStyle: const TextStyle(
-                                                color: Colors.black54,
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(4),
+                                              borderSide: BorderSide(
+                                                color: Colors.grey.shade300,
                                               ),
-                                              isDense: true,
-                                              contentPadding:
-                                                  const EdgeInsets.symmetric(
-                                                    horizontal: 8,
-                                                    vertical: 0,
-                                                  ),
-                                              filled: true,
-                                              fillColor: Colors.white,
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(4),
-                                                borderSide: BorderSide(
-                                                  color: Colors.grey.shade300,
-                                                ),
-                                              ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(4),
-                                                borderSide: BorderSide(
-                                                  color: Colors.grey.shade300,
-                                                ),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(4),
-                                                borderSide: const BorderSide(
-                                                  color: Colors.black,
-                                                ),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(4),
+                                              borderSide: BorderSide(
+                                                color: Colors.grey.shade300,
                                               ),
                                             ),
                                           ),
                                         ),
-                                      ],
-                                    )
-                                    : Text(
-                                      "${soalIndex + 1}. ${soal.namapertanyaan}",
-                                      style: GoogleFonts.poppins(fontSize: 13),
-                                    ),
-                          ),
-                          Checkbox(
-                            value: isChecked,
-                            onChanged:
-                                (_) => controller.changeListJawaban(
-                                  index,
-                                  soalIndex,
-                                ),
-                            checkColor: Colors.teal.shade50,
-                            activeColor: Colors.teal,
-                          ),
-                        ],
-                      ),
+                                      ),
+                                    ],
+                                  )
+                                  : Text(
+                                    "${soalIndex + 1}. ${soal.namapertanyaan}",
+                                    style: GoogleFonts.poppins(fontSize: 13),
+                                  ),
+                        ),
+                        Checkbox(
+                          value: isChecked,
+                          onChanged: null, // ✅ readonly
+                          checkColor: Colors.teal.shade50,
+                          activeColor: Colors.teal,
+                        ),
+                      ],
                     ),
                   ),
                 );

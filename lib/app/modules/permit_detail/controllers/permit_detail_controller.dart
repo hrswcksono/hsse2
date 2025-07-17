@@ -74,14 +74,16 @@ class PermitDetailController extends GetxController {
 
   var pengukurangas = 0;
 
-  var idpermit = 0;
-  var sudahapprove1 = 0;
-  var sudahapprove2 = 0;
-  var sudahapprove3 = 0;
-  var ttdapprove1 = "";
-  var ttdapprove2 = "";
-  var ttdapprove3 = "";
-  var ttdbuat = "".obs;
+  var     idpermit         = 0;
+  var     sudahapprove1    = 0;
+  var     sudahapprove2    = 0;
+  var     sudahapprove3    = 0;
+  dynamic statuspenyelaian = 0;
+  dynamic ttdpenyelesaian  = "";
+  var     ttdapprove1      = "";
+  var     ttdapprove2      = "";
+  var     ttdapprove3      = "";
+  var     ttdbuat          = "".obs;
 
   @override
   void onInit() {
@@ -251,27 +253,40 @@ class PermitDetailController extends GetxController {
 
             ttdbuat.value = value.data!.ttdbuat.toString();
 
-            pekerjaanSesuaiProsedur.value = value.data!.pekerjaansesuai == 1 ? true : false;
-            pekerjaanTelahDisampaikan.value = value.data!.pekerjaandisampaikan == 1 ? true : false;
+            pekerjaanSesuaiProsedur.value =
+                value.data!.pekerjaansesuai == 1 ? true : false;
+            pekerjaanTelahDisampaikan.value =
+                value.data!.pekerjaandisampaikan == 1 ? true : false;
             lokasiPastiAman.value = value.data!.lokasiaman == 1 ? true : false;
+
+            statuspenyelaian = value.data!.statuspenyelesaian;
+            ttdpenyelesaian = value.data!.ttdpenyelesaian;
+
+            print(ttdpenyelesaian);
+
+            // ✅ PERBAIKAN: Clear dulu listjawaban yang ada, lalu rebuild dengan data dari API
+            listjawaban.clear();
 
             for (int i = 0; i < listPertanyaan.length; i++) {
               final pertanyaan = listPertanyaan[i];
               final jenis = pertanyaan.jenispertanyaan?.toLowerCase() ?? '';
+
               List<dynamic> subJawaban = [];
 
               for (int j = 0; j < pertanyaan.data!.length; j++) {
                 final soal = pertanyaan.data![j];
                 final id = soal.idpertanyaan;
 
-                // ⛔ matched bisa kosong/null
+                // Cari jawaban yang matching idpertanyaan
                 final matched =
                     listJawabanTemp
                         ?.where((e) => e.idpertanyaan == id)
                         .toList();
 
                 if (jenis.contains("bahaya")) {
-                  // ✅ Jawaban model bahaya: list of map jam & keterangan
+                  /// =======================
+                  /// Jika tipe pertanyaan adalah BAHAYA
+                  /// =======================
                   List<Map<String, dynamic>> listBahaya = [];
 
                   if (matched != null && matched.isNotEmpty) {
@@ -279,12 +294,13 @@ class PermitDetailController extends GetxController {
                         matched.map((e) {
                           return {
                             "jam": e.jam ?? "",
+                            "jml": e.jml ?? "",
                             "keterangan": e.catatan ?? "",
                           };
                         }).toList();
                   }
 
-                  // Jika tidak ada data bahaya, isi default kosong
+                  // Default jika kosong
                   if (listBahaya.isEmpty) {
                     listBahaya = [
                       {"jam": "", "keterangan": ""},
@@ -293,29 +309,46 @@ class PermitDetailController extends GetxController {
 
                   subJawaban.add(listBahaya);
                 } else {
-                  // ✅ Cek apakah "lainnya"
+                  /// =======================
+                  /// Jika tipe pertanyaan BUKAN bahaya
+                  /// =======================
                   final isLainnya =
                       soal.namapertanyaan?.toLowerCase().contains("lainnya") ??
                       false;
 
                   if (matched != null && matched.isNotEmpty) {
-                    final item = matched[0];
+                    final item = matched.first;
 
-                    subJawaban.add({
+                    Map<String, dynamic> jawabanMap = {
                       "idpertanyaan": id,
                       "jawaban": item.jawaban == 1,
-                      if (isLainnya) "namapertanyaan": item.catatan ?? "",
-                    });
+                    };
+
+                    if (isLainnya) {
+                      jawabanMap["namapertanyaan"] = item.catatan ?? "";
+                    }
+
+                    subJawaban.add(jawabanMap);
                   } else {
-                    // ❗ Jika tidak ada jawaban, isi default jawaban: false
+                    // Jawaban default jika tidak ada isian
                     subJawaban.add({"idpertanyaan": id, "jawaban": false});
                   }
                 }
               }
 
-              // Simpan subJawaban ke listjawaban atau array final (tergantung struktur kamu)
+              // ✅ PERBAIKAN: Add ke listjawaban instance controller, bukan variabel lokal
               listjawaban.add(subJawaban);
             }
+
+            // ✅ PERBAIKAN: Debug print untuk memastikan data sudah benar
+            // print("=== DEBUG LISTJAWABAN ===");
+            // for (int i = 0; i < listjawaban.length; i++) {
+            //   print("Section $i: ${listjawaban[i].length} items");
+            //   for (int j = 0; j < listjawaban[i].length; j++) {
+            //     print("  [$i][$j]: ${listjawaban[i][j]}");
+            //   }
+            // }
+            // print("========================");
 
             update();
           })

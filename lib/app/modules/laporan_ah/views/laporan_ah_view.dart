@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hsse2/app/widgets/global_app_bar.dart';
 import 'package:hsse2/app/widgets/global_widget.dart';
+import 'package:hsse2/utils/helpers/function.dart';
 import 'package:hsse2/utils/values/colors.dart';
+import 'package:hsse2/utils/values/string_const.dart';
 
 import '../controllers/laporan_ah_controller.dart';
 
@@ -32,7 +34,9 @@ class LaporanAhView extends GetView<LaporanAhController> {
             ),
 
             SizedBox(height: 20,),
-            globalButton("Cetak Laporan", onPressed: (){})
+            globalButton("Cetak Laporan", onPressed: (){
+              downloadFile("${StringConst.baseUrl}lah/export/${controller.tglTF.text}", "LAH-${controller.tglTF.text}.pdf");
+            })
           ],
         ),
       ),

@@ -161,9 +161,7 @@ class UnsafeActionFormView extends GetView<UnsafeActionFormController> {
                                           ),
                                         ),
                                         onChanged:
-                                            (val) =>
-                                                ctx.listJawaban[index]["Lainnya"] =
-                                                    val,
+                                            (val){},
                                       ),
                                     ),
                                   ],

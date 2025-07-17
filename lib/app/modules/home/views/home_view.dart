@@ -75,7 +75,9 @@ class HomeView extends GetView<HomeController> {
                               if (GetStorage().read(GetStorageKey.namarole) ==
                                       'SPV HSE' ||
                                   GetStorage().read(GetStorageKey.namarole) ==
-                                      'STAFF HSE')
+                                      'STAFF HSE' ||
+                                  GetStorage().read(GetStorageKey.namarole) ==
+                                      'PEKERJA / SUB KONTRAKTOR')
                                 buttonMenu(
                                   "Form Safety Briefing",
                                   "assets/images/icon_form_sb.png",
@@ -178,23 +180,34 @@ class HomeView extends GetView<HomeController> {
                                         arguments: {"asal": "approve"},
                                       ),
                                 ),
-                              if (GetStorage().read(GetStorageKey.namarole) == 'ADMIN HSE')
+                              if (GetStorage().read(GetStorageKey.namarole) ==
+                                  'ADMIN HSE')
                                 buttonMenu(
                                   "Work Permit",
                                   "assets/images/engineer.png",
-                                  onTap: () => Get.toNamed(Routes.PERMIT),
+                                  onTap:
+                                      () => Get.toNamed(
+                                        Routes.PERMIT,
+                                        arguments: {"asal": "list"},
+                                      ),
                                 ),
-                              if (GetStorage().read(GetStorageKey.namarole) == 'ADMIN HSE')
+                              if (GetStorage().read(GetStorageKey.namarole) ==
+                                  'ADMIN HSE')
                                 buttonMenu(
                                   "Safety Briefing",
                                   "assets/images/icon_sb.png",
                                   onTap: () => Get.toNamed(Routes.SAFETY_BRIEF),
                                 ),
-                              if (GetStorage().read(GetStorageKey.namarole) == 'ADMIN HSE')
+                              if (GetStorage().read(GetStorageKey.namarole) ==
+                                  'ADMIN HSE')
                                 buttonMenu(
                                   "Safety Patrol",
                                   "assets/images/icon_sp.png",
-                                  onTap: () => Get.toNamed(Routes.SAFETY_PATROL),
+                                  onTap:
+                                      () => Get.toNamed(
+                                        Routes.SAFETY_PATROL,
+                                        arguments: {"asal": "list"},
+                                      ),
                                 ),
                               if (GetStorage().read(GetStorageKey.namarole) ==
                                       'ADMIN HSE' ||

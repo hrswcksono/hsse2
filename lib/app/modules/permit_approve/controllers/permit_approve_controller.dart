@@ -26,7 +26,6 @@ class PermitApproveController extends GetxController {
   void onInit() {
     super.onInit();
   }
-
   void approvePermit() {
     if (imageFile.value == null) {
       DialogAlert.notif("Silahkan upload atau ambil TTD terlebih dahulu", "error");

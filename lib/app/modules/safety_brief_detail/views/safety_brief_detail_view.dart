@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hsse2/app/routes/app_pages.dart';
 import 'package:hsse2/app/widgets/global_app_bar.dart';
 import 'package:hsse2/app/widgets/global_widget.dart';
 import 'package:hsse2/utils/values/colors.dart';
+import 'package:hsse2/utils/values/get_storage_key.dart';
 
 import '../controllers/safety_brief_detail_controller.dart';
 
@@ -199,16 +202,6 @@ class SafetyBriefDetailView extends GetView<SafetyBriefDetailController> {
                 ),
 
                 const SizedBox(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Respon",
-                      style: GoogleFonts.inter(color: Colors.white),
-                    ),
-                  ),
-                ),
                 const SizedBox(height: 16),
               ],
             ),

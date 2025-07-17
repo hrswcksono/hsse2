@@ -196,3 +196,39 @@ Widget buttonMenuWorkPermit(
     ),
   );
 }
+
+
+Widget statusRadioMenu({
+  required String label,
+  required int value,
+  required int groupValue,
+  required Function(int?) onChanged,
+  bool disabled = false,
+  Color activeColor = Colors.purple,
+}) {
+  return GestureDetector(
+    onTap: disabled ? null : () => onChanged(value),
+    behavior: HitTestBehavior.opaque, // supaya seluruh row tetap clickable saat aktif
+    child: Row(
+      children: [
+        IgnorePointer(
+          ignoring: disabled, // hanya blok fungsi radio, desain tetap sama
+          child: Radio<int>(
+            value: value,
+            groupValue: groupValue,
+            onChanged: onChanged,
+            activeColor: activeColor,
+            visualDensity: VisualDensity.compact,
+          ),
+        ),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 13,
+            color: Colors.black, // Warna tidak berubah meski disabled
+          ),
+        ),
+      ],
+    ),
+  );
+}

@@ -46,6 +46,12 @@ class UnsafeActionDetailController extends GetxController {
     }
   }
 
+  dynamic tglrespon = "";
+  dynamic konfirmasitemuan = "";
+  dynamic penanggungjawab = "";
+  dynamic statuspengerjaan = "";
+  dynamic catatantambahan = "";
+
   final TextEditingController lainnyaController = TextEditingController();
 
   @override
@@ -135,7 +141,7 @@ class UnsafeActionDetailController extends GetxController {
       unsafeProvider
           .getDetailUnsafe(idunsafe)
           .then((value) {
-            namaTF.text = value.data!.pic.toString();
+            namaTF.text = value.data!.nama.toString();
             waktuTF.text = value.data!.waktu.toString();
             picTF.text = value.data!.pic.toString();
             tglTemuanTF.text = formatDate(value.data!.tgltemuan!);
@@ -143,6 +149,12 @@ class UnsafeActionDetailController extends GetxController {
             catatanTF.text = value.data!.catatan!;
             impacTF.text = value.data!.impac!;
             rekomendasiTF.text = value.data!.rekomendasi!;
+
+            tglrespon = value.data!.tglrespon;
+            konfirmasitemuan = value.data!.konfirmasitemuan;
+            penanggungjawab = value.data!.penanggungjawab;
+            statuspengerjaan = value.data!.statuspengerjaan;
+            catatantambahan = value.data!.catatantambahan;
 
             var listJawabanTemp = value.data!.detail;
 

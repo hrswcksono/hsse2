@@ -9,13 +9,20 @@ import '../controllers/unsafe_action_approal_controller.dart';
 class UnsafeActionApproalView extends GetView<UnsafeActionApproalController> {
   UnsafeActionApproalView({super.key});
 
-  final data = Get.arguments;
+  final arguments = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
-    controller.idJenisUnsafe = data['idjenisunsafe'];
-    controller.idunsafe = data['idunsafe'];
-    controller.getDetailUnsafe(data['idunsafe']);
+    controller.idJenisUnsafe = arguments['idjenisunsafe'];
+    controller.idunsafe = arguments['idunsafe'];
+    controller.getDetailUnsafe(arguments['idunsafe']);
+    if (arguments["asal"] != 'approve') {
+      controller.konfirmasiTemuan.value = arguments['konfirmasitemuan'];
+      controller.selectedStatus.value = int.parse(
+        arguments['statuspengerjaan'],
+      );
+      controller.catatanTambahanTF.text = arguments['catatantambahan'];
+    }
 
     return Scaffold(
       appBar: GlobalAppBar(
@@ -44,35 +51,22 @@ class UnsafeActionApproalView extends GetView<UnsafeActionApproalController> {
                   () => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Radio<int>(
-                            value: 0,
-                            groupValue: controller.konfirmasiTemuan.value,
-                            onChanged:
-                                (value) =>
-                                    controller.konfirmasiTemuan.value = value!,
-                            visualDensity: VisualDensity.compact,
-                          ),
-                          const Text(
-                            "Diterima",
-                            style: TextStyle(fontSize: 13),
-                          ),
-                        ],
+                      statusRadioMenu(
+                        label: "Diterima",
+                        value: 0,
+                        disabled: arguments["asal"] != 'approve',
+                        groupValue: controller.konfirmasiTemuan.value,
+                        onChanged:
+                            (val) => controller.konfirmasiTemuan.value = val!,
                       ),
                       const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          Radio<int>(
-                            value: 1,
-                            groupValue: controller.konfirmasiTemuan.value,
-                            onChanged:
-                                (value) =>
-                                    controller.konfirmasiTemuan.value = value!,
-                            visualDensity: VisualDensity.compact,
-                          ),
-                          const Text("Ditolak", style: TextStyle(fontSize: 13)),
-                        ],
+                      statusRadioMenu(
+                        label: "Ditolak",
+                        value: 1,
+                        disabled: arguments["asal"] != 'approve',
+                        groupValue: controller.konfirmasiTemuan.value,
+                        onChanged:
+                            (val) => controller.konfirmasiTemuan.value = val!,
                       ),
                     ],
                   ),
@@ -95,52 +89,31 @@ class UnsafeActionApproalView extends GetView<UnsafeActionApproalController> {
                   () => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Radio<int>(
-                            value: 0,
-                            groupValue: controller.selectedStatus.value,
-                            onChanged:
-                                (value) =>
-                                    controller.selectedStatus.value = value!,
-                            visualDensity: VisualDensity.compact,
-                          ),
-                          const Text(
-                            "Belum Dikerjakan",
-                            style: TextStyle(fontSize: 13),
-                          ),
-                        ],
+                      statusRadioMenu(
+                        label: "Belum Dikerjakan",
+                        value: 0,
+                        disabled: arguments["asal"] != 'approve',
+                        groupValue: controller.selectedStatus.value,
+                        onChanged:
+                            (val) => controller.selectedStatus.value = val!,
                       ),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          Radio<int>(
-                            value: 1,
-                            groupValue: controller.selectedStatus.value,
-                            onChanged:
-                                (value) =>
-                                    controller.selectedStatus.value = value!,
-                            visualDensity: VisualDensity.compact,
-                          ),
-                          const Text(
-                            "Proses Pengerjaan",
-                            style: TextStyle(fontSize: 13),
-                          ),
-                        ],
+                      const SizedBox(height: 8),
+                      statusRadioMenu(
+                        label: "Proses Pengerjaan",
+                        value: 1,
+                        disabled: arguments["asal"] != 'approve',
+                        groupValue: controller.selectedStatus.value,
+                        onChanged:
+                            (val) => controller.selectedStatus.value = val!,
                       ),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          Radio<int>(
-                            value: 2,
-                            groupValue: controller.selectedStatus.value,
-                            onChanged:
-                                (value) =>
-                                    controller.selectedStatus.value = value!,
-                            visualDensity: VisualDensity.compact,
-                          ),
-                          const Text("Selesai", style: TextStyle(fontSize: 13)),
-                        ],
+                      const SizedBox(height: 8),
+                      statusRadioMenu(
+                        label: "Selesai",
+                        value: 2,
+                        disabled: arguments["asal"] != 'approve',
+                        groupValue: controller.selectedStatus.value,
+                        onChanged:
+                            (val) => controller.selectedStatus.value = val!,
                       ),
                     ],
                   ),
@@ -199,20 +172,22 @@ class UnsafeActionApproalView extends GetView<UnsafeActionApproalController> {
                 buildTextField(
                   "Catatan Tambahan",
                   controller.catatanTambahanTF,
+                  readOnly: arguments["asal"] != 'approve',
                   maxLines: 3,
                 ),
 
                 const SizedBox(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: controller.responUnsafe,
-                    child: Text(
-                      "Simpan Respon",
-                      style: GoogleFonts.inter(color: Colors.white),
+                if (arguments["asal"] == 'approve')
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: controller.responUnsafe,
+                      child: Text(
+                        "Simpan Respon",
+                        style: GoogleFonts.inter(color: Colors.white),
+                      ),
                     ),
                   ),
-                ),
                 const SizedBox(height: 16),
               ],
             ),

@@ -279,11 +279,11 @@ class PermitFormController extends GetxController {
           }
         }
         // 🔸 Tahap 1 & 3: jawaban boolean
-        else if (item is Map && item["jawaban"] == true) {
+        else if (item is Map) {
           datajawaban.add({
             "idjenispertanyaan": idJenis,
             "idpertanyaan": item["idpertanyaan"],
-            "jawaban": 1,
+            "jawaban": item["jawaban"] == true ? 1 : 0,
             if (item.containsKey("namapertanyaan"))
               "namapertanyaan": item["namapertanyaan"],
           });

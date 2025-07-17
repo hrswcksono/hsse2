@@ -10,7 +10,6 @@ import 'package:hsse2/app/data/providers/base_provider.dart';
 class PermitProvider extends BaseProvider {
   Future<DetailPermitResponse> getDetailPermit(int idpermit) async {
     var response = await post('permit/detail', {"idpermit": idpermit});
-    print(response.body);
     if (!response.body['success']) {
       return Future.error(response.body["message"]);
     } else {

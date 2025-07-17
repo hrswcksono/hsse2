@@ -257,15 +257,17 @@ class PermitApproveView extends GetView<PermitApproveController> {
               ),
               SizedBox(height: 10),
               globalButton(
-                "Penyelesaian",
+                arguments['statuspenyelesaian'] != null ? "Detail" : "Penyelesaian",
                 isEnabled:
-                    (GetStorage().read(GetStorageKey.namarole) == 'SPV HSE' &&
+                    ((GetStorage().read(GetStorageKey.namarole) == 'SPV HSE' &&
                         arguments['sudahapprove1'] == 1 &&
                         arguments['sudahapprove2'] == 1 &&
-                        arguments['sudahapprove3'] == 1),
+                        arguments['sudahapprove3'] == 1)) || arguments['statuspenyelesaian'] != null,
                 onPressed: () {
                   Get.toNamed(Routes.PERMIT_SELESAI, arguments: {
-                    'id': controller.idpermit,
+                    'id'                : controller.idpermit,
+                    'statuspenyelesaian': arguments['statuspenyelesaian'],
+                    'ttdpenyelesaian'   : arguments['ttdpenyelesaian']
                   });
                 },
               ),
