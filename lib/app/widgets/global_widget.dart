@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,6 +10,7 @@ Widget buildTextField(
   VoidCallback? onTap,
   bool readOnly = false,
   bool enabled = true,
+  bool numbersOnly = false, // New parameter with default false
 }) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 4),
@@ -30,10 +32,13 @@ Widget buildTextField(
           maxLines: maxLines,
           onTap: onTap,
           enabled: enabled,
+          keyboardType: numbersOnly ? TextInputType.number : TextInputType.text,
+          inputFormatters:
+              numbersOnly ? [FilteringTextInputFormatter.digitsOnly] : null,
           style: const TextStyle(fontSize: 13),
           decoration: InputDecoration(
             filled: true,
-            fillColor: Colors.grey[100], // Tetap gunakan ini untuk semua status
+            fillColor: Colors.grey[100],
             isDense: true,
             contentPadding: const EdgeInsets.symmetric(
               vertical: 8,
@@ -128,22 +133,21 @@ Widget buildCheckbox(
     child: Obx(
       () => CheckboxListTile(
         value: value.value,
-        onChanged: disabled
-            ? null
-            : (val) {
-                if (val == true) onSelected?.call();
-                value.value = val ?? false;
-              },
-        title: Text(
-          text,
-          style: GoogleFonts.poppins(fontSize: 12),
-        ),
+        onChanged:
+            disabled
+                ? null
+                : (val) {
+                  if (val == true) onSelected?.call();
+                  value.value = val ?? false;
+                },
+        title: Text(text, style: GoogleFonts.poppins(fontSize: 12)),
         controlAffinity: ListTileControlAffinity.leading,
         dense: true,
         contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
         visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        tileColor: Colors.teal,selectedTileColor: Colors.teal,
+        tileColor: Colors.teal,
+        selectedTileColor: Colors.teal,
         activeColor: Colors.teal,
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
@@ -176,10 +180,7 @@ Widget buttonMenuWorkPermit(
             alignment: Alignment.topLeft,
             child: Text(
               label,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-              ),
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
             ),
           ),
           Align(
@@ -197,7 +198,6 @@ Widget buttonMenuWorkPermit(
   );
 }
 
-
 Widget statusRadioMenu({
   required String label,
   required int value,
@@ -208,7 +208,8 @@ Widget statusRadioMenu({
 }) {
   return GestureDetector(
     onTap: disabled ? null : () => onChanged(value),
-    behavior: HitTestBehavior.opaque, // supaya seluruh row tetap clickable saat aktif
+    behavior:
+        HitTestBehavior.opaque, // supaya seluruh row tetap clickable saat aktif
     child: Row(
       children: [
         IgnorePointer(

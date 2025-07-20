@@ -38,7 +38,7 @@ class SafetyBriefView extends GetView<SafetyBriefController> {
                       data[index].status!,
                       data[index].namapekerja!,
                       data[index].namapekerjaan ?? "Belum Direspon",
-                      "sdad"
+                      "Shift ${data[index].shift!}"
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {

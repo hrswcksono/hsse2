@@ -93,7 +93,7 @@ class PermitFormView extends GetView<PermitFormController> {
                   ],
                 ),
                 buildTextField("Nomor Ijin", controller.nomorIjinTF),
-                buildTextField("Jumlah Pekerja", controller.jumlahPekerjaTF),
+                buildTextField("Jumlah Pekerja", controller.jumlahPekerjaTF, numbersOnly: true),
                 buildTextField("Deskripsi", controller.deskripsiTF),
                 const SizedBox(height: 10),
                 GetBuilder<PermitFormController>(

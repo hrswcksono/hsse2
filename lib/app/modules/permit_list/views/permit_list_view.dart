@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hsse2/app/modules/permit_list/controllers/permit_list_controller.dart';
 import 'package:hsse2/app/routes/app_pages.dart';
 import 'package:hsse2/app/widgets/global_app_bar.dart';
+import 'package:hsse2/app/widgets/global_widget.dart';
 import 'package:hsse2/utils/helpers/function.dart';
 import 'package:hsse2/utils/helpers/helpers.dart';
 import 'package:hsse2/utils/values/colors.dart';
@@ -44,11 +45,13 @@ class PermitListView extends GetView<PermitListController> {
                       data[index].tgltrans.toString(),
                       data[index].status!,
                       data[index].lokasi!,
-                      data[index].kodepermit!,
+                      "",
                       data[index].deskripsi!,
-                      data[index].sudahapprove == 1,
+                      data[index].sudahapprove == 1 &&
+                          data[index].siapselesai == 0,
                       GetStorage().read(GetStorageKey.namarole) == 'SPV HSE' &&
                           data[index].siapselesai == 1,
+                      context,
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {
@@ -74,6 +77,7 @@ class PermitListView extends GetView<PermitListController> {
     String title,
     bool sudahapprove,
     bool siapselesai,
+    BuildContext context,
   ) {
     final isClosed = status != 'I';
 
@@ -98,6 +102,7 @@ class PermitListView extends GetView<PermitListController> {
               PopupMenuButton<int>(
                 color: Colors.white,
                 onSelected: (int item) {
+                  print(item);
                   if (item == 1) {
                     Get.toNamed(
                       Routes.PERMIT_DETAIL,
@@ -119,7 +124,11 @@ class PermitListView extends GetView<PermitListController> {
                       },
                     );
                   } else if (item == 3) {
-                    downloadFile("${StringConst.baseUrl}permit/cetak/$idpermit", "$title.pdf");
+                    previewPDF(
+                      context: context,
+                      namaFile: "$title.pdf",
+                      url: "${StringConst.baseUrl}permit/cetak/$idpermit",
+                    );
                   }
                 },
                 itemBuilder:
@@ -173,7 +182,7 @@ class PermitListView extends GetView<PermitListController> {
 
           // Informasi Tgl dan Direspon Oleh
           Text(
-            "Tgl Temuan : ${formatDate(tgltemuan)}",
+            "Tanggal : ${formatDate(tgltemuan)}",
             style: GoogleFonts.poppins(fontSize: 12),
           ),
           Text(
