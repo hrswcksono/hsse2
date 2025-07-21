@@ -20,54 +20,50 @@ class PermitListView extends GetView<PermitListController> {
   PermitListView({super.key});
   @override
   Widget build(BuildContext context) {
-    print(arguments['asal']);
+    print(arguments);
+    controller.asal = arguments['asal'];
     controller.initList(arguments["idjenispermit"], arguments["asal"]);
     return Scaffold(
       appBar: GlobalAppBar(
         pTitle: arguments['namapermit'],
         pBgColor: CustomColor.appBarColor,
       ),
-      body: SmartRefresher(
-        controller: controller.xRefreshController,
-        enablePullDown: true,
-        onRefresh: controller.onRefreshData,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: controller.obx(
-                  (data) => ListView.separated(
-                    shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
-                    itemCount: data!.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return itemPermit(
-                        data[index].idpermit!,
-                        data[index].idjenispermit!,
-                        data[index].namaproject!,
-                        data[index].tgltrans.toString(),
-                        data[index].status!,
-                        data[index].lokasi!,
-                        "",
-                        data[index].kodepermit!,
-                        data[index].sudahapprove == 1 &&
-                            data[index].siapselesai == 0,
-                        GetStorage().read(GetStorageKey.namarole) ==
-                                'SPV HSE' &&
-                            data[index].siapselesai == 1,
-                        context,
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const SizedBox(height: 0);
-                    },
-                  ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: controller.obx(
+                (data) => ListView.separated(
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: data!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return itemPermit(
+                      data[index].idpermit!,
+                      data[index].idjenispermit!,
+                      data[index].namaproject!,
+                      data[index].tgltrans.toString(),
+                      data[index].status!,
+                      data[index].lokasi!,
+                      "",
+                      data[index].kodepermit!,
+                      data[index].sudahapprove == 1 &&
+                          data[index].siapselesai == 0,
+                      GetStorage().read(GetStorageKey.namarole) ==
+                              'SPV HSE' &&
+                          data[index].siapselesai == 1,
+                      context,
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(height: 0);
+                  },
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

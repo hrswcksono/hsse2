@@ -17,7 +17,6 @@ class PermitListController extends GetxController
     super.onInit();
 
     idjenispermit = arguments["idjenispermit"];
-    asal = arguments["asal"];
   }
 
   void initList(pidjenispermit, asal) {

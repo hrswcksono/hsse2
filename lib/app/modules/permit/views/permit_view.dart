@@ -100,6 +100,7 @@ class PermitView extends GetView<PermitController> {
                                     arguments: {
                                       'idjenispermit': 2,
                                       'namapermit': 'Hot Work Permit',
+                                      'asal': arguments["asal"],
                                     },
                                   );
                                 }
@@ -131,6 +132,7 @@ class PermitView extends GetView<PermitController> {
                                     arguments: {
                                       'idjenispermit': 1,
                                       'namapermit': 'Safe Work Permit',
+                                      'asal': arguments["asal"],
                                     },
                                   );
                                 }
@@ -163,6 +165,7 @@ class PermitView extends GetView<PermitController> {
                                     arguments: {
                                       'idjenispermit': 3,
                                       'namapermit': 'Confined Space Permit',
+                                      'asal': arguments["asal"],
                                     },
                                   );
                                 }
