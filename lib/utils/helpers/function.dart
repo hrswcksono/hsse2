@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:hsse2/app/widgets/dialog_alert.dart';
 import 'package:hsse2/utils/values/colors.dart';
+import 'package:hsse2/utils/values/get_storage_key.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
@@ -118,7 +120,7 @@ Future<void> previewPDF({
     Get.back();
 
     // Navigasi ke PDF viewer
-    Get.to(() => PDFViewerPage(filePath: filePath, title: namaFile, url: url,));
+    Get.to(() => PDFViewerPage(filePath: filePath, title: namaFile, url: url));
   } catch (e) {
     // Tutup loading
     Get.back();
@@ -138,8 +140,12 @@ class PDFViewerPage extends StatefulWidget {
   final String title;
   final String url;
 
-  const PDFViewerPage({Key? key, required this.filePath, required this.title, required this.url})
-    : super(key: key);
+  const PDFViewerPage({
+    Key? key,
+    required this.filePath,
+    required this.title,
+    required this.url,
+  }) : super(key: key);
 
   @override
   State<PDFViewerPage> createState() => _PDFViewerPageState();
@@ -163,10 +169,12 @@ class _PDFViewerPageState extends State<PDFViewerPage> {
             icon: Icon(Icons.download),
             onPressed: () {
               // Download ke gallery/downloads
-              downloadFile(
-                widget.url,
-                widget.title,
-              );
+              if (GetStorage().read(GetStorageKey.namarole) != 'ADMIN HSE') {
+                DialogAlert.notif("Hanya Admin HSE yang bisa mencetak Dokumen", "warning");
+                return;
+              }
+
+              downloadFile(widget.url, widget.title);
               Get.snackbar(
                 "Info",
                 "File sedang didownload",
@@ -233,25 +241,36 @@ class _PDFViewerPageState extends State<PDFViewerPage> {
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                FloatingActionButton.extended(
-                  backgroundColor: Colors.red,
-                  label: Text("Previous"),
-                  onPressed: () {
-                    if (currentPage! > 0) {
-                      currentPage = currentPage! - 1;
-                      pdfViewController.setPage(currentPage!);
-                    }
-                  },
+                SizedBox(
+                  width: 120,
+                  height: 48,
+                  child: FloatingActionButton.extended(
+                    backgroundColor: Colors.red,
+                    label: Text(
+                      "Previous",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      if (currentPage! > 0) {
+                        currentPage = currentPage! - 1;
+                        pdfViewController.setPage(currentPage!);
+                      }
+                    },
+                  ),
                 ),
-                FloatingActionButton.extended(
-                  backgroundColor: Colors.green,
-                  label: Text("Next"),
-                  onPressed: () {
-                    if (currentPage! < pages! - 1) {
-                      currentPage = currentPage! + 1;
-                      pdfViewController.setPage(currentPage!);
-                    }
-                  },
+                SizedBox(
+                  width: 120,
+                  height: 48,
+                  child: FloatingActionButton.extended(
+                    backgroundColor: Colors.green,
+                    label: Text("Next", style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      if (currentPage! < pages! - 1) {
+                        currentPage = currentPage! + 1;
+                        pdfViewController.setPage(currentPage!);
+                      }
+                    },
+                  ),
                 ),
               ],
             );

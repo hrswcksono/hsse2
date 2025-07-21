@@ -12,6 +12,7 @@ import 'package:hsse2/utils/helpers/helpers.dart';
 import 'package:hsse2/utils/values/colors.dart';
 import 'package:hsse2/utils/values/get_storage_key.dart';
 import 'package:hsse2/utils/values/string_const.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class PermitListView extends GetView<PermitListController> {
   var arguments = Get.arguments;
@@ -26,41 +27,47 @@ class PermitListView extends GetView<PermitListController> {
         pTitle: arguments['namapermit'],
         pBgColor: CustomColor.appBarColor,
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: controller.obx(
-                (data) => ListView.separated(
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                  itemCount: data!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return itemPermit(
-                      data[index].idpermit!,
-                      data[index].idjenispermit!,
-                      data[index].namaproject!,
-                      data[index].tgltrans.toString(),
-                      data[index].status!,
-                      data[index].lokasi!,
-                      "",
-                      data[index].deskripsi!,
-                      data[index].sudahapprove == 1 &&
-                          data[index].siapselesai == 0,
-                      GetStorage().read(GetStorageKey.namarole) == 'SPV HSE' &&
-                          data[index].siapselesai == 1,
-                      context,
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(height: 0);
-                  },
+      body: SmartRefresher(
+        controller: controller.xRefreshController,
+        enablePullDown: true,
+        onRefresh: controller.onRefreshData,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: controller.obx(
+                  (data) => ListView.separated(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemCount: data!.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return itemPermit(
+                        data[index].idpermit!,
+                        data[index].idjenispermit!,
+                        data[index].namaproject!,
+                        data[index].tgltrans.toString(),
+                        data[index].status!,
+                        data[index].lokasi!,
+                        "",
+                        data[index].kodepermit!,
+                        data[index].sudahapprove == 1 &&
+                            data[index].siapselesai == 0,
+                        GetStorage().read(GetStorageKey.namarole) ==
+                                'SPV HSE' &&
+                            data[index].siapselesai == 1,
+                        context,
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(height: 0);
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

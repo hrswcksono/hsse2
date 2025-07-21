@@ -6,6 +6,7 @@ import 'package:hsse2/app/routes/app_pages.dart';
 import 'package:hsse2/app/widgets/global_app_bar.dart';
 import 'package:hsse2/utils/helpers/helpers.dart';
 import 'package:hsse2/utils/values/colors.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../controllers/safety_brief_controller.dart';
 
@@ -18,36 +19,41 @@ class SafetyBriefView extends GetView<SafetyBriefController> {
         pTitle: "Safety Briefing",
         pBgColor: CustomColor.appBarColor,
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: controller.obx(
-                (data) => ListView.separated(
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                  itemCount: data!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return itemUnsafe(
-                      data[index].idsafetybrief!,
-                      data[index].idsafetybrief!,
-                      data[index].departemen!,
-                      data[index].tgltrans.toString(),
-                      data[index].status!,
-                      data[index].namapekerja!,
-                      data[index].namapekerjaan ?? "Belum Direspon",
-                      "Shift ${data[index].shift!}"
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(height: 10);
-                  },
+      body: SmartRefresher(
+        controller: controller.xRefreshController,
+        enablePullDown: true,
+        onRefresh: controller.onRefreshData,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: controller.obx(
+                  (data) => ListView.separated(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemCount: data!.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return itemUnsafe(
+                        data[index].idsafetybrief!,
+                        data[index].idsafetybrief!,
+                        data[index].departemen!,
+                        data[index].tgltrans.toString(),
+                        data[index].status!,
+                        data[index].namapekerja!,
+                        data[index].namapekerjaan ?? "Belum Direspon",
+                        "Shift ${data[index].shift!}",
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(height: 10);
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -89,9 +95,7 @@ class SafetyBriefView extends GetView<SafetyBriefController> {
                   if (item == 1) {
                     Get.toNamed(
                       Routes.SAFETY_BRIEF_DETAIL,
-                      arguments: {
-                        "idsafetybrief": idunsafe,
-                      },
+                      arguments: {"idsafetybrief": idunsafe},
                     );
                   }
                 },

@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hsse2/app/routes/app_pages.dart';
 import 'package:hsse2/app/widgets/global_app_bar.dart';
 import 'package:hsse2/utils/values/colors.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../controllers/unsafe_action_controller.dart';
 
@@ -26,36 +27,41 @@ class UnsafeActionView extends GetView<UnsafeActionController> {
                 : "Unsafe Condition",
         pBgColor: CustomColor.appBarColor,
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: controller.obx(
-                (data) => ListView.separated(
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                  itemCount: data!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return itemUnsafe(
-                      data[index].idunsafe!,
-                      data[index].idjenisunsafe!,
-                      data[index].username!,
-                      data[index].tgltemuan.toString(),
-                      data[index].status!,
-                      data[index].namajenisunsafe!,
-                      data[index].penanggungjawab ?? "Belum Direspon",
-                      data[index].nama!,
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(height: 0);
-                  },
+      body: SmartRefresher(
+        controller: controller.xRefreshController,
+        enablePullDown: true,
+        onRefresh: controller.onRefreshData,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: controller.obx(
+                  (data) => ListView.separated(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemCount: data!.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return itemUnsafe(
+                        data[index].idunsafe!,
+                        data[index].idjenisunsafe!,
+                        data[index].username!,
+                        data[index].tgltemuan.toString(),
+                        data[index].status!,
+                        data[index].namajenisunsafe!,
+                        data[index].penanggungjawab ?? "Belum Direspon",
+                        data[index].nama!,
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(height: 0);
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -108,7 +114,13 @@ class UnsafeActionView extends GetView<UnsafeActionController> {
                 },
                 itemBuilder:
                     (context) => [
-                      PopupMenuItem<int>(value: 1, child: arguments["asal"] == 'approve' ? Text('Approve') : Text('Detail')),
+                      PopupMenuItem<int>(
+                        value: 1,
+                        child:
+                            arguments["asal"] == 'approve'
+                                ? Text('Approve')
+                                : Text('Detail'),
+                      ),
                     ],
                 child: const Icon(Icons.more_vert),
               ),

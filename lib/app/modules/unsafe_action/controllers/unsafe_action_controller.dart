@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:hsse2/app/data/models/ListUnsafeResponse.dart';
 import 'package:hsse2/app/data/providers/unsafe_provider.dart';
 import 'package:hsse2/app/widgets/dialog_alert.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class UnsafeActionController extends GetxController
     with StateMixin<List<ItemUnsafeList>> {
@@ -41,5 +42,16 @@ class UnsafeActionController extends GetxController
       Get.back();
       change(null, status: RxStatus.error());
     }
+  }
+
+  RefreshController xRefreshController = RefreshController(
+    initialRefresh: false,
+  );
+
+  void onRefreshData() async {
+    // monitor network fetch
+    // if failed,use refreshFailed()
+    getListUnsafe(idjenisunsafe);
+    xRefreshController.refreshCompleted();
   }
 }

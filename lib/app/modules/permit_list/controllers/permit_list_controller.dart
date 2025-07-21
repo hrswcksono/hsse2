@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:hsse2/app/data/models/PermitResponse.dart';
 import 'package:hsse2/app/data/providers/permit_provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class PermitListController extends GetxController
     with StateMixin<List<ListItemPermit>> {
@@ -9,12 +10,14 @@ class PermitListController extends GetxController
   var arguments = Get.arguments;
 
   var idjenispermit = 0;
+  var asal = "";
 
   @override
   void onInit() {
     super.onInit();
 
     idjenispermit = arguments["idjenispermit"];
+    asal = arguments["asal"];
   }
 
   void initList(pidjenispermit, asal) {
@@ -61,5 +64,16 @@ class PermitListController extends GetxController
       print('Testda at');
       change(null, status: RxStatus.error());
     }
+  }
+
+  RefreshController xRefreshController = RefreshController(
+    initialRefresh: false,
+  );
+
+  void onRefreshData() async {
+    // monitor network fetch
+    // if failed,use refreshFailed()
+    initList(idjenispermit, asal);
+    xRefreshController.refreshCompleted();
   }
 }

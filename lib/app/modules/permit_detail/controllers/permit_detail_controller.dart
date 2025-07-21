@@ -225,7 +225,7 @@ class PermitDetailController extends GetxController {
             namaProjectTF.text = value.data!.namaproject ?? "";
             bagianTF.text = value.data!.bagian ?? "";
             perusahaanTF.text = value.data!.perusahaan ?? "";
-            nomorIjinTF.text = value.data!.nomorijin ?? "";
+            nomorIjinTF.text = value.data!.kodepermit ?? "";
             deskripsiTF.text = value.data!.deskripsi ?? "";
             lokasiTF.text = value.data!.lokasi ?? "";
             jumlahPekerjaTF.text = value.data!.jumlahpekerja.toString();
