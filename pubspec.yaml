@@ -50,6 +50,7 @@ dependencies:
   device_info_plus: ^11.5.0
   double_back_to_close_app: ^2.1.0
   pull_to_refresh: ^2.0.0
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
@@ -105,3 +106,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/icon.png"
