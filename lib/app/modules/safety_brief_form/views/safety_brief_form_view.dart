@@ -184,6 +184,7 @@ class SafetyBriefFormView extends GetView<SafetyBriefFormController> {
                 buildTextField(
                   "Jumlah Pekerja",
                   controller.jmlPekerjaTF,
+                  numbersOnly: true
                 ),
                 buildTextField(
                   "Nama Pekerja",

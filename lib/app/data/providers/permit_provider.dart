@@ -16,7 +16,7 @@ class PermitProvider extends BaseProvider {
       return detailPermitResponseFromJson(response.bodyString.toString());
     }
   }
-  
+
   Future<PermitResponse> getListPermit(int idjenispermit) async {
     var form = {'idjenispermit': idjenispermit};
     var response = await post('permit/list', form);
@@ -139,12 +139,26 @@ class PermitProvider extends BaseProvider {
     }
   }
 
-  Future<String> donePermit(int idpermit, File ttdpenyelesaian, int statuspenyelesaian) async {
-    var form = FormData({
+  Future<String> donePermit(
+    int idpermit,
+    File? ttdpenyelesaian,
+    int statuspenyelesaian,
+  ) async {
+    // Buat FormData dengan field wajib
+    Map<String, dynamic> formFields = {
       "idpermit": idpermit,
       "statuspenyelesaian": statuspenyelesaian,
-      "ttd": MultipartFile(ttdpenyelesaian, filename: ttdpenyelesaian.path.split('/').last),
-    });
+    };
+
+    // Tambahkan TTD hanya jika file ada
+    if (ttdpenyelesaian != null) {
+      formFields["ttd"] = MultipartFile(
+        ttdpenyelesaian,
+        filename: ttdpenyelesaian.path.split('/').last,
+      );
+    }
+
+    var form = FormData(formFields);
 
     var response = await post('permit/done', form);
 

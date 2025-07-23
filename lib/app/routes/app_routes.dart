@@ -32,6 +32,7 @@ abstract class Routes {
   static const REKAP_SB = _Paths.REKAP_SB;
   static const REKAP_SP = _Paths.REKAP_SP;
   static const REKAP_PERMIT = _Paths.REKAP_PERMIT;
+  static const NOTIFIKASI = _Paths.NOTIFIKASI;
 }
 
 abstract class _Paths {
@@ -65,4 +66,5 @@ abstract class _Paths {
   static const REKAP_SB = '/rekap-sb';
   static const REKAP_SP = '/rekap-sp';
   static const REKAP_PERMIT = '/rekap-permit';
+  static const NOTIFIKASI = '/notifikasi';
 }

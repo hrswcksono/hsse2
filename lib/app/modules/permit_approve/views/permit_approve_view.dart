@@ -31,7 +31,7 @@ class PermitApproveView extends GetView<PermitApproveController> {
               Obx(() {
                 final isEditable =
                     GetStorage().read(GetStorageKey.namarole) == 'SPV HSE' &&
-                    arguments['sudahapprove1'] == 0;
+                    arguments['sudahapprove1'] == 0 && arguments['statuspenyelesaian'] == null;
 
                 final localFile = controller.imageFile.value;
                 final ttdUrl = arguments['ttdapprove1'];
@@ -49,7 +49,9 @@ class PermitApproveView extends GetView<PermitApproveController> {
                       border: Border.all(color: Colors.grey.shade400),
                     ),
                     child:
-                        localFile != null && GetStorage().read(GetStorageKey.namarole) == 'SPV HSE'
+                        localFile != null &&
+                                GetStorage().read(GetStorageKey.namarole) ==
+                                    'SPV HSE'
                             ? ClipRRect(
                               borderRadius: BorderRadius.circular(8),
                               child: Image.file(
@@ -99,7 +101,7 @@ class PermitApproveView extends GetView<PermitApproveController> {
                 "Approve SPV HSE",
                 isEnabled:
                     (GetStorage().read(GetStorageKey.namarole) == 'SPV HSE' &&
-                        arguments['sudahapprove1'] == 0),
+                        arguments['sudahapprove1'] == 0  && arguments['statuspenyelesaian'] == null),
                 onPressed: () {
                   controller.approvePermit();
                 },
@@ -108,7 +110,7 @@ class PermitApproveView extends GetView<PermitApproveController> {
               Obx(() {
                 final isEditable =
                     GetStorage().read(GetStorageKey.namarole) == 'SPV AREA' &&
-                    arguments['sudahapprove2'] == 0;
+                    arguments['sudahapprove2'] == 0  && arguments['statuspenyelesaian'] == null;
 
                 final localFile = controller.imageFile.value;
                 final ttdUrl =
@@ -125,7 +127,9 @@ class PermitApproveView extends GetView<PermitApproveController> {
                       border: Border.all(color: Colors.grey.shade400),
                     ),
                     child:
-                        localFile != null && GetStorage().read(GetStorageKey.namarole) == 'SPV AREA'
+                        localFile != null &&
+                                GetStorage().read(GetStorageKey.namarole) ==
+                                    'SPV AREA'
                             ? ClipRRect(
                               borderRadius: BorderRadius.circular(8),
                               child: Image.file(
@@ -175,7 +179,7 @@ class PermitApproveView extends GetView<PermitApproveController> {
                 "Approve SPV Area",
                 isEnabled:
                     (GetStorage().read(GetStorageKey.namarole) == 'SPV AREA' &&
-                        arguments['sudahapprove2'] == 0),
+                        arguments['sudahapprove2'] == 0 && arguments['statuspenyelesaian'] == null),
                 onPressed: () {
                   controller.approvePermit();
                 },
@@ -184,7 +188,7 @@ class PermitApproveView extends GetView<PermitApproveController> {
               Obx(() {
                 final isEditable =
                     GetStorage().read(GetStorageKey.namarole) == 'MANAJER' &&
-                    arguments['sudahapprove3'] == 0;
+                    arguments['sudahapprove3'] == 0 && arguments['statuspenyelesaian'] == null;
 
                 final localFile = controller.imageFile.value;
                 final ttdUrl = arguments['ttdapprove3'];
@@ -200,7 +204,9 @@ class PermitApproveView extends GetView<PermitApproveController> {
                       border: Border.all(color: Colors.grey.shade400),
                     ),
                     child:
-                        localFile != null && GetStorage().read(GetStorageKey.namarole) == 'MANAJER'
+                        localFile != null &&
+                                GetStorage().read(GetStorageKey.namarole) ==
+                                    'MANAJER'
                             ? ClipRRect(
                               borderRadius: BorderRadius.circular(8),
                               child: Image.file(
@@ -250,25 +256,30 @@ class PermitApproveView extends GetView<PermitApproveController> {
                 "Approve Manajer",
                 isEnabled:
                     (GetStorage().read(GetStorageKey.namarole) == 'MANAJER' &&
-                        arguments['sudahapprove3'] == 0),
+                        arguments['sudahapprove3'] == 0 && arguments['statuspenyelesaian'] == null),
                 onPressed: () {
                   controller.approvePermit();
                 },
               ),
               SizedBox(height: 10),
               globalButton(
-                arguments['statuspenyelesaian'] != null ? "Detail" : "Penyelesaian",
+                arguments['statuspenyelesaian'] != null
+                    ? "Detail"
+                    : "Penyelesaian",
                 isEnabled:
-                    ((GetStorage().read(GetStorageKey.namarole) == 'SPV HSE' &&
-                        arguments['sudahapprove1'] == 1 &&
-                        arguments['sudahapprove2'] == 1 &&
-                        arguments['sudahapprove3'] == 1)) || arguments['statuspenyelesaian'] != null,
+                    (GetStorage().read(GetStorageKey.namarole) == 'SPV HSE') ||
+                    arguments['statuspenyelesaian'] != null,
                 onPressed: () {
-                  Get.toNamed(Routes.PERMIT_SELESAI, arguments: {
-                    'id'                : controller.idpermit,
-                    'statuspenyelesaian': arguments['statuspenyelesaian'],
-                    'ttdpenyelesaian'   : arguments['ttdpenyelesaian']
-                  });
+                  Get.toNamed(
+                    Routes.PERMIT_SELESAI,
+                    arguments: {
+                      'id'                : controller.idpermit,
+                      'statuspenyelesaian': arguments['statuspenyelesaian'],
+                      'ttdpenyelesaian'   : arguments['ttdpenyelesaian'],
+                      'tglubahstatus'     : arguments['tglubahstatus'],
+                      'jamubahstatus'     : arguments['jamubahstatus'],
+                    },
+                  );
                 },
               ),
             ],

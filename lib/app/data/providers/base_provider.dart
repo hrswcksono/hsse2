@@ -12,6 +12,8 @@ class BaseProvider extends GetConnect {
   void onInit() {
     httpClient.baseUrl = StringConst.baseUrl;
 
+    httpClient.timeout = const Duration(seconds: 1000);
+
     // print(idperusahaan);
     // print(iduser);
 

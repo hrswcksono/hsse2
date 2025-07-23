@@ -46,7 +46,11 @@ class PermitView extends GetView<PermitController> {
                           ),
                         ),
                       ),
-                      const Icon(Icons.notifications_none),
+                      InkWell(
+                          onTap: () {
+                            Get.toNamed(Routes.NOTIFIKASI);
+                          },
+                          child: Icon(Icons.notifications_none)),
                     ],
                   ),
                 ),

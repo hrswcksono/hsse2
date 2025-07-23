@@ -21,12 +21,18 @@ class SafetyPatrolApprovalView extends GetView<SafetyPatrolApprovalController> {
               children: [
                 // Header
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 16,
+                  ),
                   child: Row(
                     children: [
                       GestureDetector(
                         onTap: () => Get.back(),
-                        child: const Icon(Icons.arrow_back, color: Colors.black),
+                        child: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.black,
+                        ),
                       ),
                       const SizedBox(width: 10),
                       Expanded(
@@ -38,7 +44,12 @@ class SafetyPatrolApprovalView extends GetView<SafetyPatrolApprovalController> {
                           ),
                         ),
                       ),
-                      const Icon(Icons.notifications_none),
+                      InkWell(
+                        onTap: () {
+                          Get.toNamed(Routes.NOTIFIKASI);
+                        },
+                        child: Icon(Icons.notifications_none),
+                      ),
                     ],
                   ),
                 ),
@@ -76,7 +87,10 @@ class SafetyPatrolApprovalView extends GetView<SafetyPatrolApprovalController> {
                               "Approval Unsafe Action",
                               "assets/images/engineer.png", // ganti dengan ikon sesuai desain
                               onTap: () {
-                                Get.toNamed(Routes.UNSAFE_ACTION, arguments: {'idjenisunsafe': 1});
+                                Get.toNamed(
+                                  Routes.UNSAFE_ACTION,
+                                  arguments: {'idjenisunsafe': 1},
+                                );
                               },
                               size: 180,
                             ),
@@ -90,7 +104,10 @@ class SafetyPatrolApprovalView extends GetView<SafetyPatrolApprovalController> {
                               "Approval Unsafe Condition",
                               "assets/images/engineer.png",
                               onTap: () {
-                                Get.toNamed(Routes.UNSAFE_ACTION, arguments: {'idjenisunsafe': 2});
+                                Get.toNamed(
+                                  Routes.UNSAFE_ACTION,
+                                  arguments: {'idjenisunsafe': 2},
+                                );
                               },
                               size: 180,
                             ),

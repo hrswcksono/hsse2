@@ -9,6 +9,8 @@ import '../modules/laporan_ah/bindings/laporan_ah_binding.dart';
 import '../modules/laporan_ah/views/laporan_ah_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/notifikasi/bindings/notifikasi_binding.dart';
+import '../modules/notifikasi/views/notifikasi_view.dart';
 import '../modules/permit/bindings/permit_binding.dart';
 import '../modules/permit/views/permit_view.dart';
 import '../modules/permit_approve/bindings/permit_approve_binding.dart';
@@ -213,6 +215,11 @@ class AppPages {
       name: _Paths.REKAP_PERMIT,
       page: () => const RekapPermitView(),
       binding: RekapPermitBinding(),
+    ),
+    GetPage(
+      name: _Paths.NOTIFIKASI,
+      page: () => const NotifikasiView(),
+      binding: NotifikasiBinding(),
     ),
   ];
 }

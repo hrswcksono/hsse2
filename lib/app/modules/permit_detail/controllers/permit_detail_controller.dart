@@ -11,7 +11,7 @@ import 'package:hsse2/utils/helpers/helpers.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PermitDetailController extends GetxController {
-  var permitProvider = Get.find<PermitProvider>();
+  var permitProvider = Get.put(PermitProvider());
   var permitListCtl = Get.put(PermitListController());
   var arguments = Get.arguments;
   late TextEditingController kodePermitTF;
@@ -74,16 +74,19 @@ class PermitDetailController extends GetxController {
 
   var pengukurangas = 0;
 
-  var     idpermit         = 0;
-  var     sudahapprove1    = 0;
-  var     sudahapprove2    = 0;
-  var     sudahapprove3    = 0;
+  var idpermit = 0;
+  var sudahapprove1 = 0;
+  var sudahapprove2 = 0;
+  var sudahapprove3 = 0;
   dynamic statuspenyelaian = 0;
-  dynamic ttdpenyelesaian  = "";
-  var     ttdapprove1      = "";
-  var     ttdapprove2      = "";
-  var     ttdapprove3      = "";
-  var     ttdbuat          = "".obs;
+  dynamic ttdpenyelesaian = "";
+  var ttdapprove1 = "";
+  var ttdapprove2 = "";
+  var ttdapprove3 = "";
+  var ttdbuat = "".obs;
+
+  dynamic tglubahstatus = "";
+  dynamic jamubahstatus = "";
 
   @override
   void onInit() {
@@ -262,7 +265,8 @@ class PermitDetailController extends GetxController {
             statuspenyelaian = value.data!.statuspenyelesaian;
             ttdpenyelesaian = value.data!.ttdpenyelesaian;
 
-            print(ttdpenyelesaian);
+            tglubahstatus = value.data!.tglubahstatus;
+            jamubahstatus = value.data!.jamubahstatus;
 
             // ✅ PERBAIKAN: Clear dulu listjawaban yang ada, lalu rebuild dengan data dari API
             listjawaban.clear();

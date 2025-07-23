@@ -626,6 +626,8 @@ class PermitDetailView extends GetView<PermitDetailController> {
                           "ttdapprove3": controller.ttdapprove3,
                           "statuspenyelesaian": controller.statuspenyelaian,
                           "ttdpenyelesaian": controller.ttdpenyelesaian,
+                          "jamubahstatus": controller.jamubahstatus,
+                          "tglubahstatus": controller.tglubahstatus,
                         },
                       );
                     },

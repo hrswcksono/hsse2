@@ -19,6 +19,15 @@ class PermitSelesaiView extends GetView<PermitSelesaiController> {
   @override
   Widget build(BuildContext context) {
     controller.idpermit = arguments['id'];
+
+    if(arguments['statuspenyelesaian'] == 1) {
+      controller.pekerjaanSelesai.value = true;
+      controller.pekerjaanPermitBaru.value = false;
+    } else {
+      controller.pekerjaanPermitBaru.value = true;
+      controller.pekerjaanSelesai.value = false;
+    }
+
     return Scaffold(
       appBar: GlobalAppBar(
         pTitle: "Selesaikan Permit",
@@ -41,6 +50,7 @@ class PermitSelesaiView extends GetView<PermitSelesaiController> {
               onSelected: () {
                 controller.pekerjaanPermitBaru.value = false;
               },
+              disabled: arguments['statuspenyelesaian'] != null
             ),
             buildCheckbox(
               'Pekerjaan Membutuhkan Permit Baru',
@@ -48,6 +58,7 @@ class PermitSelesaiView extends GetView<PermitSelesaiController> {
               onSelected: () {
                 controller.pekerjaanSelesai.value = false;
               },
+              disabled: arguments['statuspenyelesaian'] != null
             ),
             const Text(
               "Tanda Tangan Penyelesaian",
@@ -93,7 +104,7 @@ class PermitSelesaiView extends GetView<PermitSelesaiController> {
                               fit: BoxFit.cover,
                               errorBuilder: (context, error, stackTrace) {
                                 return const Center(
-                                  child: Text("Gagal memuat gambar TTD"),
+                                  child: Text("Upload atau Ambil TTD"),
                                 );
                               },
                             ),
@@ -135,7 +146,9 @@ class PermitSelesaiView extends GetView<PermitSelesaiController> {
                   flex: 1,
                   child: buildTextField(
                     "Tanggal",
-                    TextEditingController(),
+                    TextEditingController(
+                      text: arguments['tglubahstatus']
+                    ),
                     readOnly: true,
                   ),
                 ),
@@ -144,7 +157,9 @@ class PermitSelesaiView extends GetView<PermitSelesaiController> {
                   flex: 1,
                   child: buildTextField(
                     "Jam",
-                    TextEditingController(),
+                    TextEditingController(
+                      text: arguments['jamubahstatus']
+                    ),
                     readOnly: true,
                   ),
                 ),

@@ -45,7 +45,11 @@ class HomeView extends GetView<HomeController> {
                             ),
                           ),
                         ),
-                        const Icon(Icons.notifications_none),
+                        InkWell(
+                          onTap: () {
+                            Get.toNamed(Routes.NOTIFIKASI);
+                          },
+                          child: Icon(Icons.notifications_none)),
                       ],
                     ),
                   ),

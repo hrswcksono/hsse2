@@ -31,14 +31,6 @@ class PermitSelesaiController extends GetxController {
   }
 
   void donePermit() {
-    if (imageFile.value == null) {
-      DialogAlert.notif(
-        "Silahkan upload atau ambil TTD terlebih dahulu",
-        "error",
-      );
-      return;
-    }
-
     var status = 0;
     if (pekerjaanSelesai.value) {
       status = 1; // Pekerjaan Selesai
@@ -46,13 +38,23 @@ class PermitSelesaiController extends GetxController {
       status = 2; // Pekerjaan Membutuhkan Permit Baru
     }
 
+    if (imageFile.value == null && status == 1) {
+      DialogAlert.notif(
+        "Silahkan upload atau ambil TTD terlebih dahulu",
+        "error",
+      );
+      return;
+    }
+
     try {
       permitProvider
-          .donePermit(idpermit, imageFile.value!, status)
+          .donePermit(idpermit, imageFile.value, status)
           .then((value) {
             DialogAlert.notif(value, "success");
           })
           .onError((error, _) {
+            Get.back();
+            Get.back();
             Get.back();
             DialogAlert.notif(error.toString(), "error");
           });

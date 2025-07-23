@@ -1,3 +1,4 @@
+import 'package:hsse2/app/data/models/NotifikasiResponse.dart';
 import 'package:hsse2/app/data/providers/base_provider.dart';
 
 import '../models/ListUser.dart';
@@ -90,6 +91,18 @@ class UserProvider extends BaseProvider {
       return Future.error(response.body["message"]);
     } else {
       return listUserFromJson(response.bodyString.toString());
+    }
+  }
+
+  Future<NotifikasiResponse> listNotifikasi() async {
+    var response = await post('user/notifikasi', {});
+
+    print(response.body);
+
+    if (!response.body['success']) {
+      return Future.error(response.body["message"]);
+    } else {
+      return notifikasiResponseFromJson(response.bodyString.toString());
     }
   }
 }
